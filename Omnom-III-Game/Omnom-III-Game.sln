@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows Copy of Omnom-III-Game", "Omnom-III-Game\Omnom-III-Game\Windows Copy of Omnom-III-Game.csproj", "{71594656-E46A-407F-822C-B4CDD996F8C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "omnom-nunit-tests", "omnom-nunit-tests\omnom-nunit-tests.csproj", "{613752DC-9FDF-41BE-B578-2353EF316514}"
+	ProjectSection(ProjectDependencies) = postProject
+		{11035335-CF57-45CD-83C4-A26174CC5305} = {11035335-CF57-45CD-83C4-A26174CC5305}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
