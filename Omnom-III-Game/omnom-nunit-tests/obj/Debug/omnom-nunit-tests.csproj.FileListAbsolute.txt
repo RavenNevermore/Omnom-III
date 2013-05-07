@@ -1,0 +1,8 @@
+C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\bin\Debug\omnom-nunit-tests.dll
+C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\bin\Debug\omnom-nunit-tests.pdb
+C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\bin\Debug\nunit.framework.dll
+C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\bin\Debug\nunit.mocks.dll
+C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\bin\Debug\pnunit.framework.dll
+C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\obj\Debug\omnom-nunit-tests.csprojResolveAssemblyReference.cache
+C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\obj\Debug\omnom-nunit-tests.dll
+C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\obj\Debug\omnom-nunit-tests.pdb

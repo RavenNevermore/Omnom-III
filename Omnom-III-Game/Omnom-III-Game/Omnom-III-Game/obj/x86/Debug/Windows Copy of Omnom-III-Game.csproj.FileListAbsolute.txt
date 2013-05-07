@@ -1,6 +1,5 @@
 C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\Omnom-III-Game\Omnom-III-Game\bin\x86\Debug\Omnom-III-Game.exe
 C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\Omnom-III-Game\Omnom-III-Game\bin\x86\Debug\Omnom-III-Game.pdb
-C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\Omnom-III-Game\Omnom-III-Game\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\Omnom-III-Game\Omnom-III-Game\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\Omnom-III-Game\Omnom-III-Game\obj\x86\Debug\Omnom-III-Game.exe
 C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\Omnom-III-Game\Omnom-III-Game\obj\x86\Debug\Omnom-III-Game.pdb
