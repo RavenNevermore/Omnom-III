@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Omnom_III_Game.util;
 
 namespace Omnom_III_Game {
     
@@ -28,8 +29,10 @@ namespace Omnom_III_Game {
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize() {
+            ContentUtil contentUtil = new ContentUtil(this.Content);
+
             this.scene = new DanceScene();
-            this.scene.initialize(this.Content);
+            this.scene.initialize(contentUtil);
 
             base.Initialize();
         }
