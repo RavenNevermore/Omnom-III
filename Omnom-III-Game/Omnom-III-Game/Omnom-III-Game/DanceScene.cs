@@ -17,7 +17,7 @@ namespace Omnom_III_Game {
         public void initialize(ContentManager content) {
             textures = new Dictionary<String, Texture2D>();
 
-            //textures["player_character"] = content.Load<Texture2D>("missing_texture");
+            textures["player_character"] = content.Load<Texture2D>("missing_texture");
         }
 
         public void update() {
@@ -29,7 +29,7 @@ namespace Omnom_III_Game {
 
             int characterWidth = 50;
             int characterHeight = 150;
-            /*
+            
             sprites.Draw(
                 this.textures["player_character"],
                 new Rectangle(
@@ -37,7 +37,7 @@ namespace Omnom_III_Game {
                     centerY - characterHeight / 2, 
                     characterWidth, 
                     characterHeight),
-                Color.White);*/
+                Color.White);
         }
 
     }
