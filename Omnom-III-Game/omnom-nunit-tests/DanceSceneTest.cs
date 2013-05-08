@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Moq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Omnom_III_Game;
 using Omnom_III_Game.util;
@@ -17,6 +18,30 @@ namespace omnom_nunit_tests {
 
         [Test]
         public void draw_should_draw_textures() {
+            DanceScene scene = initializeDanceScene();
+
+            
+            var sprites = new Mock<SpriteBatchWrapper>();
+
+            sprites.Setup(x => x.Draw(It.IsAny<Texture2D>(), It.IsAny<Rectangle>(), It.IsAny<Color>())).Verifiable();
+            scene.draw(sprites.Object, new Rectangle(0, 0, 800, 600));
+
+            sprites.Verify();
+        }
+
+        private static DanceScene initializeDanceScene() {
+            GraphicsDevice device = setupGraphicsDevice();
+
+            var content = new Mock<ContentUtil>();
+            var texture = new Mock<Texture2D>(device, 50, 50);
+            content.Setup(x => x.load<Texture2D>(It.IsAny<String>())).Returns(texture.Object);
+
+            DanceScene scene = new DanceScene();
+            scene.initialize(content.Object);
+            return scene;
+        }
+
+        private static GraphicsDevice setupGraphicsDevice() {
             PresentationParameters windowParams = new PresentationParameters();
             windowParams.DeviceWindowHandle = new IntPtr(1);
             GraphicsAdapter.UseNullDevice = true;
@@ -24,14 +49,7 @@ namespace omnom_nunit_tests {
                 GraphicsAdapter.DefaultAdapter,
                 GraphicsProfile.Reach,
                 windowParams);
-            var texture = new Mock<Texture2D>(device, 50, 50);
-            var content = new Mock<ContentUtil>();
-            content.Setup(x => x.load<Texture2D>(It.IsAny<String>())).Returns(texture.Object);
-
-            DanceScene scene = new DanceScene();
-            scene.initialize(content.Object);
-
-            
+            return device;
         }
 
     }

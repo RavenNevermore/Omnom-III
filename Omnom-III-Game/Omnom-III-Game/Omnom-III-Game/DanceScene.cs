@@ -23,7 +23,7 @@ namespace Omnom_III_Game {
         public void update() {
         }
 
-        public void draw(SpriteBatch sprites, Rectangle viewport) {
+        public void draw(SpriteBatchWrapper sprites, Rectangle viewport) {
 
             int characterWidth = 50;
             int characterHeight = 150;

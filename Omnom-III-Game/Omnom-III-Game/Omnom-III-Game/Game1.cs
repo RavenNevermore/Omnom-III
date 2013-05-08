@@ -77,7 +77,8 @@ namespace Omnom_III_Game {
             this.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             this.spriteBatch.Begin();
-            this.scene.draw(this.spriteBatch, this.GraphicsDevice.Viewport.Bounds);
+            SpriteBatchWrapper wrapper = new SpriteBatchWrapper(this.spriteBatch);
+            this.scene.draw(wrapper, this.GraphicsDevice.Viewport.Bounds);
             this.spriteBatch.End();
 
             base.Draw(gameTime);
