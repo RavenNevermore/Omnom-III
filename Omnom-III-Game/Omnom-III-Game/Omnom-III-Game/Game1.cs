@@ -59,7 +59,16 @@ namespace Omnom_III_Game {
         protected override void Update(GameTime gameTime) {
             this.checkForExitSignals();
 
-            this.scene.update();
+            
+            GamePadDPad dpad = GamePad.GetState(PlayerIndex.One).DPad;
+            InputState input = new InputState();
+            input.set(InputState.Move.UP, dpad.Up == ButtonState.Pressed);
+            input.set(InputState.Move.DOWN, dpad.Down == ButtonState.Pressed);
+            input.set(InputState.Move.LEFT, dpad.Left == ButtonState.Pressed);
+            input.set(InputState.Move.RIGHT, dpad.Right == ButtonState.Pressed);
+
+
+            this.scene.update(input);
 
             base.Update(gameTime);
         }

@@ -23,7 +23,13 @@ namespace omnom_nunit_tests {
             
             var sprites = new Mock<SpriteBatchWrapper>();
 
-            sprites.Setup(x => x.Draw(It.IsAny<Texture2D>(), It.IsAny<Rectangle>(), It.IsAny<Color>())).Verifiable();
+            sprites.Setup(x => x.drawFromCenter(
+                It.IsAny<Texture2D>(), 
+                It.IsAny<Rectangle>(), 
+                It.IsAny<int>(), It.IsAny<int>(), 
+                It.IsAny<int>(), It.IsAny<int>(), 
+                It.IsAny<Color>()));
+                
             scene.draw(sprites.Object, new Rectangle(0, 0, 800, 600));
 
             sprites.Verify();

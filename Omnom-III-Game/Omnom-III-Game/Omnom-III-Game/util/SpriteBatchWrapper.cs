@@ -15,8 +15,35 @@ namespace Omnom_III_Game.util {
             this.wrapped = wrapped;
         }
 
-        public virtual void Draw(Texture2D texture2D, Rectangle rectangle, Color color) {
-            this.wrapped.Draw(texture2D, rectangle, color);
+        public void drawFromCenter(Texture2D texture, Rectangle viewport,
+            int width, int height) {
+
+            this.drawFromCenter(texture, viewport, width, height, 0, 0, Color.White);
+        }
+
+        public void drawFromCenter(Texture2D texture, Rectangle viewport,
+            int width, int height,
+            int offsetX, int offsetY) {
+
+                this.drawFromCenter(texture, viewport, width, height, offsetX, offsetY, Color.White);
+        }
+
+        public void drawFromCenter(Texture2D texture, Rectangle viewport, 
+            int width, int height,
+            int offsetX, int offsetY, 
+            Color color) {
+
+            int centerX = (viewport.Width / 2) + offsetX;
+            int centerY = (viewport.Height / 2) + offsetY;
+
+            this.wrapped.Draw(
+                texture,
+                new Rectangle(
+                    centerX - width / 2,
+                    centerY - height / 2,
+                    width,
+                    height),
+                color);
         }
     }
 }
