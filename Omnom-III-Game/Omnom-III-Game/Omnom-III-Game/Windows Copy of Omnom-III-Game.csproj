@@ -84,7 +84,6 @@
     <Compile Include="util\SpriteBatchWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fmodex.dll" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>

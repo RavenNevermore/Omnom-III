@@ -48,7 +48,7 @@ namespace Omnom_III_Game {
             result = soundsystem.init(32, FMOD.INITFLAGS.NORMAL, (IntPtr) null);
             ERRCHECK(result);
 
-            result = soundsystem.createSound("C:/Program Files (x86)/FMOD SoundSystem/FMOD Programmers API Windows/examples/media/wave.mp3", FMOD.MODE.HARDWARE, ref song);
+            result = soundsystem.createSound("Content/eattherich.wma", FMOD.MODE.HARDWARE, ref song);
             ERRCHECK(result);
 
 
