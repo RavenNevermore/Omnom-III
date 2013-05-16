@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Omnom_III_Game.util;
+using Omnom_III_Game.exceptions;
 
 
 namespace Omnom_III_Game {
@@ -19,7 +20,45 @@ namespace Omnom_III_Game {
         public void initialize(ContentUtil content) {
             this.textures = new Dictionary<String, Texture2D>();
 
-            loadTextures(content, "player_character", "up", "down", "left", "right");
+            this.loadTextures(content, "player_character", "up", "down", "left", "right");
+            this.PlaySound_Load();
+        }
+
+        private void PlaySound_Load() {
+            uint            version = 0;
+            FMOD.RESULT     result;
+            FMOD.System soundsystem = null;
+            FMOD.Sound song = null;
+            FMOD.Channel channel = null;
+
+            /*
+                Create a System object and initialize.
+            */
+            result = FMOD.Factory.System_Create(ref soundsystem);
+            ERRCHECK(result);
+
+            result = soundsystem.getVersion(ref version);
+            ERRCHECK(result);
+            /*
+            if (version < FMOD.VERSION.number) {
+                MessageBox.Show("Error!  You are using an old version of FMOD " + version.ToString("X") + ".  This program requires " + FMOD.VERSION.number.ToString("X") + ".");
+                Application.Exit();
+            }*/
+
+            result = soundsystem.init(32, FMOD.INITFLAGS.NORMAL, (IntPtr) null);
+            ERRCHECK(result);
+
+            result = soundsystem.createSound("C:/Program Files (x86)/FMOD SoundSystem/FMOD Programmers API Windows/examples/media/wave.mp3", FMOD.MODE.HARDWARE, ref song);
+            ERRCHECK(result);
+
+
+            soundsystem.playSound(FMOD.CHANNELINDEX.FREE, song, false, ref channel);
+        }
+
+        private void ERRCHECK(FMOD.RESULT result) {
+            if (result != FMOD.RESULT.OK) {
+                throw new SoundSystemException(result.ToString("X"));
+            }
         }
 
         private void loadTextures(ContentUtil content, params String[] names) {
