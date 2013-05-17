@@ -15,44 +15,31 @@ namespace Omnom_III_Game {
     public class DanceScene {
 
         Dictionary<String, Texture2D> textures;
+        FMOD.System soundsystem;
+        Song song;
+
         InputState latestInput;
 
         public void initialize(ContentUtil content) {
             this.textures = new Dictionary<String, Texture2D>();
 
             this.loadTextures(content, "player_character", "up", "down", "left", "right");
-            this.PlaySound_Load();
+
+            
+
+            this.createSoundSystem();
+            this.song = new Song("eattherich", this.soundsystem);
+            this.song.play();
         }
 
-        private void PlaySound_Load() {
-            uint            version = 0;
-            FMOD.RESULT     result;
-            FMOD.System soundsystem = null;
-            FMOD.Sound song = null;
-            FMOD.Channel channel = null;
-
-            /*
-                Create a System object and initialize.
-            */
-            result = FMOD.Factory.System_Create(ref soundsystem);
-            ERRCHECK(result);
-
+        private void createSoundSystem() {
+            uint version = 0;
+            FMOD.RESULT result = FMOD.Factory.System_Create(ref soundsystem);
+            this.ERRCHECK(result);
             result = soundsystem.getVersion(ref version);
             ERRCHECK(result);
-            /*
-            if (version < FMOD.VERSION.number) {
-                MessageBox.Show("Error!  You are using an old version of FMOD " + version.ToString("X") + ".  This program requires " + FMOD.VERSION.number.ToString("X") + ".");
-                Application.Exit();
-            }*/
-
-            result = soundsystem.init(32, FMOD.INITFLAGS.NORMAL, (IntPtr) null);
+            result = soundsystem.init(32, FMOD.INITFLAGS.NORMAL, (IntPtr)null);
             ERRCHECK(result);
-
-            result = soundsystem.createSound("Content/eattherich.wma", FMOD.MODE.HARDWARE, ref song);
-            ERRCHECK(result);
-
-
-            soundsystem.playSound(FMOD.CHANNELINDEX.FREE, song, false, ref channel);
         }
 
         private void ERRCHECK(FMOD.RESULT result) {
@@ -73,9 +60,12 @@ namespace Omnom_III_Game {
 
         public void update(InputState input) {
             this.latestInput = input;
+
+            this.song.calculateMetaInfo();
         }
 
-        public void draw(SpriteBatchWrapper sprites, Rectangle viewport) {
+        public void draw(SpriteBatchWrapper sprites, GraphicsDevice device) {
+            Rectangle viewport = device.Viewport.Bounds;
             sprites.drawFromCenter(this.textures["player_character"], viewport, 50, 150);
 
             sprites.drawFromCenter(this.textures["up"], viewport, 30, 30, 0, -100, 
@@ -87,6 +77,80 @@ namespace Omnom_III_Game {
                 getStateColor(InputState.Move.LEFT));
             sprites.drawFromCenter(this.textures["right"], viewport, 30, 30, 100, 0,
                 getStateColor(InputState.Move.RIGHT));
+
+
+            drawDebugSpectrum(sprites, device, viewport);
+        }
+
+        private void drawDebugSpectrum(
+            SpriteBatchWrapper sprites,
+            GraphicsDevice device, 
+            Rectangle viewport) {
+
+            drawSpectrum(sprites, device, viewport, this.song.spectrum.left, true, -25);
+            drawSpectrum(sprites, device, viewport, this.song.spectrum.right, false, 25);
+        }
+
+        private void drawSpectrum(
+            SpriteBatchWrapper sprites, 
+            GraphicsDevice device, 
+            Rectangle viewport, 
+            Song.SpectralData spectrum,
+            bool flipDirection,
+            int xOffset) {
+
+            Texture2D boxTexRed = DrawingUtil.createTexture(device, Color.Red);
+            Texture2D boxTexRed2 = DrawingUtil.createTexture(device, Color.DarkRed);
+            Texture2D boxTexGrey = DrawingUtil.createTexture(device, Color.LightGray);
+            Texture2D boxTexGrey2 = DrawingUtil.createTexture(device, Color.DarkGray);
+
+            float spectralScale = 30;
+            float[] scaledSpectrum = spectrum.current.highCut(32).downSample(10).scaledData(spectralScale);
+            float[] maxScaledSpectrum = spectrum.max.highCut(32).downSample(10).scaledData(spectralScale);
+
+
+            int startOffset = xOffset;// -7 * scaledSpectrum.Length;
+            if (flipDirection) {
+                startOffset -= 7 * scaledSpectrum.Length;
+                Array.Reverse(scaledSpectrum);
+                Array.Reverse(maxScaledSpectrum);
+            }
+
+            for (int i = 0; i < scaledSpectrum.Length; i++) {
+                
+                float scaledVolume = scaledSpectrum[i];// *spectralScale;
+
+                for (int j = 0; j < spectralScale; j++) {
+                    if (j <= scaledVolume) {
+                        drawScaleDot(sprites, viewport,
+                            i % 10 == 0 ? boxTexRed2 : boxTexRed,
+                            i, startOffset, j, Color.White);
+                    } else if (j <= maxScaledSpectrum[i]) {
+                        drawScaleDot(sprites, viewport,
+                            i % 10 == 0 ? boxTexGrey2 : boxTexGrey,
+                            i, startOffset, j, Color.White);
+
+                    }
+                }
+            }
+        }
+
+        private static void drawScaleDot(
+            SpriteBatchWrapper sprites, 
+            Rectangle viewport, 
+            Texture2D boxTex, 
+            int i,
+            int startOffset, 
+            int j, 
+            Color color) {
+
+            sprites.drawFromCenter(
+                boxTex,
+                viewport,
+                5, 5,
+                startOffset + 7 * i,
+                100 - j * 7,
+                color);
         }
 
         private Color getStateColor(InputState.Move move) {

@@ -80,7 +80,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Song.cs" />
     <Compile Include="util\ContentUtil.cs" />
+    <Compile Include="util\DrawingUtil.cs" />
     <Compile Include="util\SpriteBatchWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
