@@ -1,22 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\omnom-nunit-tests.csproj" total="2" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2013-05-08" time="11:24:42">
-  <environment nunit-version="2.6.2.12296" clr-version="2.0.50727.4927" os-version="Microsoft Windows NT 6.1.7600.0" platform="Win32NT" cwd="C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests" machine-name="MORIA" user="josh" user-domain="moria" />
+<test-results name="C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\omnom-nunit-tests.csproj" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2013-05-21" time="19:49:18">
+  <environment nunit-version="2.6.2.12296" clr-version="2.0.50727.5420" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests" machine-name="MORIA" user="josh" user-domain="moria" />
   <culture-info current-culture="de-DE" current-uiculture="de-DE" />
-  <test-suite type="Project" name="C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\omnom-nunit-tests.csproj" executed="True" result="Success" success="True" time="0.328" asserts="0">
+  <test-suite type="Project" name="C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\omnom-nunit-tests.csproj" executed="True" result="Success" success="True" time="0.003" asserts="0">
     <results>
-      <test-suite type="Assembly" name="C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\bin\Debug\omnom-nunit-tests.dll" executed="True" result="Success" success="True" time="0.328" asserts="0">
+      <test-suite type="Assembly" name="C:\Users\josh\Documents\GitHub\Omnom-III\Omnom-III-Game\omnom-nunit-tests\bin\Debug\omnom-nunit-tests.dll" executed="True" result="Success" success="True" time="0.003" asserts="0">
         <results>
-          <test-suite type="Namespace" name="omnom_nunit_tests" executed="True" result="Success" success="True" time="0.328" asserts="0">
+          <test-suite type="Namespace" name="omnom_nunit_tests" executed="True" result="Success" success="True" time="0.002" asserts="0">
             <results>
-              <test-suite type="TestFixture" name="DanceSceneTest" executed="True" result="Success" success="True" time="0.312" asserts="0">
+              <test-suite type="TestFixture" name="SongTest" executed="True" result="Success" success="True" time="0.001" asserts="0">
                 <results>
-                  <test-case name="omnom_nunit_tests.DanceSceneTest.draw_should_draw_textures" executed="True" result="Success" success="True" time="0.296" asserts="0" />
-                </results>
-              </test-suite>
-              <test-suite type="TestFixture" name="SanityTest" executed="True" result="Success" success="True" time="0.016" asserts="0">
-                <results>
-                  <test-case name="omnom_nunit_tests.SanityTest.testSantiy" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="omnom_nunit_tests.SongTest.testBpm" executed="True" result="Success" success="True" time="0.000" asserts="1" />
                 </results>
               </test-suite>
             </results>

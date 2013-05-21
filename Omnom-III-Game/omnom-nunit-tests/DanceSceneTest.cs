@@ -22,6 +22,7 @@ namespace omnom_nunit_tests {
 
             
             var sprites = new Mock<SpriteBatchWrapper>();
+            var device = new Mock<GraphicsDevice>();
 
             sprites.Setup(x => x.drawFromCenter(
                 It.IsAny<Texture2D>(), 
@@ -30,7 +31,8 @@ namespace omnom_nunit_tests {
                 It.IsAny<int>(), It.IsAny<int>(), 
                 It.IsAny<Color>()));
                 
-            scene.draw(sprites.Object, new Rectangle(0, 0, 800, 600));
+            scene.draw(sprites.Object, device.Object);
+                //sprites.Object, new Rectangle(0, 0, 800, 600));
 
             sprites.Verify();
         }

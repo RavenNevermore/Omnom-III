@@ -13,5 +13,10 @@ namespace omnom_nunit_tests
         public void testSantiy() {
             Assert.AreEqual(4, 2+2);
         }
+
+        [Test]
+        public void testTest() {
+            Assert.True(true);
+        }
     }
 }

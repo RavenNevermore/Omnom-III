@@ -28,7 +28,7 @@ namespace Omnom_III_Game {
             
 
             this.createSoundSystem();
-            this.song = new Song("eattherich", this.soundsystem);
+            this.song = new Song("eattherich", this.soundsystem, 122.8f);
             this.song.play();
         }
 
@@ -78,7 +78,8 @@ namespace Omnom_III_Game {
             sprites.drawFromCenter(this.textures["right"], viewport, 30, 30, 100, 0,
                 getStateColor(InputState.Move.RIGHT));
 
-
+            sprites.drawDebugText("Playback:", this.song.timeRunningInMs, 
+                "|", this.song.timeRunningInBeats, "(", this.song.timeRunningInMeasures, ")");
             drawDebugSpectrum(sprites, device, viewport);
         }
 

@@ -9,10 +9,21 @@ namespace Omnom_III_Game.util {
     public class SpriteBatchWrapper {
 
         private SpriteBatch wrapped;
+        private SpriteFont font;
 
         public SpriteBatchWrapper() { }
-        public SpriteBatchWrapper(SpriteBatch wrapped) {
+        public SpriteBatchWrapper(SpriteBatch wrapped, SpriteFont defaultFont) {
             this.wrapped = wrapped;
+            this.font = defaultFont;
+        }
+
+        public void drawDebugText(params object[] text) {
+            String msg = "";
+            foreach (object item in text){
+                msg += null == item ? "null":item.ToString();
+                msg += " ";
+            }
+            this.wrapped.DrawString(font, msg, new Vector2(5, 5), Color.DarkGray);
         }
 
         public void drawFromCenter(Texture2D texture, Rectangle viewport,

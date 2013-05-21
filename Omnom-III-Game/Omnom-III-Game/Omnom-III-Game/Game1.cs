@@ -16,6 +16,7 @@ namespace Omnom_III_Game {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         DanceScene scene;
+        SpriteFont defaultFont;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -42,7 +43,8 @@ namespace Omnom_III_Game {
         /// all of your content.
         /// </summary>
         protected override void LoadContent() {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.defaultFont = Content.Load<SpriteFont>("default");
         }
 
         /// <summary>
@@ -61,11 +63,12 @@ namespace Omnom_III_Game {
 
             
             GamePadDPad dpad = GamePad.GetState(PlayerIndex.One).DPad;
+            
             InputState input = new InputState();
-            input.set(InputState.Move.UP, dpad.Up == ButtonState.Pressed);
-            input.set(InputState.Move.DOWN, dpad.Down == ButtonState.Pressed);
-            input.set(InputState.Move.LEFT, dpad.Left == ButtonState.Pressed);
-            input.set(InputState.Move.RIGHT, dpad.Right == ButtonState.Pressed);
+            input.set(InputState.Move.UP, dpad.Up == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.W));
+            input.set(InputState.Move.DOWN, dpad.Down == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.S));
+            input.set(InputState.Move.LEFT, dpad.Left == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.A));
+            input.set(InputState.Move.RIGHT, dpad.Right == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.D));
 
 
             this.scene.update(input);
@@ -86,7 +89,7 @@ namespace Omnom_III_Game {
             this.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             this.spriteBatch.Begin();
-            SpriteBatchWrapper wrapper = new SpriteBatchWrapper(this.spriteBatch);
+            SpriteBatchWrapper wrapper = new SpriteBatchWrapper(this.spriteBatch, this.defaultFont);
             this.scene.draw(wrapper, this.GraphicsDevice);
             this.spriteBatch.End();
 

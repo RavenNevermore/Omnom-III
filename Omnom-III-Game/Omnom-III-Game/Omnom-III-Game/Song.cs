@@ -120,8 +120,44 @@ namespace Omnom_III_Game {
         FMOD.Sound content;
         FMOD.Channel channel;
         public ExtendedSpectralData spectrum;
+        public float bpm {
+            get {
+                return this.beatsPerMillisecond * 1000 * 60;
+            }
 
-        public Song(String contentName, FMOD.System soundSystem) {
+            set {
+                this.beatsPerMillisecond = (value / 60) / 1000;
+            }
+        }
+
+
+        private float beatsPerMillisecond;
+
+        public long timeRunningInMs { 
+            get {
+                uint position = 0;
+                this.channel.getPosition(ref position, TIMEUNIT.MS);
+                return (long) position; 
+            } 
+        }
+
+        public int timeRunningInBeats {
+            get {
+                return (int)(this.timeRunningInMs * this.beatsPerMillisecond);
+            }
+        }
+
+        public int timeRunningInMeasures {
+            get {
+                return ((this.timeRunningInBeats - 1) / 4) + 1;
+            }
+        }
+
+        public Song() {
+        }
+
+        public Song(String contentName, FMOD.System soundSystem, float bpm) {
+            this.bpm = bpm;
             this.soundsystem = soundSystem;
             this.filename = "Content/" + contentName + ".wma";
             ERRCHECK(soundSystem.createSound(filename, FMOD.MODE.SOFTWARE, ref content));
