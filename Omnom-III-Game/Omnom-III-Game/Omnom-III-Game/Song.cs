@@ -7,6 +7,35 @@ using Omnom_III_Game.exceptions;
 
 namespace Omnom_III_Game {
     public class Song {
+        public enum MusicTime { 
+            FULL, 
+            HALF, HALF_DOTTED, 
+            QUARTER, QUARTER_DOTTED, 
+            EIGTH, EIGTH_DOTTED, 
+            SIXTEENTH, SIXTEENTH_DOTTED }
+
+        public static float MusicTimeInFractions(MusicTime time) {
+            if (MusicTime.FULL == time)
+                return 1.0f;
+            else if (MusicTime.HALF == time)
+                return .5f;
+            else if (MusicTime.HALF_DOTTED == time)
+                return .75f;
+            else if (MusicTime.QUARTER == time)
+                return .25f;
+            else if (MusicTime.QUARTER_DOTTED == time)
+                return .375f;
+            else if (MusicTime.EIGTH == time)
+                return .125f;
+            else if (MusicTime.EIGTH_DOTTED == time)
+                return .1875f;
+            else if (MusicTime.SIXTEENTH == time)
+                return .0625f;
+            else if (MusicTime.SIXTEENTH_DOTTED == time)
+                return .09375f;
+            return 0;
+        }
+
         public class Spectrum {
             public static float interpolate(float value) {
                 return 0f;
@@ -163,6 +192,15 @@ namespace Omnom_III_Game {
         public int timeRunningInMeasures {
             get {
                 return ((this.timeRunningInBeats - 1) / 4) + 1;
+            }
+        }
+
+        public float positionInMeasure {
+            get {
+                int measure = this.timeRunningInBeats / 4;
+                float measureTime = this.beatTimeInMs * 4;
+                float measureMs = this.timeRunningInMs - (measure * measureTime);
+                return measureMs / measureTime;
             }
         }
 
