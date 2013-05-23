@@ -88,8 +88,9 @@ namespace Omnom_III_Game {
         protected override void Draw(GameTime gameTime) {
             this.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            this.spriteBatch.Begin();
-            SpriteBatchWrapper wrapper = new SpriteBatchWrapper(this.spriteBatch, this.defaultFont);
+            this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            SpriteBatchWrapper wrapper = new SpriteBatchWrapper(
+                this.spriteBatch, this.GraphicsDevice, this.defaultFont);
             this.scene.draw(wrapper, this.GraphicsDevice);
             this.spriteBatch.End();
 

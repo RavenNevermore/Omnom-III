@@ -133,6 +133,19 @@ namespace Omnom_III_Game {
 
         private float beatsPerMillisecond;
 
+        public float beatTimeInMs {
+            get { return 1 / this.beatsPerMillisecond; }
+            set { }
+        }
+
+        public float positionInBeat {
+            get { 
+                float beatMs = this.timeRunningInMs - (this.timeRunningInBeats * this.beatTimeInMs);
+                return beatMs / this.beatTimeInMs;
+            }
+            set { }
+        }
+
         public long timeRunningInMs { 
             get {
                 uint position = 0;

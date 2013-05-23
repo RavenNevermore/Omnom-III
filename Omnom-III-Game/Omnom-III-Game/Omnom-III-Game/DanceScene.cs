@@ -20,12 +20,15 @@ namespace Omnom_III_Game {
 
         InputState latestInput;
 
+        PlayerProgress progress;
+
         public void initialize(ContentUtil content) {
             this.textures = new Dictionary<String, Texture2D>();
 
-            this.loadTextures(content, "player_character", "up", "down", "left", "right");
+            this.loadTextures(content, "player_character", "btn_up", "btn_down", "btn_left", "btn_right");
 
-            
+
+            this.progress = new PlayerProgress();
 
             this.createSoundSystem();
             this.song = new Song("eattherich", this.soundsystem, 122.8f);
@@ -66,20 +69,33 @@ namespace Omnom_III_Game {
 
         public void draw(SpriteBatchWrapper sprites, GraphicsDevice device) {
             Rectangle viewport = device.Viewport.Bounds;
-            sprites.drawFromCenter(this.textures["player_character"], viewport, 50, 150);
+            sprites.drawFromCenter(this.textures["player_character"], viewport, 150, 150);
 
-            sprites.drawFromCenter(this.textures["up"], viewport, 30, 30, 0, -100, 
+            sprites.drawFromCenter(this.textures["btn_up"], viewport, 30, 30, 0, -100, 
                 getStateColor(InputState.Move.UP));
-            sprites.drawFromCenter(this.textures["down"], viewport, 30, 30, 0, 100,
+            sprites.drawFromCenter(this.textures["btn_down"], viewport, 30, 30, 0, 100,
                 getStateColor(InputState.Move.DOWN));
 
-            sprites.drawFromCenter(this.textures["left"], viewport, 30, 30, -100, 0,
+            sprites.drawFromCenter(this.textures["btn_left"], viewport, 30, 30, -100, 0,
                 getStateColor(InputState.Move.LEFT));
-            sprites.drawFromCenter(this.textures["right"], viewport, 30, 30, 100, 0,
+            sprites.drawFromCenter(this.textures["btn_right"], viewport, 30, 30, 100, 0,
                 getStateColor(InputState.Move.RIGHT));
 
+            int beats = this.song.timeRunningInBeats;
+            float positionInBeat = song.positionInBeat;
+
+
+            
             sprites.drawDebugText("Playback:", this.song.timeRunningInMs, 
-                "|", this.song.timeRunningInBeats, "(", this.song.timeRunningInMeasures, ")");
+                "|", beats, "(", this.song.timeRunningInMeasures, ")");
+
+            
+            if (0 == (beats - 1) % 4) {
+                sprites.fillWithColor(Color.White, (1f - positionInBeat) * .5f);
+            } else if (0 == (beats - 1) % 2) {
+                sprites.fillWithColor(Color.White, (1f - positionInBeat) * .25f);
+            }
+
             drawDebugSpectrum(sprites, device, viewport);
         }
 
@@ -88,8 +104,8 @@ namespace Omnom_III_Game {
             GraphicsDevice device, 
             Rectangle viewport) {
 
-            drawSpectrum(sprites, device, viewport, this.song.spectrum.left, true, -25);
-            drawSpectrum(sprites, device, viewport, this.song.spectrum.right, false, 25);
+            drawSpectrum(sprites, device, viewport, this.song.spectrum.left, true, -225);
+            drawSpectrum(sprites, device, viewport, this.song.spectrum.right, false, 225);
         }
 
         private void drawSpectrum(

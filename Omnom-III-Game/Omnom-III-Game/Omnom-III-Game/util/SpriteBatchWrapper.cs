@@ -9,11 +9,13 @@ namespace Omnom_III_Game.util {
     public class SpriteBatchWrapper {
 
         private SpriteBatch wrapped;
+        private GraphicsDevice wrappedDevice;
         private SpriteFont font;
 
         public SpriteBatchWrapper() { }
-        public SpriteBatchWrapper(SpriteBatch wrapped, SpriteFont defaultFont) {
+        public SpriteBatchWrapper(SpriteBatch wrapped, GraphicsDevice device, SpriteFont defaultFont) {
             this.wrapped = wrapped;
+            this.wrappedDevice = device;
             this.font = defaultFont;
         }
 
@@ -55,6 +57,11 @@ namespace Omnom_III_Game.util {
                     width,
                     height),
                 color);
+        }
+
+        internal void fillWithColor(Color color, float alpha) {
+            Texture2D texture = DrawingUtil.createTexture(wrappedDevice, color);
+            this.wrapped.Draw(texture, wrappedDevice.Viewport.Bounds, Color.White * alpha);
         }
     }
 }
