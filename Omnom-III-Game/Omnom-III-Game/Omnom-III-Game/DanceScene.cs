@@ -35,19 +35,60 @@ namespace Omnom_III_Game {
             this.progress = new PlayerProgress();
             this.sequences = new List<DanceSequence>();
             this.sequences.Add(
-                new DanceSequence(2,
+                new DanceSequence(3,
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)));
 
             this.sequences.Add(
-                new DanceSequence(6,
+                new DanceSequence(5,
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)));
+
+            this.sequences.Add(
+                new DanceSequence(7,
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)));
+
+            this.sequences.Add(
+                new DanceSequence(9,
                     new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.EIGTH),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.EIGTH),
                     new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER)));
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER)));
+
+            this.sequences.Add(
+                new DanceSequence(11,
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)));
+
+            this.sequences.Add(
+                new DanceSequence(15,
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)));
+
+            this.sequences.Reverse();
 
             this.createSoundSystem();
             this.song = new Song("eattherich", this.soundsystem, 122.8f);
@@ -84,18 +125,23 @@ namespace Omnom_III_Game {
             this.latestInput = input;
             this.song.calculateMetaInfo();
 
-            if (null != this.activeSequence && activeSequence.isGone(this.song)) {
-                this.activeSequence = null;
-                this.activeSequenceInput = null;
+            if (null == this.activeSequence || this.activeSequence.isGone(this.song)) {
+
+                foreach (DanceSequence sequence in this.sequences) {
+                    if (sequence.isGone(this.song))
+                        continue;
+
+                    this.activeSequence = sequence;
+                }
             }
 
 
-            this.sequences.RemoveAll(x => x.isGone(this.song));
+            //this.sequences.RemoveAll(x => x.isGone(this.song));
 
-
+            /*
             if (null == this.activeSequence && 0 < this.sequences.Count) {
                 this.activeSequence = this.sequences.ElementAt(0);
-            }
+            }*/
 
             if (null != this.activeSequence) {
                 this.activeSequenceInput = this.activeSequence.nextInput(this.song);
@@ -122,7 +168,8 @@ namespace Omnom_III_Game {
 
             
             sprites.drawDebugText("Playback:", this.song.timeRunningInMs, 
-                "|", beats, "(", this.song.timeRunningInMeasures, this.song.positionInMeasure, ")\n\rScore:", this.progress.score);
+                "|", beats, "(", this.song.timeRunningInMeasures, this.song.positionInMeasure, ")\n\rScore:", this.progress.score, 
+                "\n\rSequences:", this.sequences.Count, this.activeSequence.startMeasure);
 
             
             if (0 == (beats - 1) % 4) {

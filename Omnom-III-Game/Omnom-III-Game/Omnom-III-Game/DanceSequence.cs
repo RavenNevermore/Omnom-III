@@ -17,15 +17,15 @@ namespace Omnom_III_Game {
         }
 
         public int startMeasure;
-        public List<Input> sequence;
+        public Input[]/*List<Input>*/ sequence;
         private float endMeasure;
 
         public DanceSequence(int startMeasure, params Input[] sequence) {
             this.startMeasure = startMeasure;
             float end = startMeasure;
-            this.sequence = new List<Input>();
+            this.sequence = sequence;// new List<Input>();
             foreach (Input input in sequence){
-                this.sequence.Add(input);
+                //this.sequence.Add(input);
                 end += Song.MusicTimeInFractions(input.time);
             }
             this.endMeasure = end;
@@ -33,7 +33,8 @@ namespace Omnom_III_Game {
 
         public bool isGone(Song song) {
             int songPos = song.timeRunningInMeasures;
-            float endMeasure = this.endMeasure + (((int)this.endMeasure) + 1 - this.startMeasure);
+            int endMeasure = (int)this.endMeasure;
+            
             return songPos > endMeasure;
         }
 
