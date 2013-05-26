@@ -9,55 +9,59 @@ namespace Omnom_III_Game {
         public class Input {
             public InputState.Move handicap;
             public Song.MusicTime time;
+            public long length;
+            public long startPositionInSong;
 
             public Input(InputState.Move handicap, Song.MusicTime time) {
                 this.handicap = handicap;
                 this.time = time;
             }
+
+            public void calcLength(Song song) {
+                this.length = (long)(Song.MusicTimeInFractions(this.time) * song.measureTimeInMs);
+            }
         }
 
-        public int startMeasure;
-        public Input[]/*List<Input>*/ sequence;
-        private float endMeasure;
+        public long startPosition;
+        public Input[] sequence;
+        private int positionInSequence;
+        public long endPosition;
 
-        public DanceSequence(int startMeasure, params Input[] sequence) {
-            this.startMeasure = startMeasure;
-            float end = startMeasure;
-            this.sequence = sequence;// new List<Input>();
-            foreach (Input input in sequence){
-                //this.sequence.Add(input);
-                end += Song.MusicTimeInFractions(input.time);
+        public DanceSequence(Song song, int startMeasure, params Input[] sequence) {
+            this.startPosition = (long) (song.measureTimeInMs * (startMeasure - 1));
+            this.positionInSequence = 0;
+
+            this.endPosition = this.startPosition;
+
+            this.sequence = sequence;
+            long inputPos = this.startPosition;
+            foreach (Input input in this.sequence){
+                input.calcLength(song);
+                input.startPositionInSong = inputPos;
+
+                this.endPosition += input.length;
+                inputPos += input.length;
             }
-            this.endMeasure = end;
         }
 
         public bool isGone(Song song) {
-            int songPos = song.timeRunningInMeasures;
-            int endMeasure = (int)this.endMeasure;
-            
-            return songPos > endMeasure;
+            return song.timeRunningInMs > this.endPosition;
         }
 
         public Input nextInput(Song song) {
-            float currentMeasure = song.timeRunningInMeasures;
-            currentMeasure += song.positionInMeasure;
+            if (song.timeRunningInMs < this.startPosition
+                || song.timeRunningInMs > this.endPosition)
+                return null;
 
-            if (currentMeasure < this.startMeasure
-                || currentMeasure > this.endMeasure) {
-                    return null;
-            }
-            float measure = (float) startMeasure;
-            
-            Input lastInput = null;
-            foreach (Input input in sequence) {
-                lastInput = input;
-                measure += Song.MusicTimeInFractions(input.time);
-                if (measure > currentMeasure) {
-                    break;
+            for (int i = 0; i < this.sequence.Length; i++) {
+                Input current = this.sequence[i];
+                if (current.startPositionInSong <= song.timeRunningInMs
+                    && current.startPositionInSong + current.length >= song.timeRunningInMs) {
+                        return current;
                 }
             }
-
-            return lastInput;
+            return null;
         }
+
     }
 }

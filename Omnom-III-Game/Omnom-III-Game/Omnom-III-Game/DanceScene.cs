@@ -19,8 +19,8 @@ namespace Omnom_III_Game {
         Song song;
 
         InputState latestInput;
-        List<DanceSequence> sequences;
-        DanceSequence activeSequence;
+        DanceSequence[] sequences;
+        int activeSequenceIndex;
         DanceSequence.Input activeSequenceInput;
 
         PlayerProgress progress;
@@ -31,39 +31,38 @@ namespace Omnom_III_Game {
 
             this.loadTextures(content, "player_character", "btn_up", "btn_down", "btn_left", "btn_right");
 
+            this.createSoundSystem();
+            //this.song = new Song("MeasureTest", this.soundsystem, 60);//122.8f);
+            this.song = new Song("eattherich", this.soundsystem, 122.8f);
+            this.song.timeShift = this.song.beatTimeInMs * -1;
 
             this.progress = new PlayerProgress();
-            this.sequences = new List<DanceSequence>();
-            this.sequences.Add(
-                new DanceSequence(3,
+            this.sequences = new DanceSequence[]{
+                new DanceSequence(this.song, 3,
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)));
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)),
 
-            this.sequences.Add(
-                new DanceSequence(5,
+                new DanceSequence(this.song, 5,
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)));
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)),
 
-            this.sequences.Add(
-                new DanceSequence(7,
+                new DanceSequence(this.song, 7,
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)));
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)),
 
-            this.sequences.Add(
-                new DanceSequence(9,
+                new DanceSequence(this.song, 9,
                     new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER)));
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER)),
 
-            this.sequences.Add(
-                new DanceSequence(11,
+                new DanceSequence(this.song, 11,
                     new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
@@ -73,10 +72,9 @@ namespace Omnom_III_Game {
                     new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH),
                     new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)));
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)),
 
-            this.sequences.Add(
-                new DanceSequence(15,
+                new DanceSequence(this.song, 15,
                     new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
@@ -86,12 +84,10 @@ namespace Omnom_III_Game {
                     new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH),
                     new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)));
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER))};
+            this.activeSequenceIndex = 0;
 
-            this.sequences.Reverse();
-
-            this.createSoundSystem();
-            this.song = new Song("eattherich", this.soundsystem, 122.8f);
+            
             this.song.play();
         }
 
@@ -121,31 +117,32 @@ namespace Omnom_III_Game {
             }
         }
 
+        private DanceSequence activeSequence() {
+            if (this.activeSequenceIndex >= this.sequences.Length) {
+                return null;
+            }
+            return this.sequences[this.activeSequenceIndex];
+        }
+
         public void update(InputState input) {
             this.latestInput = input;
             this.song.calculateMetaInfo();
 
-            if (null == this.activeSequence || this.activeSequence.isGone(this.song)) {
-
-                foreach (DanceSequence sequence in this.sequences) {
-                    if (sequence.isGone(this.song))
-                        continue;
-
-                    this.activeSequence = sequence;
+            
+            if (null != this.activeSequence()){
+                if (this.activeSequence().isGone(this.song)){
+                    this.activeSequenceIndex++;
                 }
+                
+            }
+
+            if (null != this.activeSequence()) {
+                this.activeSequenceInput = this.activeSequence().nextInput(this.song);
+            } else {
+                this.activeSequenceInput = null;
             }
 
 
-            //this.sequences.RemoveAll(x => x.isGone(this.song));
-
-            /*
-            if (null == this.activeSequence && 0 < this.sequences.Count) {
-                this.activeSequence = this.sequences.ElementAt(0);
-            }*/
-
-            if (null != this.activeSequence) {
-                this.activeSequenceInput = this.activeSequence.nextInput(this.song);
-            }
         }
 
         public void draw(SpriteBatchWrapper sprites, GraphicsDevice device) {
@@ -165,17 +162,17 @@ namespace Omnom_III_Game {
             int beats = this.song.timeRunningInBeats;
             float positionInBeat = song.positionInBeat;
 
-
+            DanceSequence seq = this.activeSequence();
             
             sprites.drawDebugText("Playback:", this.song.timeRunningInMs, 
                 "|", beats, "(", this.song.timeRunningInMeasures, this.song.positionInMeasure, ")\n\rScore:", this.progress.score, 
-                "\n\rSequences:", this.sequences.Count, this.activeSequence.startMeasure);
+                "\n\rSequences:", this.sequences.Length, null == seq ? -1 : seq.startPosition, null == seq ? -1 : seq.endPosition);
 
             
             if (0 == (beats - 1) % 4) {
-                sprites.fillWithColor(Color.White, (1f - positionInBeat) * .5f);
+                sprites.fillWithColor(Color.White, (1f - positionInBeat) * .125f);
             } else if (0 == (beats - 1) % 2) {
-                sprites.fillWithColor(Color.White, (1f - positionInBeat) * .25f);
+                sprites.fillWithColor(Color.White, (1f - positionInBeat) * .075f);
             }
 
             drawDebugSpectrum(sprites, device, viewport);

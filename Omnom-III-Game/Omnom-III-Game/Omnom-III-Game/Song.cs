@@ -37,10 +37,9 @@ namespace Omnom_III_Game {
         }
 
         public class Spectrum {
-            public static float interpolate(float value) {
-                return 0f;
-            
-            }
+            public static int  DEFAULT_SAMPLESIZE = 64;
+
+            public float[] data;
 
             private Spectrum(float[] data) {
                 this.data = data;
@@ -52,8 +51,8 @@ namespace Omnom_III_Game {
             }
 
             public Spectrum(FMOD.Channel channel,int channelOffset) {
-               
-                int sampleSize = 64;
+
+                int sampleSize = DEFAULT_SAMPLESIZE;
 
                 float[] specs = new float[sampleSize];
 
@@ -96,11 +95,13 @@ namespace Omnom_III_Game {
                 return scaled;
             }
 
-            public int sampleSize() {
-                return data.Length;
+            public int sampleSize {
+                get {
+                    return data.Length;
+                }
             }
 
-            public float[] data;
+            
         }
 
         public class SpectralData {
@@ -113,12 +114,12 @@ namespace Omnom_III_Game {
             public SpectralData(FMOD.Channel channel, int offset) {
                 this.channel = channel;
                 this.offset = offset;
-                this.max = new Spectrum(64);
+                this.max = new Spectrum(Spectrum.DEFAULT_SAMPLESIZE);
             }
 
             public void update() {
                 this.current = new Spectrum(this.channel, offset);
-                for (int i = 0; i < 64; i++) {
+                for (int i = 0; i < this.current.sampleSize; i++) {
                     float vol = this.current.data[i];
                     if (vol > this.max.data[i]){
                         this.max.data[i] = vol;
@@ -149,6 +150,9 @@ namespace Omnom_III_Game {
         FMOD.Sound content;
         FMOD.Channel channel;
         public ExtendedSpectralData spectrum;
+        private float beatsPerMillisecond;
+        public float timeShift;
+
         public float bpm {
             get {
                 return this.beatsPerMillisecond * 1000 * 60;
@@ -159,11 +163,13 @@ namespace Omnom_III_Game {
             }
         }
 
-
-        private float beatsPerMillisecond;
-
         public float beatTimeInMs {
             get { return 1 / this.beatsPerMillisecond; }
+            set { }
+        }
+
+        public float measureTimeInMs {
+            get { return this.beatTimeInMs * 4; }
             set { }
         }
 
@@ -175,17 +181,16 @@ namespace Omnom_III_Game {
             set { }
         }
 
+        private long _timeRunningInMs;
         public long timeRunningInMs { 
             get {
-                uint position = 0;
-                this.channel.getPosition(ref position, TIMEUNIT.MS);
-                return (long) position; 
+                return this._timeRunningInMs;
             } 
         }
 
         public int timeRunningInBeats {
             get {
-                return (int)(this.timeRunningInMs * this.beatsPerMillisecond);
+                return 1 + (int)(this.timeRunningInMs * this.beatsPerMillisecond);
             }
         }
 
@@ -229,6 +234,11 @@ namespace Omnom_III_Game {
         public void calculateMetaInfo() {
             this.soundsystem.update();
             this.spectrum.update();
+
+            uint position = 0;
+            this.channel.getPosition(ref position, TIMEUNIT.MS);
+            this._timeRunningInMs = (long) position;
+            this._timeRunningInMs += (long)this.timeShift;
         }
 
         
