@@ -9,16 +9,23 @@ namespace Omnom_III_Game {
         public class Input {
             public InputState.Move handicap;
             public Song.MusicTime time;
+            public bool partOfTriole;
             public long length;
             public long startPositionInSong;
 
-            public Input(InputState.Move handicap, Song.MusicTime time) {
+            public Input(InputState.Move handicap, Song.MusicTime time, bool partOfTriole) {
                 this.handicap = handicap;
+                this.partOfTriole = partOfTriole;
                 this.time = time;
             }
 
+            public Input(InputState.Move handicap, Song.MusicTime time) : this(handicap, time, false) {}
+
             public void calcLength(Song song) {
                 this.length = (long)(Song.MusicTimeInFractions(this.time) * song.measureTimeInMs);
+                if (this.partOfTriole) {
+                    this.length = (long) (2.0f / 3.0f * (float)this.length);
+                }
             }
         }
 

@@ -33,11 +33,18 @@ namespace Omnom_III_Game {
 
             this.createSoundSystem();
             //this.song = new Song("MeasureTest", this.soundsystem, 60);//122.8f);
-            this.song = new Song("eattherich", this.soundsystem, 122.8f);
-            this.song.timeShift = this.song.beatTimeInMs * -1;
+            //this.song = new Song("eattherich", this.soundsystem, 122.8f);
+            this.song = new Song("eyeofthetiger", this.soundsystem, 109f);
+            this.song.timeShift = this.song.beatTimeInMs * -1.5f;
 
             this.progress = new PlayerProgress();
             this.sequences = new DanceSequence[]{
+                new DanceSequence(this.song, 1,
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)),
+
                 new DanceSequence(this.song, 3,
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
@@ -45,46 +52,100 @@ namespace Omnom_III_Game {
                     new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)),
 
                 new DanceSequence(this.song, 5,
-                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.HALF),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER, true),
 
-                new DanceSequence(this.song, 7,
-                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)),
+                    new DanceSequence.Input(InputState.Move.BREAK, Song.MusicTime.HALF),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER, true),
 
-                new DanceSequence(this.song, 9,
+                    new DanceSequence.Input(InputState.Move.BREAK, Song.MusicTime.HALF),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER, true),
+
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.FULL)),
+
+                new DanceSequence(this.song, 13,
                     new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH, true),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH, true),
+
+                    new DanceSequence.Input(InputState.Move.BREAK, Song.MusicTime.HALF),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH, true),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH, true),
+
+                    new DanceSequence.Input(InputState.Move.BREAK, Song.MusicTime.HALF),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER, true),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER, true),
+
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.FULL)),
+
+                new DanceSequence(this.song, 21,
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.EIGTH)),
+
+                new DanceSequence(this.song, 25,
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH)),
+
+                new DanceSequence(this.song, 29,
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.EIGTH)),
+
+                new DanceSequence(this.song, 33,
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.EIGTH),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH)),
+
+                new DanceSequence(this.song, 37,
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
                     new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER)),
 
-                new DanceSequence(this.song, 11,
-                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH),
-                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
-                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH),
-                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
-                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER)),
-
-                new DanceSequence(this.song, 15,
-                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH),
-                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
-                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.EIGTH),
-                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.EIGTH),
-                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
-                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.QUARTER))};
+                new DanceSequence(this.song, 39,
+                    new DanceSequence.Input(InputState.Move.UP, Song.MusicTime.HALF),
+                    new DanceSequence.Input(InputState.Move.DOWN, Song.MusicTime.HALF),
+                    new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.HALF),
+                    new DanceSequence.Input(InputState.Move.RIGHT, Song.MusicTime.HALF))
+            };
             this.activeSequenceIndex = 0;
 
             

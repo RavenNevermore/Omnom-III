@@ -63,12 +63,21 @@ namespace Omnom_III_Game {
 
             
             GamePadDPad dpad = GamePad.GetState(PlayerIndex.One).DPad;
+            GamePadButtons buttons = GamePad.GetState(PlayerIndex.One).Buttons;
             
             InputState input = new InputState();
-            input.set(InputState.Move.UP, dpad.Up == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.W));
-            input.set(InputState.Move.DOWN, dpad.Down == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.S));
-            input.set(InputState.Move.LEFT, dpad.Left == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.A));
-            input.set(InputState.Move.RIGHT, dpad.Right == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.D));
+            input.set(InputState.Move.UP, dpad.Up == ButtonState.Pressed 
+                || buttons.Y == ButtonState.Pressed
+                || Keyboard.GetState().IsKeyDown(Keys.W));
+            input.set(InputState.Move.DOWN, dpad.Down == ButtonState.Pressed
+                || buttons.A == ButtonState.Pressed
+                || Keyboard.GetState().IsKeyDown(Keys.S));
+            input.set(InputState.Move.LEFT, dpad.Left == ButtonState.Pressed
+                || buttons.X == ButtonState.Pressed
+                || Keyboard.GetState().IsKeyDown(Keys.A));
+            input.set(InputState.Move.RIGHT, dpad.Right == ButtonState.Pressed
+                || buttons.B == ButtonState.Pressed
+                || Keyboard.GetState().IsKeyDown(Keys.D));
 
 
             this.scene.update(input);
