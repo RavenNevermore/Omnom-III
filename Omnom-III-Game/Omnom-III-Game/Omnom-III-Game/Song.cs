@@ -90,9 +90,13 @@ namespace Omnom_III_Game {
             public float[] scaledData(float scale) {
                 float[] scaled = new float[this.data.Length];
                 for (int i = 0; i < this.data.Length; i++) {
-                    scaled[i] = this.data[i] * scale;
+                    scaled[i] = normalize(this.data[i]) * scale;
                 }
                 return scaled;
+            }
+
+            private float normalize(float data) {
+                return (float) Math.Pow(data, 1 / Math.E);
             }
 
             public int sampleSize {
