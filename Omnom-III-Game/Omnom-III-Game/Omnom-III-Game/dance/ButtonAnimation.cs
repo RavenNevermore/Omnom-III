@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Omnom_III_Game.util;
 
-namespace Omnom_III_Game {
+namespace Omnom_III_Game.dance {
     public class ButtonAnimation {
         static int  DefaultBoxSize = 30;
 

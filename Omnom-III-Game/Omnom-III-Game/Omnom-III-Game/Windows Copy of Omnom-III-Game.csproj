@@ -69,10 +69,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ButtonAnimation.cs" />
+    <Compile Include="dance\ButtonAnimation.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="DanceScene.cs" />
     <Compile Include="DanceSequence.cs" />
+    <Compile Include="dance\DanceSceneAnimationBundle.cs" />
     <Compile Include="exceptions\SoundSystemException.cs" />
     <Compile Include="fmod\fmod.cs" />
     <Compile Include="fmod\fmod_dsp.cs" />

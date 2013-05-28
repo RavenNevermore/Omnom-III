@@ -38,6 +38,18 @@ namespace Omnom_III_Game {
                 this.moveStates[move];
         }
 
+        public List<Move> activeStates { 
+            get {
+                List<Move> active = new List<Move>();
+                foreach (KeyValuePair<Move, Boolean> move in this.moveStates) {
+                    if (move.Value) {
+                        active.Add(move.Key);
+                    }
+                }
+                return active;
+            }
+        }
+
         public bool Equals(InputState other) {
             return null != other
                 && other.moveStates.Equals(this.moveStates);

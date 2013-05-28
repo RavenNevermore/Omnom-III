@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Omnom_III_Game.util;
 using Omnom_III_Game.exceptions;
+using Omnom_III_Game.dance;
 
 
 namespace Omnom_III_Game {
@@ -18,28 +19,29 @@ namespace Omnom_III_Game {
         FMOD.System soundsystem;
         Song song;
 
-        InputState latestInput;
+        List<InputState.Move> activePlayerInputs;
         DanceSequence[] sequences;
         int activeSequenceIndex;
         DanceSequence.Input activeSequenceInput;
 
         PlayerProgress progress;
 
-        ButtonAnimation testBtnAnim;
+        DanceSceneAnimationBundle animations;
 
 
         public void initialize(ContentUtil content) {
+            this.activePlayerInputs = new List<InputState.Move>();
             this.textures = new Dictionary<String, Texture2D>();
 
             this.loadTextures(content, "player_character", "btn_up", "btn_down", "btn_left", "btn_right");
-            this.testBtnAnim = new ButtonAnimation(this.textures["btn_up"], new Vector2(150, 150), Color.Red, 1500L);
-
+            
             this.createSoundSystem();
             //this.song = new Song("MeasureTest", this.soundsystem, 60);//122.8f);
             //this.song = new Song("eattherich", this.soundsystem, 122.8f);
             this.song = new Song("eyeofthetiger", this.soundsystem, 109f);
             this.song.timeShift = this.song.beatTimeInMs * -1.5f;
 
+            this.animations = new DanceSceneAnimationBundle(this.textures, this.song);
             this.progress = new PlayerProgress();
             this.sequences = new DanceSequence[]{
                 new DanceSequence(this.song, 1,
@@ -189,13 +191,14 @@ namespace Omnom_III_Game {
         }
 
         public void update(InputState input) {
-
-            this.latestInput = input;
             this.song.calculateMetaInfo();
 
-            if (input.isActive(InputState.Move.LEFT) && input.isActive(InputState.Move.RIGHT))
-                this.testBtnAnim.addStartPoint(this.song.timeRunningInMs);
-            this.testBtnAnim.update(this.song.timeRunningInMs);
+            List<InputState.Move> activeMoves = input.activeStates;
+            foreach (InputState.Move move in activeMoves) {
+                if (!this.activePlayerInputs.Contains(move)) {
+                    this.animations.startPlayerAnimation(move, this.song.timeRunningInMs);
+                }
+            }
             
             if (null != this.activeSequence()){
                 if (this.activeSequence().isGone(this.song)){
@@ -205,30 +208,25 @@ namespace Omnom_III_Game {
             }
 
             if (null != this.activeSequence()) {
-                this.activeSequenceInput = this.activeSequence().nextInput(this.song);
+                DanceSequence.Input nextInput = this.activeSequence().nextInput(this.song);
+                if (null != nextInput && !nextInput.Equals(this.activeSequenceInput)){
+                    this.animations.startOpponentAnimation(
+                        nextInput.handicap,
+                        this.song.timeRunningInMs);
+                }
+                this.activeSequenceInput = nextInput;
             } else {
                 this.activeSequenceInput = null;
             }
 
-
+            this.animations.update(song.timeRunningInMs);
         }
 
         public void draw(SpriteBatchWrapper sprites, GraphicsDevice device) {
 
-            this.testBtnAnim.draw(sprites);
-            
             sprites.drawFromCenter(this.textures["player_character"], 150, 150);
-
-            sprites.drawFromCenter(this.textures["btn_up"], 30, 30, 0, -100, 
-                getStateColor(InputState.Move.UP));
-            sprites.drawFromCenter(this.textures["btn_down"], 30, 30, 0, 100,
-                getStateColor(InputState.Move.DOWN));
-
-            sprites.drawFromCenter(this.textures["btn_left"], 30, 30, -100, 0,
-                getStateColor(InputState.Move.LEFT));
-            sprites.drawFromCenter(this.textures["btn_right"], 30, 30, 100, 0,
-                getStateColor(InputState.Move.RIGHT));
-
+            
+            this.animations.draw(sprites);
             int beats = this.song.timeRunningInBeats;
             float positionInBeat = song.positionInBeat;
 
@@ -313,13 +311,6 @@ namespace Omnom_III_Game {
                 startOffset + 7 * i,
                 100 - j * 7,
                 color);
-        }
-
-        private Color getStateColor(InputState.Move move) {
-            if (null != this.activeSequenceInput) {
-                return move == this.activeSequenceInput.handicap ? Color.LightBlue : Color.Gray;
-            }
-            return this.latestInput.isActive(move) ? Color.Green : Color.Gray;
         }
     }
 }
