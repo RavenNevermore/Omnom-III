@@ -11,11 +11,13 @@ namespace Omnom_III_Game.util {
         private SpriteBatch wrapped;
         private GraphicsDevice wrappedDevice;
         private SpriteFont font;
+        private Rectangle viewport;
 
         public SpriteBatchWrapper() { }
         public SpriteBatchWrapper(SpriteBatch wrapped, GraphicsDevice device, SpriteFont defaultFont) {
             this.wrapped = wrapped;
             this.wrappedDevice = device;
+            this.viewport = device.Viewport.Bounds;
             this.font = defaultFont;
         }
 
@@ -28,26 +30,25 @@ namespace Omnom_III_Game.util {
             this.wrapped.DrawString(font, msg, new Vector2(5, 5), Color.DarkGray);
         }
 
-        public void drawFromCenter(Texture2D texture, Rectangle viewport,
-            int width, int height) {
-
-            this.drawFromCenter(texture, viewport, width, height, 0, 0, Color.White);
+        public void drawFromCenter(Texture2D texture, int width, int height) {
+            
+            this.drawFromCenter(texture, width, height, 0, 0, Color.White);
         }
 
-        public void drawFromCenter(Texture2D texture, Rectangle viewport,
+        public void drawFromCenter(Texture2D texture,
             int width, int height,
             int offsetX, int offsetY) {
 
-                this.drawFromCenter(texture, viewport, width, height, offsetX, offsetY, Color.White);
+                this.drawFromCenter(texture, width, height, offsetX, offsetY, Color.White);
         }
 
-        public void drawFromCenter(Texture2D texture, Rectangle viewport, 
+        public void drawFromCenter(Texture2D texture, 
             int width, int height,
             int offsetX, int offsetY, 
             Color color) {
 
-            int centerX = (viewport.Width / 2) + offsetX;
-            int centerY = (viewport.Height / 2) + offsetY;
+            int centerX = (this.viewport.Width / 2) + offsetX;
+            int centerY = (this.viewport.Height / 2) + offsetY;
 
             this.wrapped.Draw(
                 texture,

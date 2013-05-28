@@ -93,6 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ButtonAnimation.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="DanceScene.cs" />
     <Compile Include="DanceSequence.cs" />

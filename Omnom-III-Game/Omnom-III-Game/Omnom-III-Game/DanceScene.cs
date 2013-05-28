@@ -25,11 +25,14 @@ namespace Omnom_III_Game {
 
         PlayerProgress progress;
 
+        ButtonAnimation testBtnAnim;
+
 
         public void initialize(ContentUtil content) {
             this.textures = new Dictionary<String, Texture2D>();
 
             this.loadTextures(content, "player_character", "btn_up", "btn_down", "btn_left", "btn_right");
+            this.testBtnAnim = new ButtonAnimation(this.textures["btn_up"], new Vector2(150, 150), Color.Red, 1500L);
 
             this.createSoundSystem();
             //this.song = new Song("MeasureTest", this.soundsystem, 60);//122.8f);
@@ -186,9 +189,13 @@ namespace Omnom_III_Game {
         }
 
         public void update(InputState input) {
+
             this.latestInput = input;
             this.song.calculateMetaInfo();
 
+            if (input.isActive(InputState.Move.LEFT) && input.isActive(InputState.Move.RIGHT))
+                this.testBtnAnim.addStartPoint(this.song.timeRunningInMs);
+            this.testBtnAnim.update(this.song.timeRunningInMs);
             
             if (null != this.activeSequence()){
                 if (this.activeSequence().isGone(this.song)){
@@ -207,17 +214,19 @@ namespace Omnom_III_Game {
         }
 
         public void draw(SpriteBatchWrapper sprites, GraphicsDevice device) {
-            Rectangle viewport = device.Viewport.Bounds;
-            sprites.drawFromCenter(this.textures["player_character"], viewport, 150, 150);
 
-            sprites.drawFromCenter(this.textures["btn_up"], viewport, 30, 30, 0, -100, 
+            this.testBtnAnim.draw(sprites);
+            
+            sprites.drawFromCenter(this.textures["player_character"], 150, 150);
+
+            sprites.drawFromCenter(this.textures["btn_up"], 30, 30, 0, -100, 
                 getStateColor(InputState.Move.UP));
-            sprites.drawFromCenter(this.textures["btn_down"], viewport, 30, 30, 0, 100,
+            sprites.drawFromCenter(this.textures["btn_down"], 30, 30, 0, 100,
                 getStateColor(InputState.Move.DOWN));
 
-            sprites.drawFromCenter(this.textures["btn_left"], viewport, 30, 30, -100, 0,
+            sprites.drawFromCenter(this.textures["btn_left"], 30, 30, -100, 0,
                 getStateColor(InputState.Move.LEFT));
-            sprites.drawFromCenter(this.textures["btn_right"], viewport, 30, 30, 100, 0,
+            sprites.drawFromCenter(this.textures["btn_right"], 30, 30, 100, 0,
                 getStateColor(InputState.Move.RIGHT));
 
             int beats = this.song.timeRunningInBeats;
@@ -236,22 +245,20 @@ namespace Omnom_III_Game {
                 sprites.fillWithColor(Color.White, (1f - positionInBeat) * .075f);
             }
 
-            drawDebugSpectrum(sprites, device, viewport);
+            drawDebugSpectrum(sprites, device);
         }
 
         private void drawDebugSpectrum(
             SpriteBatchWrapper sprites,
-            GraphicsDevice device, 
-            Rectangle viewport) {
+            GraphicsDevice device) {
 
-            drawSpectrum(sprites, device, viewport, this.song.spectrum.left, true, -225);
-            drawSpectrum(sprites, device, viewport, this.song.spectrum.right, false, 225);
+            drawSpectrum(sprites, device, this.song.spectrum.left, true, -225);
+            drawSpectrum(sprites, device, this.song.spectrum.right, false, 225);
         }
 
         private void drawSpectrum(
             SpriteBatchWrapper sprites, 
             GraphicsDevice device, 
-            Rectangle viewport, 
             Song.SpectralData spectrum,
             bool flipDirection,
             int xOffset) {
@@ -279,11 +286,11 @@ namespace Omnom_III_Game {
 
                 for (int j = 0; j < spectralScale; j++) {
                     if (j <= scaledVolume) {
-                        drawScaleDot(sprites, viewport,
+                        drawScaleDot(sprites,
                             i % 10 == 0 ? boxTexRed2 : boxTexRed,
                             i, startOffset, j, Color.White);
                     } else if (j <= maxScaledSpectrum[i]) {
-                        drawScaleDot(sprites, viewport,
+                        drawScaleDot(sprites,
                             i % 10 == 0 ? boxTexGrey2 : boxTexGrey,
                             i, startOffset, j, Color.White);
 
@@ -294,7 +301,6 @@ namespace Omnom_III_Game {
 
         private static void drawScaleDot(
             SpriteBatchWrapper sprites, 
-            Rectangle viewport, 
             Texture2D boxTex, 
             int i,
             int startOffset, 
@@ -303,7 +309,6 @@ namespace Omnom_III_Game {
 
             sprites.drawFromCenter(
                 boxTex,
-                viewport,
                 5, 5,
                 startOffset + 7 * i,
                 100 - j * 7,
