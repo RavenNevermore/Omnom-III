@@ -179,7 +179,7 @@ namespace Omnom_III_Game {
 
         public float positionInBeat {
             get { 
-                float beatMs = this.timeRunningInMs - (this.timeRunningInBeats * this.beatTimeInMs);
+                float beatMs = this.timeRunningInMs - ((this.timeRunningInBeats - 1) * this.beatTimeInMs);
                 return beatMs / this.beatTimeInMs;
             }
             set { }
