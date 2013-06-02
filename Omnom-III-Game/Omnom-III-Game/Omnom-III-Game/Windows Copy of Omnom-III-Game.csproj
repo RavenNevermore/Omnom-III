@@ -73,6 +73,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="DanceScene.cs" />
     <Compile Include="DanceSequence.cs" />
+    <Compile Include="dance\DanceProtocol.cs" />
     <Compile Include="dance\DanceSceneAnimationBundle.cs" />
     <Compile Include="exceptions\SoundSystemException.cs" />
     <Compile Include="fmod\fmod.cs" />
