@@ -86,6 +86,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Song.cs" />
+    <Compile Include="util\CommitingReader.cs" />
+    <Compile Include="util\ContentScript.cs" />
     <Compile Include="util\ContentUtil.cs" />
     <Compile Include="util\DrawingUtil.cs" />
     <Compile Include="util\SpriteBatchWrapper.cs" />

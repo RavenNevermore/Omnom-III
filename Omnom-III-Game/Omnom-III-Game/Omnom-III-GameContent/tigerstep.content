@@ -1,0 +1,33 @@
+# The Tigerstep
+
+song: eyeofthetiger
+tempo: 109
+startshift: -1.5
+
+sequences:
+     1> 1/4  left, right, left, right
+
+     3> 1/4  left, right, left, right
+
+     5> 1/2    up, 1/4 triplet(left, right, up),
+        1/2 break, 1/4 triplet(left, right, up),
+        1/2 break, 1/4 triplet(left, right, down),
+        1/1  down
+
+    13> 1/4    up, down, triplet(left, right, 1/8 down, up),
+        1/2 break, 1/4 triplet(left, right, 1/8 down, up),
+        1/2 break, 1/4 triplet(left, right, down),
+        1/1  down
+
+    21> 1/4 left, right, left, right, left, right, left, 1/8 down, right
+
+    25> 1/4 up, down, up, down, up, down, left, 1/8 right, down
+
+    29> 1/4 left, right, left, right, left, right, left, 1/8 down, right
+
+    33> 1/4 up, down, up, down, up, down, left, 1/8 right, down
+
+    37> 1/4 left, right, up, down
+
+    39> up, down, left, right
+

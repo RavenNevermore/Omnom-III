@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Omnom_III_Game.util;
 
 namespace Omnom_III_Game.dance {
     class DanceProtocol {
@@ -54,12 +55,21 @@ namespace Omnom_III_Game.dance {
 
         public static DanceProtocol EyeOfTheTiger(FMOD.System soundsystem) {
             DanceProtocol protocol = new DanceProtocol();
+
+            ContentScript script = ContentScript.FromFile("tigerstep");
+
+
             //this.song = new Song("MeasureTest", this.soundsystem, 60);//122.8f);
             //this.song = new Song("eattherich", this.soundsystem, 122.8f);
             //this.song = new Song("eyeofthetiger", this.soundsystem, 109f);
-            //this.song.timeShift = this.song.beatTimeInMs * -1.5f;
-            protocol.song = new Song("eyeofthetiger", soundsystem, 109f);
-            protocol.song.timeShift = protocol.song.beatTimeInMs * -1.5f;
+            
+            //protocol.song = new Song("eyeofthetiger", soundsystem, 109f);
+            protocol.song = new Song(script["song"][0], soundsystem, script.asFloat["tempo"][0]);
+
+            //protocol.song.timeShift = protocol.song.beatTimeInMs * -1.5f;
+            if (null != script["startshift"])
+                protocol.song.timeShift = protocol.song.beatTimeInMs * script.asFloat["startshift"][0];
+
             protocol.sequences = new DanceSequence[]{
                 new DanceSequence(protocol.song, 1,
                     new DanceSequence.Input(InputState.Move.LEFT, Song.MusicTime.QUARTER),
