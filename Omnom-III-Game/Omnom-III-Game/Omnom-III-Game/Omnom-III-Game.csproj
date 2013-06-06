@@ -114,6 +114,7 @@
     <Compile Include="util\ContentUtil.cs" />
     <Compile Include="util\DrawingUtil.cs" />
     <Compile Include="util\CommitingReader.cs" />
+    <Compile Include="util\ParserUtil.cs" />
     <Compile Include="util\SpriteBatchWrapper.cs" />
   </ItemGroup>
   <ItemGroup>

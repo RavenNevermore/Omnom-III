@@ -137,8 +137,9 @@ namespace Omnom_III_Game.util {
             get {
                 
                 return new TypedAccessor<float>(this,
-                    x => { return float.Parse(x, 
-                        System.Globalization.CultureInfo.InvariantCulture); },
+                    //x => { return float.Parse(x, 
+                    //    System.Globalization.CultureInfo.InvariantCulture); },
+                    x => {return ParserUtil.toFloat(x);},
                     x => {return "" + x;});
             }
         }
@@ -240,7 +241,6 @@ namespace Omnom_III_Game.util {
                     break;
             String title = line.Substring(startIndex).Trim();
             return "".Equals(title) ? null : title;
-        }
-        
+        }        
     }
 }

@@ -36,6 +36,33 @@ namespace Omnom_III_Game {
             return 0;
         }
 
+        public static MusicTime FractionsInMusicTime(float fraction, bool dotted) {
+            if (dotted) {
+                fraction += fraction / 2;
+            }
+
+            if (1.0f == fraction)
+                return MusicTime.FULL;
+            else if (.75f == fraction)
+                return MusicTime.HALF_DOTTED;
+            else if (.5f == fraction)
+                return MusicTime.HALF;
+            else if (.375f == fraction)
+                return MusicTime.QUARTER_DOTTED;
+            else if (.25f == fraction)
+                return MusicTime.QUARTER;
+            else if (.1875f == fraction)
+                return MusicTime.EIGTH_DOTTED;
+            else if (.125f == fraction)
+                return MusicTime.EIGTH;
+            else if (.09375f == fraction)
+                return MusicTime.SIXTEENTH_DOTTED;
+            else if (.0625f == fraction)
+                return MusicTime.SIXTEENTH;
+
+            throw new ArgumentOutOfRangeException("Fraction is not a valid musictime fraction.");
+        }
+
         public class Spectrum {
             public static int  DEFAULT_SAMPLESIZE = 64;
 

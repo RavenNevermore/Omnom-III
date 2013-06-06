@@ -90,6 +90,7 @@
     <Compile Include="util\ContentScript.cs" />
     <Compile Include="util\ContentUtil.cs" />
     <Compile Include="util\DrawingUtil.cs" />
+    <Compile Include="util\ParserUtil.cs" />
     <Compile Include="util\SpriteBatchWrapper.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Omnom_III_Game.util;
 
 namespace Omnom_III_Game {
     public class DanceSequence {
@@ -33,17 +34,39 @@ namespace Omnom_III_Game {
         public Input[] sequence;
         private int positionInSequence;
         public long endPosition;
+        private Song song;
 
         public DanceSequence(Song song, int startMeasure, params Input[] sequence) {
             this.startPosition = (long) (song.measureTimeInMs * (startMeasure - 1));
             this.positionInSequence = 0;
+            this.song = song;
 
             this.endPosition = this.startPosition;
 
+            this.addInputs(sequence);
+            /*
             this.sequence = sequence;
             long inputPos = this.startPosition;
             foreach (Input input in this.sequence){
                 input.calcLength(song);
+                input.startPositionInSong = inputPos;
+
+                this.endPosition += input.length;
+                inputPos += input.length;
+            }*/
+        }
+
+        public void addInputs(params Input[] sequence) {
+            this.sequence = ParserUtil.addArrays(this.sequence, sequence);
+
+            this.recalculatePositions();
+        }
+
+        private void recalculatePositions() {
+            long inputPos = this.startPosition;
+            this.endPosition = this.startPosition;
+            foreach (Input input in this.sequence) {
+                input.calcLength(this.song);
                 input.startPositionInSong = inputPos;
 
                 this.endPosition += input.length;
