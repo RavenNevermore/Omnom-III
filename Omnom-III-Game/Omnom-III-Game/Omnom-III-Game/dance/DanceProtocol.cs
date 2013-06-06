@@ -113,9 +113,5 @@ namespace Omnom_III_Game.dance {
             }
         }
 
-        public static DanceProtocol EyeOfTheTiger(FMOD.System soundsystem) {
-            DanceProtocol protocol = new DanceProtocol("tigerstep", soundsystem);
-            return protocol;
-        }
     }
 }

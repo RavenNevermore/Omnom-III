@@ -13,8 +13,9 @@ using Omnom_III_Game.dance;
 
 
 namespace Omnom_III_Game {
-    public class DanceScene {
+    public class DanceScene : IScene {
 
+        String scriptname;
         Dictionary<String, Texture2D> textures;
         FMOD.System soundsystem;
         DanceProtocol protocol;
@@ -25,6 +26,13 @@ namespace Omnom_III_Game {
 
         DanceSceneAnimationBundle animations;
 
+        public DanceScene(String scriptname) {
+            this.scriptname = scriptname;
+        }
+
+        public IScene nextScene() { return null; }
+
+        public bool wantsToExit() { return false; }
 
         public void initialize(ContentUtil content) {
             this.activePlayerInputs = new List<InputState.Move>();
@@ -33,7 +41,7 @@ namespace Omnom_III_Game {
             this.loadTextures(content, "player_character", "btn_up", "btn_down", "btn_left", "btn_right");
             
             this.createSoundSystem();
-            this.protocol = DanceProtocol.EyeOfTheTiger(this.soundsystem);
+            this.protocol = new DanceProtocol(this.scriptname, this.soundsystem);
             
 
             this.animations = new DanceSceneAnimationBundle(this.textures, this.protocol.song);

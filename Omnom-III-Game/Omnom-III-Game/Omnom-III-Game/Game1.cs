@@ -15,7 +15,7 @@ namespace Omnom_III_Game {
     public class Game1 : Microsoft.Xna.Framework.Game {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        DanceScene scene;
+        IScene scene;
         SpriteFont defaultFont;
 
         public Game1() {
@@ -32,7 +32,7 @@ namespace Omnom_III_Game {
         protected override void Initialize() {
             ContentUtil contentUtil = new ContentUtil(this.Content);
 
-            this.scene = new DanceScene();
+            this.scene = new DanceScene("tigerstep");
             this.scene.initialize(contentUtil);
 
             base.Initialize();
