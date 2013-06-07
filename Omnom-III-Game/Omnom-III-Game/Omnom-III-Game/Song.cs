@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FMOD;
 using Omnom_III_Game.exceptions;
+using Omnom_III_Game.util;
 
 namespace Omnom_III_Game {
     public class Song {
@@ -177,7 +178,6 @@ namespace Omnom_III_Game {
         }
 
         String filename;
-        FMOD.System soundsystem;
         FMOD.Sound content;
         FMOD.Channel channel;
         public ExtendedSpectralData spectrum;
@@ -243,11 +243,10 @@ namespace Omnom_III_Game {
         public Song() {
         }
 
-        public Song(String contentName, FMOD.System soundSystem, float bpm) {
+        public Song(String contentName, float bpm) {
             this.bpm = bpm;
-            this.soundsystem = soundSystem;
             this.filename = "Content/" + contentName + ".wma";
-            ERRCHECK(soundSystem.createSound(filename, FMOD.MODE.SOFTWARE, ref content));
+            ERRCHECK(SystemRef.soundsystem.createSound(filename, FMOD.MODE.SOFTWARE, ref content));
         }
 
         private void ERRCHECK(FMOD.RESULT result) {
@@ -257,13 +256,13 @@ namespace Omnom_III_Game {
         }
 
         public void play() {
-            this.soundsystem.playSound(FMOD.CHANNELINDEX.FREE, content, false, ref channel);
+            SystemRef.soundsystem.playSound(FMOD.CHANNELINDEX.FREE, content, false, ref channel);
             this.spectrum = new ExtendedSpectralData(this.channel);
             
         }
 
         public void calculateMetaInfo() {
-            this.soundsystem.update();
+            SystemRef.soundsystem.update();
             this.spectrum.update();
 
             uint position = 0;
@@ -272,6 +271,12 @@ namespace Omnom_III_Game {
             this._timeRunningInMs += (long)this.timeShift;
         }
 
-        
+
+
+        public bool stoppedPlaying() {
+            bool isPlaying = false;
+            this.channel.isPlaying(ref isPlaying);
+            return !isPlaying;
+        }
     }
 }

@@ -32,7 +32,8 @@ namespace Omnom_III_Game {
         protected override void Initialize() {
             ContentUtil contentUtil = new ContentUtil(this.Content);
 
-            this.scene = new DanceScene("tigerstep");
+            //this.scene = new DanceScene("eattherich");
+            this.scene = new SceneManager();
             this.scene.initialize(contentUtil);
 
             base.Initialize();
@@ -59,7 +60,7 @@ namespace Omnom_III_Game {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
-            this.checkForExitSignals();
+            //this.checkForExitSignals();
 
             
             GamePadDPad dpad = GamePad.GetState(PlayerIndex.One).DPad;
@@ -79,8 +80,16 @@ namespace Omnom_III_Game {
                 || buttons.B == ButtonState.Pressed
                 || Keyboard.GetState().IsKeyDown(Keys.D));
 
+            input.set(InputState.Control.EXIT, buttons.Back == ButtonState.Pressed
+                || Keyboard.GetState().IsKeyDown(Keys.Escape));
+            input.set(InputState.Control.SELECT, buttons.Start == ButtonState.Pressed
+                || Keyboard.GetState().IsKeyDown(Keys.Enter));
+
 
             this.scene.update(input);
+
+            if (this.scene.wantsToExit())
+                this.Exit();
 
             base.Update(gameTime);
         }

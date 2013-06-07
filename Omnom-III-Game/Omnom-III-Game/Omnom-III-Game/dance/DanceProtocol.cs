@@ -7,8 +7,10 @@ using System.IO;
 using Omnom_III_Game.util;
 
 namespace Omnom_III_Game.dance {
-    class DanceProtocol {
+    public class DanceProtocol {
 
+        public String title;
+        ContentScript script;
         DanceSequence[] sequences;
         int activeSequenceIndex;
         public Song song;
@@ -17,10 +19,14 @@ namespace Omnom_III_Game.dance {
             this.sequences = new DanceSequence[0];
         }
 
-        public DanceProtocol(String scriptname, FMOD.System soundsystem): this() {
+        public DanceProtocol(String scriptname): this() {
+            
+            this.script = ContentScript.FromFile(scriptname);
+            this.title = script.title;
+        }
 
-            ContentScript script = ContentScript.FromFile(scriptname);
-            this.song = new Song(script["song"][0], soundsystem, script.asFloat["tempo"][0]);
+        public void initialize() {
+            this.song = new Song(script["song"][0], script.asFloat["tempo"][0]);
 
             if (null != script["startshift"])
                 this.song.timeShift = this.song.beatTimeInMs * script.asFloat["startshift"][0];
@@ -104,6 +110,10 @@ namespace Omnom_III_Game.dance {
 
         public void startPlaying() {
             this.song.play();
+        }
+
+        public bool stoppedPlaying() {
+            return this.song.stoppedPlaying();
         }
 
         public void update() {

@@ -11,7 +11,7 @@ namespace Omnom_III_Game {
         void update(InputState input);
         void draw(SpriteBatchWrapper sprites, GraphicsDevice device);
 
-        IScene nextScene();
+        String nextScene();
         bool wantsToExit();
     }
 }

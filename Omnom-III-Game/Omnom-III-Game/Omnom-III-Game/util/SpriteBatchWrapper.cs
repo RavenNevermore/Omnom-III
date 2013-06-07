@@ -30,6 +30,13 @@ namespace Omnom_III_Game.util {
             this.wrapped.DrawString(font, msg, new Vector2(5, 5), Color.DarkGray);
         }
 
+        public void drawTextCentered(String text, int lineOffset, Color color) {
+            int x = 50;
+            int y = (this.viewport.Height / 2) + this.font.LineSpacing * lineOffset;
+
+            this.wrapped.DrawString(this.font, text, new Vector2(x, y), color);
+        }
+
         public void drawFromCenter(Texture2D texture, int width, int height) {
             
             this.drawFromCenter(texture, width, height, 0, 0, Color.White);

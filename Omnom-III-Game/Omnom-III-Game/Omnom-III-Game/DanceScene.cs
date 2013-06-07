@@ -15,12 +15,15 @@ using Omnom_III_Game.dance;
 namespace Omnom_III_Game {
     public class DanceScene : IScene {
 
+        public String title {get {return this.protocol.title;}}
         String scriptname;
         Dictionary<String, Texture2D> textures;
-        FMOD.System soundsystem;
+        //FMOD.System soundsystem;
         DanceProtocol protocol;
         List<InputState.Move> activePlayerInputs;
         DanceSequence.Input activeSequenceInput;
+
+        bool exit;
 
         PlayerProgress progress;
 
@@ -28,43 +31,30 @@ namespace Omnom_III_Game {
 
         public DanceScene(String scriptname) {
             this.scriptname = scriptname;
+            //this.createSoundSystem();
+            this.protocol = new DanceProtocol(this.scriptname);
         }
 
-        public IScene nextScene() { return null; }
+        public String nextScene() { return null; }
 
-        public bool wantsToExit() { return false; }
+        public bool wantsToExit() { return exit; }
 
         public void initialize(ContentUtil content) {
+            this.exit = false;
             this.activePlayerInputs = new List<InputState.Move>();
             this.textures = new Dictionary<String, Texture2D>();
 
             this.loadTextures(content, "player_character", "btn_up", "btn_down", "btn_left", "btn_right");
             
-            this.createSoundSystem();
-            this.protocol = new DanceProtocol(this.scriptname, this.soundsystem);
-            
+            //this.createSoundSystem();
+            //this.protocol = new DanceProtocol(this.scriptname, this.soundsystem);
+            this.protocol.initialize();
 
             this.animations = new DanceSceneAnimationBundle(this.textures, this.protocol.song);
             this.progress = new PlayerProgress();
 
-
+            
             this.protocol.startPlaying();
-        }
-
-        private void createSoundSystem() {
-            uint version = 0;
-            FMOD.RESULT result = FMOD.Factory.System_Create(ref soundsystem);
-            this.ERRCHECK(result);
-            result = soundsystem.getVersion(ref version);
-            ERRCHECK(result);
-            result = soundsystem.init(32, FMOD.INITFLAGS.NORMAL, (IntPtr)null);
-            ERRCHECK(result);
-        }
-
-        private void ERRCHECK(FMOD.RESULT result) {
-            if (result != FMOD.RESULT.OK) {
-                throw new SoundSystemException(result.ToString("X"));
-            }
         }
 
         private void loadTextures(ContentUtil content, params String[] names) {
@@ -79,6 +69,12 @@ namespace Omnom_III_Game {
 
         public void update(InputState input) {
             this.protocol.update();
+
+            if (this.protocol.stoppedPlaying() || 
+                    input.isActive(InputState.Control.EXIT)){
+                exit = true;
+                return;
+            }
 
             List<InputState.Move> activeMoves = input.activeStates;
             foreach (InputState.Move move in activeMoves) {

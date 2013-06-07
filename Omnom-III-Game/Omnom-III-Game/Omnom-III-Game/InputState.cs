@@ -7,6 +7,7 @@ namespace Omnom_III_Game {
     public class InputState {
 
         public enum Move { UP, DOWN, LEFT, RIGHT, BREAK };
+        public enum Control { EXIT, SELECT };
 
         public static Move moveFromString(String input) {
             input = input.Trim().ToUpper();
@@ -25,9 +26,11 @@ namespace Omnom_III_Game {
         }
 
         private Dictionary<Move, Boolean> moveStates;
+        private Dictionary<Control, Boolean> controlStates;
 
         public InputState() {
             this.moveStates = new Dictionary<Move, Boolean>();
+            this.controlStates = new Dictionary<Control, Boolean>();
         }
 
         public InputState(params Move[] activeInputs) {
@@ -49,9 +52,18 @@ namespace Omnom_III_Game {
             this.moveStates[move] = value;
         }
 
+        public void set(Control control, Boolean value) {
+            this.controlStates[control] = value;
+        }
+
         public Boolean isActive(Move move) {
             return this.moveStates.ContainsKey(move) &&
                 this.moveStates[move];
+        }
+
+        public Boolean isActive(Control control) {
+            return this.controlStates.ContainsKey(control) &&
+                this.controlStates[control];
         }
 
         public List<Move> activeStates { 
