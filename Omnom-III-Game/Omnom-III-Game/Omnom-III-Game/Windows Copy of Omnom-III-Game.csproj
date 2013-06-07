@@ -76,6 +76,7 @@
     <Compile Include="dance\DanceProtocol.cs" />
     <Compile Include="dance\DanceSceneAnimationBundle.cs" />
     <Compile Include="exceptions\SoundSystemException.cs" />
+    <Compile Include="ExplicitInputState.cs" />
     <Compile Include="fmod\fmod.cs" />
     <Compile Include="fmod\fmod_dsp.cs" />
     <Compile Include="fmod\fmod_errors.cs" />

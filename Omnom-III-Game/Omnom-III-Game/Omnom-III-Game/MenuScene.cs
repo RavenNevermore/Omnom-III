@@ -23,6 +23,7 @@ namespace Omnom_III_Game {
         int selectedIndex;
         int exitIndex;
         bool next;
+        ExplicitInputState input;
 
         public MenuScene() {
             this.items = new List<MenuItem>();
@@ -37,27 +38,30 @@ namespace Omnom_III_Game {
 
         public void initialize(ContentUtil content) {
             this.selectedIndex = 0;
+            this.input = new ExplicitInputState();
             this.next = false;
         }
 
-        public void update(InputState input) {
-            if (input.isActive(InputState.Control.EXIT)){
+        public void update(InputState currentInput) {
+            this.input.update(currentInput);
+
+            if (this.input.isActive(InputState.Control.EXIT)){
                 this.selectedIndex = exitIndex;
                 this.next = true;
                 return;
             }
 
-            if (input.isActive(InputState.Control.SELECT)) {
+            if (this.input.isActive(InputState.Control.SELECT)) {
                 this.next = true;
                 return;
             }
 
-            if (input.isActive(InputState.Move.UP)){
+            if (this.input.isActive(InputState.Move.UP)) {
                 this.selectedIndex--;
                 if (this.selectedIndex < 0) {
                     this.selectedIndex = this.items.Count - 1;
                 }
-            } else if (input.isActive(InputState.Move.DOWN)) {
+            } else if (this.input.isActive(InputState.Move.DOWN)) {
                 this.selectedIndex++;
                 if (this.selectedIndex >= this.items.Count) {
                     this.selectedIndex = 0;

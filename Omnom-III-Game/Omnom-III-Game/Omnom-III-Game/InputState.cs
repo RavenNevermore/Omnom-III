@@ -25,8 +25,8 @@ namespace Omnom_III_Game {
             throw new ArgumentOutOfRangeException("No move defined for "+input);
         }
 
-        private Dictionary<Move, Boolean> moveStates;
-        private Dictionary<Control, Boolean> controlStates;
+        internal Dictionary<Move, Boolean> moveStates;
+        internal Dictionary<Control, Boolean> controlStates;
 
         public InputState() {
             this.moveStates = new Dictionary<Move, Boolean>();
@@ -56,12 +56,12 @@ namespace Omnom_III_Game {
             this.controlStates[control] = value;
         }
 
-        public Boolean isActive(Move move) {
+        public virtual Boolean isActive(Move move) {
             return this.moveStates.ContainsKey(move) &&
                 this.moveStates[move];
         }
 
-        public Boolean isActive(Control control) {
+        public virtual Boolean isActive(Control control) {
             return this.controlStates.ContainsKey(control) &&
                 this.controlStates[control];
         }
