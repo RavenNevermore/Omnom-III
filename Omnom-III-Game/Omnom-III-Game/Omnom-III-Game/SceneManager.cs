@@ -54,6 +54,7 @@ namespace Omnom_III_Game {
 
             if (this.activeScene.wantsToExit()) {
                 this.nextSceneName = this.activeScene.nextScene();
+                this.activeScene.cleanup();
                 if (null == this.nextSceneName)
                     this.nextSceneName = defaultScene;
 
@@ -77,6 +78,12 @@ namespace Omnom_III_Game {
 
         public bool wantsToExit() {
             return this.exit;
+        }
+
+        public void cleanup() {
+            foreach (KeyValuePair<String, IScene> scene in this.scenes) {
+                scene.Value.cleanup();
+            }
         }
     }
 }

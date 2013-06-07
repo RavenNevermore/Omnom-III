@@ -278,5 +278,11 @@ namespace Omnom_III_Game {
             this.channel.isPlaying(ref isPlaying);
             return !isPlaying;
         }
+
+        internal void stop() {
+            if (!this.stoppedPlaying()) {
+                this.channel.stop();
+            }
+        }
     }
 }

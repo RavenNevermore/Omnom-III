@@ -80,7 +80,8 @@ namespace Omnom_III_Game {
 
         public bool Equals(InputState other) {
             return null != other
-                && other.moveStates.Equals(this.moveStates);
+                && other.moveStates.Equals(this.moveStates)
+                && other.controlStates.Equals(this.controlStates);
         }
     }
 }

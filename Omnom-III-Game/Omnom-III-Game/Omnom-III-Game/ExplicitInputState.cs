@@ -19,7 +19,7 @@ namespace Omnom_III_Game {
             this.controlStates = input.controlStates;
         }
 
-        public virtual Boolean isActive(Move move) {
+        public override Boolean isActive(Move move) {
             Boolean current = base.isActive(move);
             Boolean last = this.lastMoveState.ContainsKey(move)
                 && this.lastMoveState[move];
@@ -30,7 +30,7 @@ namespace Omnom_III_Game {
             return current && !last;
         }
 
-        public virtual Boolean isActive(Control control) {
+        public override Boolean isActive(Control control) {
             Boolean current = base.isActive(control);
             Boolean last = this.lastControlState.ContainsKey(control)
                 && this.lastControlState[control];

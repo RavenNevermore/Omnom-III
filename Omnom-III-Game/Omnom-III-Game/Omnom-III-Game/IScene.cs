@@ -10,6 +10,7 @@ namespace Omnom_III_Game {
         void initialize(ContentUtil content);
         void update(InputState input);
         void draw(SpriteBatchWrapper sprites, GraphicsDevice device);
+        void cleanup();
 
         String nextScene();
         bool wantsToExit();

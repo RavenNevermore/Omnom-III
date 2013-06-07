@@ -122,6 +122,11 @@ namespace Omnom_III_Game {
             drawDebugSpectrum(sprites, device);
         }
 
+
+        public void cleanup() {
+            this.protocol.stop();
+        }
+        
         private void drawDebugSpectrum(
             SpriteBatchWrapper sprites,
             GraphicsDevice device) {

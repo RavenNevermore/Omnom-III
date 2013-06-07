@@ -24,6 +24,7 @@ namespace Omnom_III_Game {
         int exitIndex;
         bool next;
         ExplicitInputState input;
+        bool firstUpdate;
 
         public MenuScene() {
             this.items = new List<MenuItem>();
@@ -40,10 +41,18 @@ namespace Omnom_III_Game {
             this.selectedIndex = 0;
             this.input = new ExplicitInputState();
             this.next = false;
+            this.firstUpdate = true;
         }
 
         public void update(InputState currentInput) {
             this.input.update(currentInput);
+
+            // We ignore the first update after initializing the scene,
+            // to prevent older button presses carrying on.
+            if (this.firstUpdate) {
+                this.firstUpdate = false;
+                return;
+            }
 
             if (this.input.isActive(InputState.Control.EXIT)){
                 this.selectedIndex = exitIndex;
@@ -87,5 +96,7 @@ namespace Omnom_III_Game {
         public bool wantsToExit() {
             return this.next;
         }
+
+        public void cleanup() { }
     }
 }

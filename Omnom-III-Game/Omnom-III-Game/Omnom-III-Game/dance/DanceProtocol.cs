@@ -123,5 +123,9 @@ namespace Omnom_III_Game.dance {
             }
         }
 
+
+        internal void stop() {
+            this.song.stop();
+        }
     }
 }
