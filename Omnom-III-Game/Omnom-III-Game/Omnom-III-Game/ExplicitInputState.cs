@@ -6,39 +6,38 @@ using System.Text;
 namespace Omnom_III_Game {
     class ExplicitInputState : InputState {
 
-        Dictionary<Move, Boolean> lastMoveState;
-        Dictionary<Control, Boolean> lastControlState;
+        Dictionary<object, Boolean> lastStates;
 
         public ExplicitInputState() : base() {
-            this.lastMoveState = new Dictionary<Move,bool>();
-            this.lastControlState = new Dictionary<Control, bool>();
+            this.lastStates = new Dictionary<object, bool>();
         }
 
         public void update(InputState input) {
+            foreach (KeyValuePair<Move, Boolean> state in this.moveStates) {
+                this.lastStates[state.Key] = state.Value;
+            }
+            foreach (KeyValuePair<Control, Boolean> state in this.controlStates) {
+                this.lastStates[state.Key] = state.Value;
+            }
+
             this.moveStates = input.moveStates;
             this.controlStates = input.controlStates;
         }
 
         public override Boolean isActive(Move move) {
-            Boolean current = base.isActive(move);
-            Boolean last = this.lastMoveState.ContainsKey(move)
-                && this.lastMoveState[move];
-
-            if (current != last)
-                this.lastMoveState[move] = current;
-
-            return current && !last;
+            return this.isActive(move, base.isActive(move));
         }
 
         public override Boolean isActive(Control control) {
-            Boolean current = base.isActive(control);
-            Boolean last = this.lastControlState.ContainsKey(control)
-                && this.lastControlState[control];
+            return this.isActive(control, base.isActive(control));
+        }
 
-            if (current != last)
-                this.lastControlState[control] = current;
+        private Boolean isActive(object key, Boolean current){
+            Boolean last = this.lastStates.ContainsKey(key) && this.lastStates[key];
 
-            return current && !last;
+            this.lastStates[key] = current;
+
+            return !last && current;
         }
 
     }

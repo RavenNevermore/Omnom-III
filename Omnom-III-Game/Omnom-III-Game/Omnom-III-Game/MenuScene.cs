@@ -49,6 +49,7 @@ namespace Omnom_III_Game {
 
             // We ignore the first update after initializing the scene,
             // to prevent older button presses carrying on.
+            
             if (this.firstUpdate) {
                 this.firstUpdate = false;
                 return;
