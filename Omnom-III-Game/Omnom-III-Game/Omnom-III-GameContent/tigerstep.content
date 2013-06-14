@@ -1,6 +1,7 @@
 # The Tigerstep
 
 song: eyeofthetiger
+enemy: enemy_tbone
 tempo: 109
 startshift: -1.5
 

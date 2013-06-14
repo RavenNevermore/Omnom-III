@@ -50,6 +50,8 @@ namespace Omnom_III_Game {
             //this.protocol = new DanceProtocol(this.scriptname, this.soundsystem);
             this.protocol.initialize();
 
+            this.loadTextures(content, this.protocol.enemyTexture);
+
             this.animations = new DanceSceneAnimationBundle(this.textures, this.protocol.song);
             this.progress = new PlayerProgress();
 
@@ -68,6 +70,9 @@ namespace Omnom_III_Game {
         }
 
         public void update(InputState input) {
+            if (this.exit)
+                return;
+
             this.protocol.update();
 
             if (this.protocol.stoppedPlaying() || 
@@ -99,8 +104,12 @@ namespace Omnom_III_Game {
         }
 
         public void draw(SpriteBatchWrapper sprites, GraphicsDevice device) {
+            if (this.exit)
+                return;
 
-            sprites.drawFromCenter(this.textures["player_character"], 150, 150);
+            String characterTex = this.protocol.isEnemyActive ? 
+                this.protocol.enemyTexture : "player_character";
+            sprites.drawFromCenter(this.textures[characterTex], 150, 150);
             
             this.animations.draw(sprites);
             int beats = this.protocol.song.timeRunningInBeats;
@@ -109,8 +118,10 @@ namespace Omnom_III_Game {
             DanceSequence seq = this.protocol.activeSequence;
             
             sprites.drawDebugText("Playback:", this.protocol.timeRunning,
-                "|", beats, "(", this.protocol.song.timeRunningInMeasures, this.protocol.song.positionInMeasure, ")\n\rScore:", this.progress.score,
-                "\n\rSequences:", this.protocol.numberOfSequences, null == seq ? -1 : seq.startPosition, null == seq ? -1 : seq.endPosition);
+                "|", beats, "(", this.protocol.song.timeRunningInMeasures, this.protocol.song.positionInMeasure, 
+                ")\n\rScore:", this.progress.score, "  Lives: ", this.progress.lifes,
+                "\n\rSequences:", this.protocol.numberOfSequences, null == seq ? -1 : seq.startPosition, null == seq ? -1 : seq.endPosition,
+                "\n\rPos in Active Sequence:", this.protocol.activeSequencePlayPosition);
 
             
             if (0 == (beats - 1) % 4) {

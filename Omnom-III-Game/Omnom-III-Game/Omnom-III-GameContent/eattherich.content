@@ -1,6 +1,7 @@
 # Eating The Rich
 
 song: eattherich
+enemy: enemy_tbone
 tempo: 122.8
 startshift: -.75
 

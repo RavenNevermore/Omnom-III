@@ -56,6 +56,14 @@ namespace Omnom_III_Game {
             }*/
         }
 
+        public float playPosition {
+            get {
+                float pos = (float) (this.song.timeRunningInMs - this.startPosition);
+                float length = (float) (this.endPosition - this.startPosition);
+                return pos / length;
+            }
+        }
+
         public void addInputs(params Input[] sequence) {
             this.sequence = ParserUtil.addArrays(this.sequence, sequence);
 
@@ -74,8 +82,10 @@ namespace Omnom_III_Game {
             }
         }
 
-        public bool isGone(Song song) {
-            return song.timeRunningInMs > this.endPosition;
+        public bool isGone {
+            get {
+                return this.song.timeRunningInMs > this.endPosition;
+            }
         }
 
         public Input nextInput(Song song) {

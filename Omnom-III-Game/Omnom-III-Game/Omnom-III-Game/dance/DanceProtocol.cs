@@ -10,6 +10,8 @@ namespace Omnom_III_Game.dance {
     public class DanceProtocol {
 
         public String title;
+        public String enemyTexture;
+        private String scriptname;
         ContentScript script;
         DanceSequence[] sequences;
         int activeSequenceIndex;
@@ -20,12 +22,16 @@ namespace Omnom_III_Game.dance {
         }
 
         public DanceProtocol(String scriptname): this() {
-            
+            this.scriptname = scriptname;
             this.script = ContentScript.FromFile(scriptname);
             this.title = script.title;
         }
 
         public void initialize() {
+            this.script = ContentScript.FromFile(scriptname);
+            this.title = script.title;
+            this.enemyTexture = script["enemy"][0];
+
             this.song = new Song(script["song"][0], script.asFloat["tempo"][0]);
 
             if (null != script["startshift"])
@@ -82,6 +88,18 @@ namespace Omnom_III_Game.dance {
             }
         }
 
+        public float activeSequencePlayPosition {
+            get {
+                return null == this.activeSequence ? -1 : this.activeSequence.playPosition;
+            }
+        }
+
+        public bool isEnemyActive {
+            get {
+                return null != this.activeSequence && 0 < this.activeSequencePlayPosition;
+            }
+        }
+
         public void addSequence(DanceSequence sequence) {
             List<DanceSequence> sequenceList = this.sequences.ToList();
             sequenceList.Add(sequence);
@@ -118,7 +136,7 @@ namespace Omnom_III_Game.dance {
 
         public void update() {
             this.song.calculateMetaInfo();
-            if (null != this.activeSequence && this.activeSequence.isGone(this.song)) {
+            if (null != this.activeSequence && this.activeSequence.isGone) {
                 this.activeSequenceIndex++;
             }
         }
