@@ -88,6 +88,10 @@ namespace Omnom_III_Game.dance {
             }
         }
 
+        public DanceSequence.Input nextSequenceInput() {
+            return this.activeSequence.nextInput();
+        }
+
         public float activeSequencePlayPosition {
             get {
                 return null == this.activeSequence ? -1 : this.activeSequence.playPosition;

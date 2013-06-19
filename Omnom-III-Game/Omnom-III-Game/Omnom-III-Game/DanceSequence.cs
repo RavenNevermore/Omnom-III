@@ -88,15 +88,15 @@ namespace Omnom_III_Game {
             }
         }
 
-        public Input nextInput(Song song) {
-            if (song.timeRunningInMs < this.startPosition
-                || song.timeRunningInMs > this.endPosition)
+        public Input nextInput() {
+            if (this.song.timeRunningInMs < this.startPosition
+                || this.song.timeRunningInMs > this.endPosition)
                 return null;
 
             for (int i = 0; i < this.sequence.Length; i++) {
                 Input current = this.sequence[i];
-                if (current.startPositionInSong <= song.timeRunningInMs
-                    && current.startPositionInSong + current.length >= song.timeRunningInMs) {
+                if (current.startPositionInSong <= this.song.timeRunningInMs
+                    && current.startPositionInSong + current.length >= this.song.timeRunningInMs) {
                         return current;
                 }
             }

@@ -70,37 +70,52 @@ namespace Omnom_III_Game {
         }
 
         public void update(InputState input) {
-            if (this.exit)
-                return;
-
             this.protocol.update();
-
-            if (this.protocol.stoppedPlaying() || 
-                    input.isActive(InputState.Control.EXIT)){
-                exit = true;
+            if (this.hasExitState(input))
                 return;
-            }
 
-            List<InputState.Move> activeMoves = input.activeStates;
-            foreach (InputState.Move move in activeMoves) {
-                if (!this.activePlayerInputs.Contains(move)) {
-                    this.animations.startPlayerAnimation(move, this.protocol.timeRunning);
-                }
-            }
-
-            if (null != this.protocol.activeSequence) {
-                DanceSequence.Input nextInput = this.protocol.activeSequence.nextInput(this.protocol.song);
-                if (null != nextInput && !nextInput.Equals(this.activeSequenceInput)){
+            if (this.protocol.isEnemyActive) {
+                DanceSequence.Input nextInput = this.protocol.nextSequenceInput();
+                if (null != nextInput && !nextInput.Equals(this.activeSequenceInput)) {
                     this.animations.startOpponentAnimation(
                         nextInput.handicap,
                         this.protocol.timeRunning);
                 }
                 this.activeSequenceInput = nextInput;
             } else {
-                this.activeSequenceInput = null;
+                //1. check for missed beats.
+                
+
+                List<InputState.Move> activeMoves = input.activeStates;
+                foreach (InputState.Move move in activeMoves) {
+                    //2. get closest beat
+                    //2.1 check if beat matches move
+                    //2.2 if so, calculate accuracy
+                    //2.3 else treat as missed beat.
+
+                    if (!this.activePlayerInputs.Contains(move)) {
+                        long t = this.protocol.timeRunning;
+                        this.animations.startPlayerAnimation(move, t);
+
+                    }
+                }
             }
 
             this.animations.update(this.protocol.timeRunning);
+        }
+
+        private bool hasExitState(InputState input) {
+            if (this.exit) {
+                return true;
+            }
+
+            if (this.protocol.stoppedPlaying() ||
+                    input.isActive(InputState.Control.EXIT)) {
+                exit = true;
+                return true;
+            }
+
+            return false;
         }
 
         public void draw(SpriteBatchWrapper sprites, GraphicsDevice device) {
