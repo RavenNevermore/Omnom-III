@@ -83,13 +83,19 @@ namespace Omnom_III_Game {
                 }
                 this.activeSequenceInput = nextInput;
             }
-                this.progress.update(time, this.protocol.lastSequence);
-            
-                if (this.progress.activeMoveIsMissed()) {
-                    this.animations.startFailAnimation(
-                        this.progress.getActiveHandicap(), time);
-                    this.progress.cleanup(time);
+            if (this.progress.update(time, this.protocol.lastSequence, input.activeStates)) {
+                PlayerProgress.Rating rating = this.progress.getActiveMoveRating();
+                InputState.Move handicap = this.progress.getActiveHandicap();
+
+                if (PlayerProgress.Rating.MISSED == rating) {
+                    this.animations.startFailAnimation(handicap, time);
+                } else if (PlayerProgress.Rating.NONE != rating) {
+                    this.animations.startPlayerAnimation(handicap, time);
                 }
+                
+            }
+            this.progress.cleanup(time);
+                
 
                 // ==> calculate animations
 

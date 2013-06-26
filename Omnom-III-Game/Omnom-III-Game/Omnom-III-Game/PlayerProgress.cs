@@ -11,7 +11,6 @@ namespace Omnom_III_Game {
 
         public class PlayerMove {
             public DanceSequence.BasicInput script;
-            public DanceSequence.BasicInput move;
             public Rating rating = Rating.NONE;
 
             internal bool hasEnded(long positionInSong) {
@@ -70,20 +69,34 @@ namespace Omnom_III_Game {
             }
         }
 
-        public void update(long positionInSong, DanceSequence activeSequence) {
+        /**
+         *  returns whether this update changed ratings or the move
+         */
+        public bool update(long positionInSong, DanceSequence activeSequence,
+                List<InputState.Move> activeMoves) {
+
+            bool hasNextMove = false;
+
             if (null == activeSequence)
-                return;
+                return false;
             if (null == this.activeMove) {
                 this.activateNextMove(activeSequence, positionInSong);
+                hasNextMove = true;
             }
             if (null != this.activeMove && !this.activeMove.isCounted()) {
                 if (this.activeMove.hasEnded(positionInSong)) {
                     this.activeMove.rating = Rating.MISSED;
                     this.lifes--;
+                    return true;
                 } else {
-
+                    if (activeMoves.Contains(this.activeMove.script.handicap)){
+                        this.activeMove.rating = Rating.GOOD;
+                        return true;
+                    }
                 }
             }
+
+            return hasNextMove;
         }
 
         public bool activeMoveIsMissed() {
@@ -103,6 +116,12 @@ namespace Omnom_III_Game {
             }
         }
 
-        
+
+
+        public Rating getActiveMoveRating() {
+            if (null == this.activeMove)
+                return Rating.NONE;
+            return this.activeMove.rating;
+        }
     }
 }
