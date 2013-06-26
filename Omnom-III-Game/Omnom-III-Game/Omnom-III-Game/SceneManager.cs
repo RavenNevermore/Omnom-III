@@ -31,6 +31,7 @@ namespace Omnom_III_Game {
             this.scenes["menu"] = menu;
             this.addDanceScene("tigerstep", menu);
             this.addDanceScene("eattherich", menu);
+            this.addDanceScene("level_steaky", menu);
             menu.add(new MenuScene.MenuItem("exit", "Quit Game"));
         }
 

@@ -44,7 +44,7 @@ namespace Omnom_III_Game {
             this.activePlayerInputs = new List<InputState.Move>();
             this.textures = new Dictionary<String, Texture2D>();
 
-            this.loadTextures(content, "player_character", "btn_up", "btn_down", "btn_left", "btn_right");
+            this.loadTextures(content, "player_character", "btn_up", "btn_down", "btn_left", "btn_right", "btn_fail");
             
             //this.createSoundSystem();
             //this.protocol = new DanceProtocol(this.scriptname, this.soundsystem);
@@ -73,19 +73,32 @@ namespace Omnom_III_Game {
             this.protocol.update();
             if (this.hasExitState(input))
                 return;
+            long time = this.protocol.timeRunning;
 
             if (this.protocol.isEnemyActive) {
                 DanceSequence.Input nextInput = this.protocol.nextSequenceInput();
                 if (null != nextInput && !nextInput.Equals(this.activeSequenceInput)) {
                     this.animations.startOpponentAnimation(
-                        nextInput.handicap,
-                        this.protocol.timeRunning);
+                        nextInput.handicap, time);
                 }
                 this.activeSequenceInput = nextInput;
-            } else {
-                //1. check for missed beats.
+            }
+                this.progress.update(time, this.protocol.lastSequence);
+            
+                if (this.progress.activeMoveIsMissed()) {
+                    this.animations.startFailAnimation(
+                        this.progress.getActiveHandicap(), time);
+                    this.progress.cleanup(time);
+                }
+
+                // ==> calculate animations
+
+                
                 
 
+                //1. check for missed beats.
+                
+                /*
                 List<InputState.Move> activeMoves = input.activeStates;
                 foreach (InputState.Move move in activeMoves) {
                     //2. get closest beat
@@ -99,8 +112,10 @@ namespace Omnom_III_Game {
 
                     }
                 }
-            }
+                */
+            //}
 
+            
             this.animations.update(this.protocol.timeRunning);
         }
 
@@ -134,7 +149,7 @@ namespace Omnom_III_Game {
             
             sprites.drawDebugText("Playback:", this.protocol.timeRunning,
                 "|", beats, "(", this.protocol.song.timeRunningInMeasures, this.protocol.song.positionInMeasure, 
-                ")\n\rScore:", this.progress.score, "  Lives: ", this.progress.lifes,
+                ")\n\rScore:", this.progress.score, "  Lives: ", this.progress.lifes, "  Active Move: ", this.progress.activeMove, 
                 "\n\rSequences:", this.protocol.numberOfSequences, null == seq ? -1 : seq.startPosition, null == seq ? -1 : seq.endPosition,
                 "\n\rPos in Active Sequence:", this.protocol.activeSequencePlayPosition);
 
@@ -151,6 +166,8 @@ namespace Omnom_III_Game {
 
         public void cleanup() {
             this.protocol.stop();
+            this.protocol.reset();
+            this.progress.reset();
         }
         
         private void drawDebugSpectrum(

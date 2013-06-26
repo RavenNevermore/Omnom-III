@@ -5,12 +5,104 @@ using System.Text;
 
 namespace Omnom_III_Game {
     public class PlayerProgress {
+        public enum Rating {
+            MISSED, PERFECT, GOOD, OK, BAD, NONE
+        }
+
+        public class PlayerMove {
+            public DanceSequence.BasicInput script;
+            public DanceSequence.BasicInput move;
+            public Rating rating = Rating.NONE;
+
+            internal bool hasEnded(long positionInSong) {
+                return positionInSong >= this.script.endPositionInSong;
+            }
+
+            internal bool isCounted() {
+                return Rating.NONE != this.rating;
+            }
+
+            public override string ToString() {
+                String str = "";
+                if (null == this.script) {
+                    str += "NULL --- | ---";
+                } else {
+                    str += this.script.handicap;
+                    str += " ";
+                    str += this.script.startPositionInSong;
+                    str += " | ";
+                    str += this.script.endPositionInSong;
+                }
+                str += " (";
+                str += this.rating;
+                str += ")";
+                return str;
+            }
+        }
+
         public int score;
         public int lifes;
 
+        public PlayerMove activeMove;
+
         public PlayerProgress() {
             this.score = 0;
-            this.lifes = 5;
+            this.lifes = 10;
         }
+
+        public void reset() {
+            this.score = 0;
+            this.lifes = 10;
+            this.activeMove = null;
+        }
+
+        public void activateNextMove(DanceSequence sequence, long currentTime) {
+            long sequenceTime = currentTime - sequence.length;
+            if (sequence.isGoneAt(sequenceTime))
+                return;
+
+            this.activeMove = new PlayerMove();
+            DanceSequence.BasicInput sequenceInput = 
+                sequence.findClosestInput(sequenceTime);
+
+            if (null != sequenceInput) {
+                this.activeMove.script = sequenceInput.copyShifted(sequence.length);
+            }
+        }
+
+        public void update(long positionInSong, DanceSequence activeSequence) {
+            if (null == activeSequence)
+                return;
+            if (null == this.activeMove) {
+                this.activateNextMove(activeSequence, positionInSong);
+            }
+            if (null != this.activeMove && !this.activeMove.isCounted()) {
+                if (this.activeMove.hasEnded(positionInSong)) {
+                    this.activeMove.rating = Rating.MISSED;
+                    this.lifes--;
+                } else {
+
+                }
+            }
+        }
+
+        public bool activeMoveIsMissed() {
+            return null != this.activeMove && 
+                Rating.MISSED == this.activeMove.rating;
+        }
+
+        public InputState.Move getActiveHandicap() {
+            if (null == this.activeMove)
+                return InputState.Move.BREAK;
+            return this.activeMove.script.handicap;
+        }
+
+        public void cleanup(long positionInSong) {
+            if (null != this.activeMove && this.activeMove.hasEnded(positionInSong)) {
+                this.activeMove = null;
+            }
+        }
+
+        
     }
 }

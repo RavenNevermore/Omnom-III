@@ -284,5 +284,9 @@ namespace Omnom_III_Game {
                 this.channel.stop();
             }
         }
+
+        internal void reset() {
+            this.channel.setPosition(0, TIMEUNIT.MS);
+        }
     }
 }

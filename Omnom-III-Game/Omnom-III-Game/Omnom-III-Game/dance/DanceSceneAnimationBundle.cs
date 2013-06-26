@@ -12,27 +12,38 @@ namespace Omnom_III_Game.dance {
     class DanceSceneAnimationBundle {
         public Dictionary<InputState.Move, ButtonAnimation> opponent;
         public Dictionary<InputState.Move, ButtonAnimation> player;
+        public Dictionary<InputState.Move, ButtonAnimation> fail;
 
         public DanceSceneAnimationBundle(Dictionary<String, Texture2D> textures, Song song) {
             this.opponent = new Dictionary<InputState.Move, ButtonAnimation>();
             this.player = new Dictionary<InputState.Move, ButtonAnimation>();
+            this.fail = new Dictionary<InputState.Move, ButtonAnimation>();
 
             long length = (long)song.beatTimeInMs;
             this.setup(this.opponent, textures, Color.LightBlue, length);
             this.setup(this.player, textures, Color.Green, length);
+            this.setup(this.fail, textures, Color.Black, length, new string[]{"btn_fail"});
         }
 
         private void setup(Dictionary<InputState.Move, ButtonAnimation> animationSet, 
                 Dictionary<String, Texture2D> textures, Color color, long length) {
 
+            this.setup(animationSet, textures, color, length,
+                new string[]{"btn_up", "btn_left", "btn_right", "btn_down"});
+        }
+
+        private void setup(Dictionary<InputState.Move, ButtonAnimation> animationSet,
+                Dictionary<String, Texture2D> textures, Color color, long length,
+                string[] textureNames) {
+
             animationSet[InputState.Move.UP] = new ButtonAnimation(
-                textures["btn_up"], new Vector2(0, -100), color, length);
+                textures[textureNames[0 % textureNames.Length]], new Vector2(0, -100), color, length);
             animationSet[InputState.Move.LEFT] = new ButtonAnimation(
-                textures["btn_left"], new Vector2(-100, 0), color, length);
+                textures[textureNames[1 % textureNames.Length]], new Vector2(-100, 0), color, length);
             animationSet[InputState.Move.RIGHT] = new ButtonAnimation(
-                textures["btn_right"], new Vector2(100, 0), color, length);
+                textures[textureNames[2 % textureNames.Length]], new Vector2(100, 0), color, length);
             animationSet[InputState.Move.DOWN] = new ButtonAnimation(
-                textures["btn_down"], new Vector2(0, 100), color, length);
+                textures[textureNames[3 % textureNames.Length]], new Vector2(0, 100), color, length);
         }
 
         public void startOpponentAnimation(InputState.Move move, long startPoint) {
@@ -41,6 +52,10 @@ namespace Omnom_III_Game.dance {
 
         public void startPlayerAnimation(InputState.Move move, long startPoint) {
             this.startAnimation(this.player, move, startPoint);
+        }
+
+        public void startFailAnimation(InputState.Move move, long startPoint) {
+            this.startAnimation(this.fail, move, startPoint);
         }
 
         private void startAnimation(Dictionary<InputState.Move, ButtonAnimation> bundle,
@@ -63,6 +78,7 @@ namespace Omnom_III_Game.dance {
         private void performOnAll(func myFunc) {
             this.performOnDict(this.opponent, myFunc);
             this.performOnDict(this.player, myFunc);
+            this.performOnDict(this.fail, myFunc);
         }
 
         private void performOnDict(Dictionary<InputState.Move, ButtonAnimation> animations,

@@ -88,6 +88,14 @@ namespace Omnom_III_Game.dance {
             }
         }
 
+        public DanceSequence lastSequence {
+            get {
+                int i = this.activeSequenceIndex - 1;
+                return this.activeSequenceIndex > 0 ?
+                        this.sequences[i] : null; 
+            }
+        }
+
         public DanceSequence.Input nextSequenceInput() {
             return this.activeSequence.nextInput();
         }
@@ -128,6 +136,7 @@ namespace Omnom_III_Game.dance {
 
         public void reset() {
             this.activeSequenceIndex = 0;
+            this.song.reset();
         }
 
         public void startPlaying() {

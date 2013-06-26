@@ -108,6 +108,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="steakysong.mp3">
+      <Name>steakysong</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="btn_fail.png">
+      <Name>btn_fail</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="tigerstep.content">
       <Name>tigerstep</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -119,6 +129,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="level_steaky.content">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level_steaky</Name>
+    </None>
     <None Include="eattherich.content">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>eattherich</Name>
