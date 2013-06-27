@@ -2,6 +2,7 @@
 
 song: steakysong
 enemy: enemy_tbone
+background: bgr_steaky
 tempo: 107
 startshift: 0
 

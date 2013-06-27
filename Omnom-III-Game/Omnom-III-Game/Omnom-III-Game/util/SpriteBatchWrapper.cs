@@ -71,5 +71,12 @@ namespace Omnom_III_Game.util {
             Texture2D texture = DrawingUtil.createTexture(wrappedDevice, color);
             this.wrapped.Draw(texture, wrappedDevice.Viewport.Bounds, Color.White * alpha);
         }
+
+        internal void drawBackground(Texture2D texture) {
+            if (null == texture) {
+                texture = DrawingUtil.createTexture(wrappedDevice, Color.CornflowerBlue);
+            }
+            this.wrapped.Draw(texture, wrappedDevice.Viewport.Bounds, Color.White);
+        }
     }
 }

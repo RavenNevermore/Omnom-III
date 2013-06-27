@@ -44,13 +44,16 @@ namespace Omnom_III_Game {
             this.activePlayerInputs = new List<InputState.Move>();
             this.textures = new Dictionary<String, Texture2D>();
 
-            this.loadTextures(content, "player_character", "btn_up", "btn_down", "btn_left", "btn_right", "btn_fail");
+            this.loadTextures(content, 
+                "player_character", "btn_up", "btn_down", "btn_left", "btn_right", "btn_fail");
             
             //this.createSoundSystem();
             //this.protocol = new DanceProtocol(this.scriptname, this.soundsystem);
             this.protocol.initialize();
 
-            this.loadTextures(content, this.protocol.enemyTexture);
+            this.loadTextures(content, 
+                this.protocol.enemyTexture,
+                this.protocol.backgroundTexture);
 
             this.animations = new DanceSceneAnimationBundle(this.textures, this.protocol.song);
             this.progress = new PlayerProgress();
@@ -61,6 +64,8 @@ namespace Omnom_III_Game {
 
         private void loadTextures(ContentUtil content, params String[] names) {
             foreach (String name in names){
+                if (null == name)
+                    continue;
                 try {
                     this.textures[name] = content.load<Texture2D>(name);
                 } catch (ContentLoadException e) {
@@ -121,9 +126,14 @@ namespace Omnom_III_Game {
             if (this.exit)
                 return;
 
+            if (null != this.protocol.backgroundTexture) {
+                sprites.drawBackground(
+                    this.textures[this.protocol.backgroundTexture]);
+            }
+
             String characterTex = this.protocol.isEnemyActive ? 
                 this.protocol.enemyTexture : "player_character";
-            sprites.drawFromCenter(this.textures[characterTex], 150, 150);
+            sprites.drawFromCenter(this.textures[characterTex], 350, 350, 0, 50);
             
             this.animations.draw(sprites);
             int beats = this.protocol.song.timeRunningInBeats;

@@ -11,6 +11,7 @@ namespace Omnom_III_Game.dance {
 
         public String title;
         public String enemyTexture;
+        public String backgroundTexture;
         private String scriptname;
         ContentScript script;
         DanceSequence[] sequences;
@@ -31,6 +32,7 @@ namespace Omnom_III_Game.dance {
             this.script = ContentScript.FromFile(scriptname);
             this.title = script.title;
             this.enemyTexture = script["enemy"][0];
+            this.backgroundTexture = null == script["background"] ? null : script["background"][0];
 
             this.song = new Song(script["song"][0], script.asFloat["tempo"][0]);
 
