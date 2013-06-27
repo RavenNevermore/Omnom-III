@@ -96,6 +96,7 @@ namespace Omnom_III_Game {
                 } else {
                     if (activeMoves.Contains(this.activeMove.script.handicap)){
                         this.activeMove.rating = Rating.GOOD;
+                        this.score += 5;
                         return true;
                     }
                 }
@@ -127,6 +128,10 @@ namespace Omnom_III_Game {
             if (null == this.activeMove)
                 return Rating.NONE;
             return this.activeMove.rating;
+        }
+
+        internal bool isDead() {
+            return 0 >= this.lifes;
         }
     }
 }

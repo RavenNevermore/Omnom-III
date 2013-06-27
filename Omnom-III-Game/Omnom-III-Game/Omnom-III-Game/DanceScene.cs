@@ -95,34 +95,12 @@ namespace Omnom_III_Game {
                 
             }
             this.progress.cleanup(time);
-                
-
-                // ==> calculate animations
-
-                
-                
-
-                //1. check for missed beats.
-                
-                /*
-                List<InputState.Move> activeMoves = input.activeStates;
-                foreach (InputState.Move move in activeMoves) {
-                    //2. get closest beat
-                    //2.1 check if beat matches move
-                    //2.2 if so, calculate accuracy
-                    //2.3 else treat as missed beat.
-
-                    if (!this.activePlayerInputs.Contains(move)) {
-                        long t = this.protocol.timeRunning;
-                        this.animations.startPlayerAnimation(move, t);
-
-                    }
-                }
-                */
-            //}
-
             
             this.animations.update(this.protocol.timeRunning);
+
+            if (this.progress.isDead()) {
+                this.exit = true;
+            }
         }
 
         private bool hasExitState(InputState input) {
