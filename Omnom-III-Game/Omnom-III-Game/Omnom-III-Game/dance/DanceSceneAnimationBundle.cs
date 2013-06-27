@@ -10,6 +10,9 @@ using Omnom_III_Game.util;
 
 namespace Omnom_III_Game.dance {
     class DanceSceneAnimationBundle {
+        public static int CENTER_OFFSET = 160;
+        public static int Y_OFFSET = 50;
+
         public Dictionary<InputState.Move, ButtonAnimation> opponent;
         public Dictionary<InputState.Move, ButtonAnimation> player;
         public Dictionary<InputState.Move, ButtonAnimation> fail;
@@ -37,13 +40,13 @@ namespace Omnom_III_Game.dance {
                 string[] textureNames) {
 
             animationSet[InputState.Move.UP] = new ButtonAnimation(
-                textures[textureNames[0 % textureNames.Length]], new Vector2(0, -100), color, length);
+                textures[textureNames[0 % textureNames.Length]], new Vector2(0, -1 * CENTER_OFFSET + Y_OFFSET), color, length);
             animationSet[InputState.Move.LEFT] = new ButtonAnimation(
-                textures[textureNames[1 % textureNames.Length]], new Vector2(-100, 0), color, length);
+                textures[textureNames[1 % textureNames.Length]], new Vector2(-1 * CENTER_OFFSET, Y_OFFSET), color, length);
             animationSet[InputState.Move.RIGHT] = new ButtonAnimation(
-                textures[textureNames[2 % textureNames.Length]], new Vector2(100, 0), color, length);
+                textures[textureNames[2 % textureNames.Length]], new Vector2(CENTER_OFFSET, Y_OFFSET), color, length);
             animationSet[InputState.Move.DOWN] = new ButtonAnimation(
-                textures[textureNames[3 % textureNames.Length]], new Vector2(0, 100), color, length);
+                textures[textureNames[3 % textureNames.Length]], new Vector2(0, CENTER_OFFSET + Y_OFFSET), color, length);
         }
 
         public void startOpponentAnimation(InputState.Move move, long startPoint) {

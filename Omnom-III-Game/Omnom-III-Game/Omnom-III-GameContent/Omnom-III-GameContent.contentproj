@@ -118,6 +118,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="bgr_steaky.png">
+      <Name>bgr_steaky</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="tigerstep.content">
       <Name>tigerstep</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

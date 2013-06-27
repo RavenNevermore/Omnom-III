@@ -37,6 +37,11 @@ namespace Omnom_III_Game {
                 str += ")";
                 return str;
             }
+
+            internal bool isBreak() {
+                return null != this.script &&
+                    this.script.handicap == InputState.Move.BREAK;
+            }
         }
 
         public int score;
@@ -84,13 +89,14 @@ namespace Omnom_III_Game {
                 hasNextMove = true;
             }
             if (null != this.activeMove && !this.activeMove.isCounted()) {
-                if (this.activeMove.hasEnded(positionInSong)) {
+                if (this.activeMove.hasEnded(positionInSong) && ! this.activeMove.isBreak()) {
                     this.activeMove.rating = Rating.MISSED;
                     this.lifes--;
                     return true;
                 } else {
                     if (activeMoves.Contains(this.activeMove.script.handicap)){
                         this.activeMove.rating = Rating.GOOD;
+                        this.score += 5;
                         return true;
                     }
                 }
@@ -122,6 +128,10 @@ namespace Omnom_III_Game {
             if (null == this.activeMove)
                 return Rating.NONE;
             return this.activeMove.rating;
+        }
+
+        internal bool isDead() {
+            return 0 >= this.lifes;
         }
     }
 }
