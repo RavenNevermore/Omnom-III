@@ -80,6 +80,10 @@ namespace Omnom_III_Game {
             }*/
         }
 
+        public float getTimeDeltaInBeats(long timeDelta) {
+            return timeDelta / this.song.beatTimeInMs;
+        }
+
         public long length {
             get {
                 return this.endPosition - this.startPosition;

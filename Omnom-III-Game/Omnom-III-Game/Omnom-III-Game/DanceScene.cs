@@ -18,7 +18,6 @@ namespace Omnom_III_Game {
         public String title {get {return this.protocol.title;}}
         String scriptname;
         Dictionary<String, Texture2D> textures;
-        //FMOD.System soundsystem;
         DanceProtocol protocol;
         List<InputState.Move> activePlayerInputs;
         DanceSequence.Input activeSequenceInput;
@@ -47,8 +46,6 @@ namespace Omnom_III_Game {
             this.loadTextures(content, 
                 "player_character", "btn_up", "btn_down", "btn_left", "btn_right", "btn_fail");
             
-            //this.createSoundSystem();
-            //this.protocol = new DanceProtocol(this.scriptname, this.soundsystem);
             this.protocol.initialize();
 
             this.loadTextures(content, 

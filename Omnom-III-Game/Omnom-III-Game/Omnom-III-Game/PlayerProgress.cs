@@ -6,7 +6,7 @@ using System.Text;
 namespace Omnom_III_Game {
     public class PlayerProgress {
         public enum Rating {
-            MISSED, PERFECT, GOOD, OK, BAD, NONE
+            MISSED, PERFECT, GOOD, OK, NONE
         }
 
         public class PlayerMove {
@@ -63,7 +63,7 @@ namespace Omnom_III_Game {
         public void activateNextMove(DanceSequence sequence, long currentTime) {
             long sequenceTime = currentTime - sequence.length;
             if (sequence.isGoneAt(sequenceTime))
-                return;
+               return;
 
             this.activeMove = new PlayerMove();
             DanceSequence.BasicInput sequenceInput = 
@@ -95,8 +95,26 @@ namespace Omnom_III_Game {
                     return true;
                 } else {
                     if (activeMoves.Contains(this.activeMove.script.handicap)){
-                        this.activeMove.rating = Rating.GOOD;
-                        this.score += 5;
+                        long deltaT = positionInSong - this.activeMove.script.startPositionInSong;
+                        if (0 > deltaT)
+                            deltaT *= -1;
+
+                        float delta = activeSequence.getTimeDeltaInBeats(deltaT);
+                        if (delta < .125) {
+                            this.activeMove.rating = Rating.PERFECT;
+                            this.score += 10;
+                        } else if (delta < .25){
+                            this.activeMove.rating = Rating.GOOD;
+                            this.score += 5;
+                        } else if (delta < .375) {
+                            this.activeMove.rating = Rating.OK;
+                            this.score += 2;
+                        } else {
+                            this.activeMove.rating = Rating.MISSED;
+                        }
+
+                        
+                        
                         return true;
                     }
                 }
