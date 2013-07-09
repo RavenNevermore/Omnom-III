@@ -45,18 +45,15 @@ namespace Omnom_III_Game {
         }
 
         public int score;
-        public int lifes;
 
         public PlayerMove activeMove;
 
         public PlayerProgress() {
             this.score = 0;
-            this.lifes = 10;
         }
 
         public void reset() {
             this.score = 0;
-            this.lifes = 10;
             this.activeMove = null;
         }
 
@@ -91,7 +88,7 @@ namespace Omnom_III_Game {
             if (null != this.activeMove && !this.activeMove.isCounted()) {
                 if (this.activeMove.hasEnded(positionInSong) && ! this.activeMove.isBreak()) {
                     this.activeMove.rating = Rating.MISSED;
-                    this.lifes--;
+                    
                     return true;
                 } else {
                     if (activeMoves.Contains(this.activeMove.script.handicap)){
@@ -146,10 +143,6 @@ namespace Omnom_III_Game {
             if (null == this.activeMove)
                 return Rating.NONE;
             return this.activeMove.rating;
-        }
-
-        internal bool isDead() {
-            return 0 >= this.lifes;
         }
     }
 }

@@ -30,7 +30,6 @@ namespace Omnom_III_Game {
 
         public DanceScene(String scriptname) {
             this.scriptname = scriptname;
-            //this.createSoundSystem();
             this.protocol = new DanceProtocol(this.scriptname);
         }
 
@@ -100,9 +99,6 @@ namespace Omnom_III_Game {
             
             this.animations.update(this.protocol.timeRunning);
 
-            if (this.progress.isDead()) {
-                this.exit = true;
-            }
         }
 
         private bool hasExitState(InputState input) {
@@ -140,7 +136,7 @@ namespace Omnom_III_Game {
             
             sprites.drawDebugText("Playback:", this.protocol.timeRunning,
                 "|", beats, "(", this.protocol.song.timeRunningInMeasures, this.protocol.song.positionInMeasure, 
-                ")\n\rScore:", this.progress.score, "  Lives: ", this.progress.lifes, "  Active Move: ", this.progress.activeMove, 
+                ")\n\rScore:", this.progress.score, "  Active Move: ", this.progress.activeMove, 
                 "\n\rSequences:", this.protocol.numberOfSequences, null == seq ? -1 : seq.startPosition, null == seq ? -1 : seq.endPosition,
                 "\n\rPos in Active Sequence:", this.protocol.activeSequencePlayPosition);
 
