@@ -39,7 +39,9 @@ namespace Omnom_III_Game {
             this.sequence = new List<Input>();
         }
 
-
+        public override string ToString() {
+            return "Start: "+ this.startMeasure+" Length: "+this.length;
+        }
 
         internal void addInput(InputState.Move move, Song.MusicTime musicLength, bool isTriplet) {
             Input input = new Input();
@@ -60,6 +62,10 @@ namespace Omnom_III_Game {
             playerStart -= fuzzyness;
             playerStart += fuzzyness;
             return playerStart <= measures && measures <= playerEnd;
+        }
+
+        internal bool isEnemyActive(float measures) {
+            return this.startMeasure <= measures && measures <= this.startMeasure + this.length;
         }
     }
 }

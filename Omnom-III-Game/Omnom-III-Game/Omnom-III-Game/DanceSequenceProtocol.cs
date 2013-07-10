@@ -75,7 +75,7 @@ namespace Omnom_III_Game {
             return inputs;
         } }
 
-        internal DanceSequence atMeasure(int measure) {
+        internal DanceSequence atMeasure(float measure) {
             foreach (DanceSequence seq in this.sequences) {
                 if (measure >= seq.startMeasure
                     && measure <= seq.startMeasure + 2*seq.length) {

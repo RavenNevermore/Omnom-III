@@ -19,9 +19,11 @@ namespace Omnom_III_Game {
         ContentScript script;
         Song song;
         DanceSequenceProtocol sequences;
+        DanceSequence currentSequence;
         PlayerProgress progress;
-
-
+        
+        String enemyTexture;
+        String backgroundTexture;
         TextureContext textures;
 
 
@@ -46,13 +48,17 @@ namespace Omnom_III_Game {
         public void initialize(ContentUtil content) {
             this.exit = false;
             this.textures.clear();
+            this.currentSequence = null;
 
             script.reload();
             this.textures.loadTextures(content, 
                 "player_character", "btn_up", "btn_down", "btn_left", "btn_right", "btn_fail");
+
+            this.enemyTexture = this.script.get("enemy");
+            this.backgroundTexture = this.script.get("background");
             this.textures.loadTextures(content, 
-                this.script.get("enemy"),
-                this.script.get("background"));
+                this.enemyTexture,
+                this.backgroundTexture);
 
             this.song = new Song(this.script);
             this.sequences.initialize(this.script);
@@ -77,8 +83,8 @@ namespace Omnom_III_Game {
             
             float measures = this.song.timeRunningInMeasures;
 
-            DanceSequence currentSequence = sequences.atMeasure((int)measures);
-            if (null != currentSequence && currentSequence.playerInputAllowed(measures)) {
+            this.currentSequence = sequences.atMeasure(measures);
+            if (null != this.currentSequence && this.currentSequence.playerInputAllowed(measures)) {
                 foreach (InputState.Move move in input.activeStates) {
                     this.animations.startPlayerAnimation(move, time);
                 }
@@ -106,11 +112,22 @@ namespace Omnom_III_Game {
             if (this.exit)
                 return;
 
-            this.textures.drawAsBackground(this.script.get("background"), sprites);
+            this.textures.drawAsBackground(this.backgroundTexture, sprites);
 
-            //String characterTex = this.protocol.isEnemyActive ? 
-            //    this.protocol.enemyTexture : "player_character";
-            //sprites.drawFromCenter(this.textures[characterTex], 350, 350, 0, 50);
+            if (null != this.currentSequence) {
+                String character = null;
+                if (this.currentSequence.isEnemyActive(this.song.timeRunningInMeasures)) {
+                    character = this.enemyTexture;
+                } else {
+                    character = "player_character";
+                }
+                sprites.drawFromCenter(this.textures.getRaw(character), 350, 350, 0, 50);
+            }
+
+            sprites.drawDebugText(
+                "Measures: ", this.song.timeRunningInMeasures,
+                "Current Seq: ", this.currentSequence,
+                "\n\rScore: ", this.progress.score);
             
             this.animations.draw(sprites);
             
