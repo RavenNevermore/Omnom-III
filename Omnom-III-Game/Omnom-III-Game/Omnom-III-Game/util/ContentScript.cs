@@ -111,6 +111,7 @@ namespace Omnom_III_Game.util {
         }
 
         public String title;
+        String simpleFilename;
 
         private Dictionary<String, List<String>> content;
 
@@ -126,6 +127,13 @@ namespace Omnom_III_Game.util {
 
         private void set(String name, List<String> values) {
             this.content[name] = values;
+        }
+
+        public String get(String key) {
+            List<String> field = this[key];
+            if (null != field && field.Count > 0)
+                return field[0];
+            return null;
         }
 
         public List<String> this[String key] {
@@ -144,23 +152,27 @@ namespace Omnom_III_Game.util {
             }
         }
 
-        public static ContentScript FromFile(String simpleFilename) {
-            String filename = "Content/" + simpleFilename + ".content";
+        internal void reload() {
+            this.content.Clear();
+            if (null == this.simpleFilename)
+                return;
 
+            String filename = "Content/" + simpleFilename + ".content";
             CommitingReader reader = new CommitingReader(filename);
             Regex regexContentName = new Regex("(\\s*)(\\w+):(.*)");
+            
 
             try {
                 String line = null;
-                ContentScript script = new ContentScript();
-                
+
                 while (null != (line = reader.readIgnorigEmptys())) {
                     line = line.TrimEnd();
-                    if (null == script.title && line.Trim().StartsWith("# ")) {
-                        script.title = getTitleFromLine(line.Trim());
+                    if (null == this.title && line.Trim().StartsWith("# ")) {
+                        this.title = getTitleFromLine(line.Trim());
                         reader.commit();
                         continue;
                     } else {
+                        reader.commit();
                         Match match = regexContentName.Match(line);
                         if (match.Success) {
                             int skipInLine = match.Groups[1].Length;
@@ -169,7 +181,7 @@ namespace Omnom_III_Game.util {
                             content = content.Trim();
                             List<String> contents = new List<string>();
 
-                            reader.commit();
+                            
                             int indexDepth = -1;
                             while (null != (line = reader.readIgnorigEmptys())) {
                                 if (-1 == indexDepth) {
@@ -191,21 +203,27 @@ namespace Omnom_III_Game.util {
                                     content = inline.Trim();
                                 }
 
-                                
+
                                 reader.commit();
                             }
 
                             if (!"".Equals(content))
                                 contents.Add(content);
 
-                            script[contentname] = contents;
+                            this[contentname] = contents;
                         }
                     }
                 }
-                return script;
             } finally {
                 reader.close();
             }
+        }
+
+        public static ContentScript FromFile(String simpleFilename) {
+            ContentScript script = new ContentScript();
+            script.simpleFilename = simpleFilename;
+            script.reload();
+            return script;
         }
 
         
@@ -241,6 +259,8 @@ namespace Omnom_III_Game.util {
                     break;
             String title = line.Substring(startIndex).Trim();
             return "".Equals(title) ? null : title;
-        }        
+        }
+
+        
     }
 }

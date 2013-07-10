@@ -96,6 +96,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="DanceScene.cs" />
     <Compile Include="DanceSequence.cs" />
+    <Compile Include="DanceSequenceProtocol.cs" />
     <Compile Include="dance\ButtonAnimation.cs" />
     <Compile Include="dance\DanceProtocol.cs" />
     <Compile Include="dance\DanceSceneAnimationBundle.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="util\ParserUtil.cs" />
     <Compile Include="util\SpriteBatchWrapper.cs" />
     <Compile Include="util\SystemRef.cs" />
+    <Compile Include="util\TextureContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

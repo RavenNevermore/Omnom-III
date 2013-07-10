@@ -10,11 +10,11 @@ namespace Omnom_III_Game {
         }
 
         public class PlayerMove {
-            public DanceSequence.BasicInput script;
+            public DanceSequence.Input script;
             public Rating rating = Rating.NONE;
 
             internal bool hasEnded(long positionInSong) {
-                return positionInSong >= this.script.endPositionInSong;
+                return false;//positionInSong >= this.script.endPositionInSong;
             }
 
             internal bool isCounted() {
@@ -28,9 +28,9 @@ namespace Omnom_III_Game {
                 } else {
                     str += this.script.handicap;
                     str += " ";
-                    str += this.script.startPositionInSong;
+                    //str += this.script.startPositionInSong;
                     str += " | ";
-                    str += this.script.endPositionInSong;
+                    //str += this.script.endPositionInSong;
                 }
                 str += " (";
                 str += this.rating;
@@ -58,7 +58,7 @@ namespace Omnom_III_Game {
         }
 
         public void activateNextMove(DanceSequence sequence, long currentTime) {
-            long sequenceTime = currentTime - sequence.length;
+            /*long sequenceTime = currentTime - sequence.length;
             if (sequence.isGoneAt(sequenceTime))
                return;
 
@@ -68,7 +68,7 @@ namespace Omnom_III_Game {
 
             if (null != sequenceInput) {
                 this.activeMove.script = sequenceInput.copyShifted(sequence.length);
-            }
+            }*/
         }
 
         /**
@@ -91,7 +91,7 @@ namespace Omnom_III_Game {
                     
                     return true;
                 } else {
-                    if (activeMoves.Contains(this.activeMove.script.handicap)){
+                    if (activeMoves.Contains(this.activeMove.script.handicap)){/*
                         long deltaT = positionInSong - this.activeMove.script.startPositionInSong;
                         if (0 > deltaT)
                             deltaT *= -1;
@@ -110,7 +110,7 @@ namespace Omnom_III_Game {
                             this.activeMove.rating = Rating.MISSED;
                         }
 
-                        
+                        */
                         
                         return true;
                     }

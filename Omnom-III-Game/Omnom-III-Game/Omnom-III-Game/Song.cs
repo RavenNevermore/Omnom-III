@@ -15,6 +15,14 @@ namespace Omnom_III_Game {
             EIGTH, EIGTH_DOTTED, 
             SIXTEENTH, SIXTEENTH_DOTTED }
 
+        public static float MusicTimeInFractions(MusicTime time, Boolean asPartOfTriole) {
+            float t = Song.MusicTimeInFractions(time);
+            if (asPartOfTriole) {
+                t = 2f / 3f * t;
+            }
+            return t;
+        }
+
         public static float MusicTimeInFractions(MusicTime time) {
             if (MusicTime.FULL == time)
                 return 1.0f;
@@ -194,6 +202,8 @@ namespace Omnom_III_Game {
             }
         }
 
+        public float bpms { get { return this.beatsPerMillisecond; } }
+
         public float beatTimeInMs {
             get { return 1 / this.beatsPerMillisecond; }
             set { }
@@ -225,9 +235,9 @@ namespace Omnom_III_Game {
             }
         }
 
-        public int timeRunningInMeasures {
+        public float timeRunningInMeasures {
             get {
-                return ((this.timeRunningInBeats - 1) / 4) + 1;
+                return (float)this.timeRunningInMs * (this.beatsPerMillisecond / 4.0f);
             }
         }
 
@@ -245,8 +255,22 @@ namespace Omnom_III_Game {
 
         public Song(String contentName, float bpm) {
             this.bpm = bpm;
-            this.filename = "Content/" + contentName + ".wma";
+            this.setFilenameFromContentName(contentName);
             ERRCHECK(SystemRef.soundsystem.createSound(filename, FMOD.MODE.SOFTWARE, ref content));
+        }
+
+        public Song(ContentScript script) {
+            this.bpm = script.asFloat["tempo"][0];
+            this.setFilenameFromContentName(script["song"][0]);
+            ERRCHECK(SystemRef.soundsystem.createSound(filename, FMOD.MODE.SOFTWARE, ref content));
+
+
+            if (null != script["startshift"])
+                this.timeShift = this.beatTimeInMs * script.asFloat["startshift"][0];
+        }
+
+        private void setFilenameFromContentName(String contentName) {
+            this.filename = "Content/" + contentName + ".wma";
         }
 
         private void ERRCHECK(FMOD.RESULT result) {

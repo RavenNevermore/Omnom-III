@@ -17,7 +17,7 @@ namespace Omnom_III_Game.dance {
         public Dictionary<InputState.Move, ButtonAnimation> player;
         public Dictionary<InputState.Move, ButtonAnimation> fail;
 
-        public DanceSceneAnimationBundle(Dictionary<String, Texture2D> textures, Song song) {
+        public DanceSceneAnimationBundle(TextureContext textures, Song song) {
             this.opponent = new Dictionary<InputState.Move, ButtonAnimation>();
             this.player = new Dictionary<InputState.Move, ButtonAnimation>();
             this.fail = new Dictionary<InputState.Move, ButtonAnimation>();
@@ -29,24 +29,24 @@ namespace Omnom_III_Game.dance {
         }
 
         private void setup(Dictionary<InputState.Move, ButtonAnimation> animationSet, 
-                Dictionary<String, Texture2D> textures, Color color, long length) {
+                TextureContext textures, Color color, long length) {
 
             this.setup(animationSet, textures, color, length,
                 new string[]{"btn_up", "btn_left", "btn_right", "btn_down"});
         }
 
         private void setup(Dictionary<InputState.Move, ButtonAnimation> animationSet,
-                Dictionary<String, Texture2D> textures, Color color, long length,
+                TextureContext textures, Color color, long length,
                 string[] textureNames) {
 
             animationSet[InputState.Move.UP] = new ButtonAnimation(
-                textures[textureNames[0 % textureNames.Length]], new Vector2(0, -1 * CENTER_OFFSET + Y_OFFSET), color, length);
+                textures.getRaw(textureNames[0 % textureNames.Length]), new Vector2(0, -1 * CENTER_OFFSET + Y_OFFSET), color, length);
             animationSet[InputState.Move.LEFT] = new ButtonAnimation(
-                textures[textureNames[1 % textureNames.Length]], new Vector2(-1 * CENTER_OFFSET, Y_OFFSET), color, length);
+                textures.getRaw(textureNames[1 % textureNames.Length]), new Vector2(-1 * CENTER_OFFSET, Y_OFFSET), color, length);
             animationSet[InputState.Move.RIGHT] = new ButtonAnimation(
-                textures[textureNames[2 % textureNames.Length]], new Vector2(CENTER_OFFSET, Y_OFFSET), color, length);
+                textures.getRaw(textureNames[2 % textureNames.Length]), new Vector2(CENTER_OFFSET, Y_OFFSET), color, length);
             animationSet[InputState.Move.DOWN] = new ButtonAnimation(
-                textures[textureNames[3 % textureNames.Length]], new Vector2(0, CENTER_OFFSET + Y_OFFSET), color, length);
+                textures.getRaw(textureNames[3 % textureNames.Length]), new Vector2(0, CENTER_OFFSET + Y_OFFSET), color, length);
         }
 
         public void startOpponentAnimation(InputState.Move move, long startPoint) {
