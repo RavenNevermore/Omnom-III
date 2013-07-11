@@ -84,10 +84,15 @@ namespace Omnom_III_Game {
             float measures = this.song.timeRunningInMeasures;
 
             this.currentSequence = sequences.atMeasure(measures);
-            if (null != this.currentSequence && this.currentSequence.playerInputAllowed(measures)) {
-                foreach (InputState.Move move in input.activeStates) {
-                    this.animations.startPlayerAnimation(move, time);
-                }
+            PlayerProgress.RatedMoves rated = this.progress.nextRating(measures, this.currentSequence, input);
+            foreach (DanceSequence.Input move in rated.good) {
+                this.animations.startPlayerAnimation(move.handicap, time);
+            }
+            foreach (DanceSequence.Input move in rated.missed) {
+                this.animations.startFailAnimation(move.handicap, time);
+            }
+            foreach (DanceSequence.Input move in rated.wrong) {
+                this.animations.startFailAnimation(move.handicap, time);
             }
             
             

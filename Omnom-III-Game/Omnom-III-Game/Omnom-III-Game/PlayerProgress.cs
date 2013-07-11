@@ -9,140 +9,91 @@ namespace Omnom_III_Game {
             MISSED, PERFECT, GOOD, OK, NONE
         }
 
-        public class PlayerMove {
-            public DanceSequence.Input script;
-            public Rating rating = Rating.NONE;
-
-            internal bool hasEnded(long positionInSong) {
-                return false;//positionInSong >= this.script.endPositionInSong;
+        public class RatedMoves {
+            public RatedMoves() {
+                this.perfect = new List<DanceSequence.Input>();
+                this.good = new List<DanceSequence.Input>();
+                this.ok = new List<DanceSequence.Input>();
+                this.missed = new List<DanceSequence.Input>();
+                this.wrong = new List<DanceSequence.Input>();
             }
 
-            internal bool isCounted() {
-                return Rating.NONE != this.rating;
-            }
+            public List<DanceSequence.Input> perfect;
+            public List<DanceSequence.Input> good;
+            public List<DanceSequence.Input> ok;
+            public List<DanceSequence.Input> missed;
+            public List<DanceSequence.Input> wrong;
 
-            public override string ToString() {
-                String str = "";
-                if (null == this.script) {
-                    str += "NULL --- | ---";
-                } else {
-                    str += this.script.handicap;
-                    str += " ";
-                    //str += this.script.startPositionInSong;
-                    str += " | ";
-                    //str += this.script.endPositionInSong;
-                }
-                str += " (";
-                str += this.rating;
-                str += ")";
-                return str;
-            }
-
-            internal bool isBreak() {
-                return null != this.script &&
-                    this.script.handicap == InputState.Move.BREAK;
+            internal void addWrongMove(DanceSequence sequence, float measure, InputState.Move move) {
+                DanceSequence.Input input = new DanceSequence.Input(sequence);
+                input.positionInSong = measure;
+                input.handicap = move;
+                this.missed.Add(input);
             }
         }
 
+        
         public int score;
-
-        public PlayerMove activeMove;
+        private List<DanceSequence.Input> notYetRated;
 
         public PlayerProgress() {
-            this.score = 0;
+            this.reset();
+        }
+
+        public RatedMoves nextRating(float measure, DanceSequence sequence, InputState input) {
+            RatedMoves rating = new RatedMoves();
+            List<DanceSequence.Input> possibleMatches = sequence.findReachableInputs(measure);
+            List<DanceSequence.Input> rated = new List<DanceSequence.Input>();
+
+            this.addNotYetRated(possibleMatches);
+
+            foreach (InputState.Move move in input.activeStates) {
+                DanceSequence.Input matching = this.getMatchingInput(possibleMatches, move);
+
+                if (null != matching) {
+                    this.score += 5;
+                    rating.good.Add(matching);
+                    rated.Add(matching);
+                } else {
+                    rating.addWrongMove(sequence, measure, move);
+                }
+            }
+            
+            foreach (DanceSequence.Input possibleMiss in this.notYetRated) {
+                if (!possibleMiss.isReachable(measure)) {
+                    rating.missed.Add(possibleMiss);
+                    rated.Add(possibleMiss);
+                }
+            }
+
+            foreach (DanceSequence.Input ratedInput in rated) {
+                this.notYetRated.Remove(ratedInput);
+            }
+
+            return rating;
+        }
+
+        private DanceSequence.Input getMatchingInput(List<DanceSequence.Input> possibleMatches, InputState.Move move) {
+            foreach (DanceSequence.Input input in possibleMatches) {
+                if (input.handicap.Equals(move)) {
+                    return input;
+                }
+            }
+            return null;
+        }
+
+        private void addNotYetRated(List<DanceSequence.Input> possibleMatches) {
+            foreach (DanceSequence.Input input in possibleMatches) {
+                if (!this.notYetRated.Contains(input))
+                    this.notYetRated.Add(input);
+            }
         }
 
         public void reset() {
             this.score = 0;
-            this.activeMove = null;
+            this.notYetRated = new List<DanceSequence.Input>();
         }
 
-        public void activateNextMove(DanceSequence sequence, long currentTime) {
-            /*long sequenceTime = currentTime - sequence.length;
-            if (sequence.isGoneAt(sequenceTime))
-               return;
-
-            this.activeMove = new PlayerMove();
-            DanceSequence.BasicInput sequenceInput = 
-                sequence.findClosestInput(sequenceTime);
-
-            if (null != sequenceInput) {
-                this.activeMove.script = sequenceInput.copyShifted(sequence.length);
-            }*/
-        }
-
-        /**
-         *  returns whether this update changed ratings or the move
-         */
-        public bool update(long positionInSong, DanceSequence activeSequence,
-                List<InputState.Move> activeMoves) {
-
-            bool hasNextMove = false;
-
-            if (null == activeSequence)
-                return false;
-            if (null == this.activeMove) {
-                this.activateNextMove(activeSequence, positionInSong);
-                hasNextMove = true;
-            }
-            if (null != this.activeMove && !this.activeMove.isCounted()) {
-                if (this.activeMove.hasEnded(positionInSong) && ! this.activeMove.isBreak()) {
-                    this.activeMove.rating = Rating.MISSED;
-                    
-                    return true;
-                } else {
-                    if (activeMoves.Contains(this.activeMove.script.handicap)){/*
-                        long deltaT = positionInSong - this.activeMove.script.startPositionInSong;
-                        if (0 > deltaT)
-                            deltaT *= -1;
-
-                        float delta = activeSequence.getTimeDeltaInBeats(deltaT);
-                        if (delta < .125) {
-                            this.activeMove.rating = Rating.PERFECT;
-                            this.score += 10;
-                        } else if (delta < .25){
-                            this.activeMove.rating = Rating.GOOD;
-                            this.score += 5;
-                        } else if (delta < .375) {
-                            this.activeMove.rating = Rating.OK;
-                            this.score += 2;
-                        } else {
-                            this.activeMove.rating = Rating.MISSED;
-                        }
-
-                        */
-                        
-                        return true;
-                    }
-                }
-            }
-
-            return hasNextMove;
-        }
-
-        public bool activeMoveIsMissed() {
-            return null != this.activeMove && 
-                Rating.MISSED == this.activeMove.rating;
-        }
-
-        public InputState.Move getActiveHandicap() {
-            if (null == this.activeMove)
-                return InputState.Move.BREAK;
-            return this.activeMove.script.handicap;
-        }
-
-        public void cleanup(long positionInSong) {
-            if (null != this.activeMove && this.activeMove.hasEnded(positionInSong)) {
-                this.activeMove = null;
-            }
-        }
-
-
-
-        public Rating getActiveMoveRating() {
-            if (null == this.activeMove)
-                return Rating.NONE;
-            return this.activeMove.rating;
-        }
+        
     }
 }

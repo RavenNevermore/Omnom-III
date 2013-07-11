@@ -13,18 +13,49 @@ namespace Omnom_III_Game {
             public bool partOfTriole;
             internal DanceSequence parent;
 
+            public Input(DanceSequence parent) {
+                this.parent = parent;
+            }
+
             public float length { get { return Song.MusicTimeInFractions(
                 this.musicLength,
                 this.partOfTriole); } }
 
-            public float positionInSong { get {
-                return this.positionInSequence + this.parent.startMeasure;
-            } }
+            public float positionInSong { 
+                get {
+                    return this.positionInSequence + this.parent.startMeasure;
+                }
+                set {
+                    this.positionInSequence = value - this.parent.startMeasure;
+                }
+            }
 
             internal long startTime(float beatsPerMs) {
                 return (long) ((this.positionInSong * 4) / beatsPerMs);
             }
+
+            public bool isReachable(float songMeasure) {
+                float templateMeasure = songMeasure - this.parent.length;
+
+                float start = this.positionInSong - FUZZYNESS;
+                float end = this.positionInSong + this.length + FUZZYNESS;
+
+                return start <= templateMeasure && templateMeasure <= end;
+            }
+
+            public override bool Equals(object obj) {
+                if (null == obj || !(obj is Input))
+                    return false;
+                Input other = (Input) obj;
+
+                return other.handicap.Equals(this.handicap)
+                    && other.positionInSequence == this.positionInSequence
+                    && other.musicLength == this.musicLength
+                    && other.partOfTriole == this.partOfTriole;
+            }
         }
+
+        public static float FUZZYNESS = Song.MusicTimeInFractions(Song.MusicTime.SIXTEENTH);
 
         public int startMeasure;
         public List<Input> sequence;
@@ -44,12 +75,11 @@ namespace Omnom_III_Game {
         }
 
         internal void addInput(InputState.Move move, Song.MusicTime musicLength, bool isTriplet) {
-            Input input = new Input();
+            Input input = new Input(this);
             input.handicap = move;
             input.musicLength = musicLength;
             input.partOfTriole = isTriplet;
             input.positionInSequence = this._length;
-            input.parent = this;
 
             this.sequence.Add(input);
             this._length += input.length;
@@ -58,14 +88,24 @@ namespace Omnom_III_Game {
         internal bool playerInputAllowed(float measures) {
             float playerStart = this.startMeasure + this.length;
             float playerEnd = playerStart + this.length;
-            float fuzzyness = Song.MusicTimeInFractions(Song.MusicTime.SIXTEENTH);
-            playerStart -= fuzzyness;
-            playerStart += fuzzyness;
+            
+            playerStart -= FUZZYNESS;
+            playerStart += FUZZYNESS;
             return playerStart <= measures && measures <= playerEnd;
         }
 
         internal bool isEnemyActive(float measures) {
             return this.startMeasure <= measures && measures <= this.startMeasure + this.length;
+        }
+
+        public List<Input> findReachableInputs(float measure) {
+            List<Input> possibles = new List<Input>();
+            foreach (Input input in this.sequence) {
+                if (input.isReachable(measure)){
+                    possibles.Add(input);
+                }
+            }
+            return possibles;
         }
     }
 }
