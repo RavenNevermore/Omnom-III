@@ -53,6 +53,10 @@ namespace Omnom_III_Game {
                     && other.musicLength == this.musicLength
                     && other.partOfTriole == this.partOfTriole;
             }
+
+            public override int GetHashCode() {
+                return 1;// (int)this.startTime(1f / 1000f);
+            }
         }
 
         public static float FUZZYNESS = Song.MusicTimeInFractions(Song.MusicTime.SIXTEENTH);

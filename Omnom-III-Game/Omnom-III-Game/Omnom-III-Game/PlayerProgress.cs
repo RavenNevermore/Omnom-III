@@ -34,6 +34,7 @@ namespace Omnom_III_Game {
 
         
         public int score;
+        private float ratedUntil;
         private List<DanceSequence.Input> notYetRated;
 
         public PlayerProgress() {
@@ -49,11 +50,17 @@ namespace Omnom_III_Game {
 
             foreach (InputState.Move move in input.activeStates) {
                 DanceSequence.Input matching = this.getMatchingInput(possibleMatches, move);
+                if (null != matching && matching.positionInSong <= this.ratedUntil)
+                    continue;
 
                 if (null != matching) {
                     this.score += 5;
                     rating.good.Add(matching);
                     rated.Add(matching);
+                    this.notYetRated.Remove(matching);
+                    if (measure > this.ratedUntil) {
+                        this.ratedUntil = matching.positionInSong;
+                    }
                 } else {
                     rating.addWrongMove(sequence, measure, move);
                 }
@@ -64,10 +71,6 @@ namespace Omnom_III_Game {
                     rating.missed.Add(possibleMiss);
                     rated.Add(possibleMiss);
                 }
-            }
-
-            foreach (DanceSequence.Input ratedInput in rated) {
-                this.notYetRated.Remove(ratedInput);
             }
 
             return rating;
@@ -84,6 +87,9 @@ namespace Omnom_III_Game {
 
         private void addNotYetRated(List<DanceSequence.Input> possibleMatches) {
             foreach (DanceSequence.Input input in possibleMatches) {
+                if (input.positionInSong <= this.ratedUntil)
+                    continue;
+
                 if (!this.notYetRated.Contains(input))
                     this.notYetRated.Add(input);
             }
@@ -91,6 +97,7 @@ namespace Omnom_III_Game {
 
         public void reset() {
             this.score = 0;
+            this.ratedUntil = -1f;
             this.notYetRated = new List<DanceSequence.Input>();
         }
 
