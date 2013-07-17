@@ -18,6 +18,10 @@ namespace Omnom_III_Game.graphics {
         private long frameTime;
         private Rectangle activeFrame;
 
+        public bool repeat;
+        private bool _stopped;
+        public bool stopped { get { return this._stopped; } }
+
         public AnimatedTexture(Texture2D texture) : this(texture, 0L) {}
 
         public AnimatedTexture(Texture2D texture, long time) {
@@ -29,6 +33,7 @@ namespace Omnom_III_Game.graphics {
             this.frames = this.textureWidth / this.viewportWidth;
             this.time = time;
             this.frameTime = time / frames;
+            this.repeat = true;
             this.reset();
         }
 
@@ -37,14 +42,22 @@ namespace Omnom_III_Game.graphics {
         public void reset(){
             this.activeFrame = new Rectangle(0, 0, this.viewportWidth, this.height);
             this.elapsedTime = 0;
-
+            this._stopped = false;
         }
 
         public void update(long deltaT) {
             this.elapsedTime += deltaT;
 
-            while (this.elapsedTime >= this.time) {
-                this.elapsedTime -= this.time;
+            if (this.repeat) {
+                while (this.elapsedTime >= this.time) {
+                    this.elapsedTime -= this.time;
+                }
+            } else if (this.elapsedTime >= this.time) {
+                this._stopped = true;
+            }
+
+            if (this.stopped) {
+                return;
             }
 
             int frame = (int) (this.elapsedTime / this.frameTime);

@@ -23,7 +23,7 @@ namespace Omnom_III_Game {
         DanceSequence currentSequence;
         PlayerProgress progress;
         
-        AnimatedTexture enemyTexture;
+        AnimatedCharacter enemy;
         
         String backgroundTexture;
         TextureContext textures;
@@ -32,7 +32,7 @@ namespace Omnom_III_Game {
 
         bool exit;
 
-        
+        InputState.Move lastMove;
 
         DanceSceneAnimationBundle animations;
 
@@ -58,7 +58,7 @@ namespace Omnom_III_Game {
                 "player_character", "btn_up", "btn_down", "btn_left", "btn_right", "btn_fail");
 
             String enemyTextureName = this.script.get("enemy");
-            this.textures.loadTextures(content, enemyTextureName+"_idle");
+            //this.textures.loadTextures(content, enemyTextureName+"_idle");
 
             this.backgroundTexture = this.script.get("background");
             this.textures.loadTextures(content, 
@@ -76,8 +76,9 @@ namespace Omnom_III_Game {
                     handicap.startTime(song.bpms));
             }
 
-            this.enemyTexture = new AnimatedTexture(textures.getRaw(enemyTextureName + "_idle"), (long)(this.song.beatTimeInMs));
-            this.enemyTexture.reset();
+            this.enemy = new AnimatedCharacter(enemyTextureName, content, (long)this.song.beatTimeInMs);
+            //this.enemyTexture = new AnimatedTexture(textures.getRaw(enemyTextureName + "_idle"), (long)(this.song.beatTimeInMs));
+            //this.enemyTexture.reset();
             this.lastTime = 0;
             this.song.play();
         }
@@ -94,6 +95,13 @@ namespace Omnom_III_Game {
             float measures = this.song.timeRunningInMeasures;
 
             this.currentSequence = sequences.atMeasure(measures);
+            if (this.currentSequence.isEnemyActive(measures)) {
+                InputState.Move move = this.currentSequence.getActiveMoveAt(measures);
+                if (this.lastMove != move)
+                    this.enemy.activate(move);
+                this.lastMove = move;
+            }
+
             PlayerProgress.RatedMoves rated = this.progress.nextRating(measures, this.currentSequence, input);
             foreach (DanceSequence.Input move in rated.good) {
                 this.animations.startPlayerAnimation(move.handicap, time);
@@ -107,7 +115,7 @@ namespace Omnom_III_Game {
             
             
             this.animations.update(time);
-            this.enemyTexture.update(deltaT);
+            this.enemy.update(deltaT);
         }
 
         private bool hasExitState(InputState input) {
@@ -132,7 +140,7 @@ namespace Omnom_III_Game {
 
             if (null != this.currentSequence) {
                 if (this.currentSequence.isEnemyActive(this.song.timeRunningInMeasures)) {
-                    this.enemyTexture.drawCentered(sprites, 350, 350, 50);
+                    this.enemy.draw(sprites);
                 } else {
                     sprites.drawFromCenter(this.textures.getRaw("player_character"), 350, 350, 0, 50);
                 }
@@ -141,7 +149,7 @@ namespace Omnom_III_Game {
 
             sprites.drawDebugText(
                 "Measures: ", this.song.timeRunningInMeasures,
-                "Current Seq: ", this.currentSequence,
+                "Current Seq: ", this.currentSequence, "Last Move:", this.lastMove,
                 "\n\rScore: ", this.progress.score);
             
             this.animations.draw(sprites);

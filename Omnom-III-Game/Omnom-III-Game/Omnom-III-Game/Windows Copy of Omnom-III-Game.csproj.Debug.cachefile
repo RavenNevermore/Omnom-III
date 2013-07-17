@@ -13,6 +13,10 @@ Content\steakysong.xnb
 Content\default.xnb
 Content\bgr_steaky.xnb
 Content\enemy_tbone_idle.xnb
+Content\enemy_tbone_down.xnb
+Content\enemy_tbone_left.xnb
+Content\enemy_tbone_right.xnb
+Content\enemy_tbone_up.xnb
 Content\eattherich.wma
 Content\MeasureTest.wma
 Content\eyeofthetiger.wma

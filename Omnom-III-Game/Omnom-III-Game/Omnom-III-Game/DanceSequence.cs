@@ -102,10 +102,21 @@ namespace Omnom_III_Game {
             return this.startMeasure <= measures && measures <= this.startMeasure + this.length;
         }
 
-        public List<Input> findReachableInputs(float measure) {
+        public InputState.Move getActiveMoveAt(float songMeasure) {
+            float templateMeasure = songMeasure - this.startMeasure;
+            foreach (Input input in this.sequence) {
+                if (input.positionInSequence <= templateMeasure
+                    && input.positionInSequence + input.length >= templateMeasure) {
+                        return input.handicap;
+                }
+            }
+            return InputState.Move.BREAK;
+        }
+
+        public List<Input> findReachableInputs(float songMeasure) {
             List<Input> possibles = new List<Input>();
             foreach (Input input in this.sequence) {
-                if (input.isReachable(measure)){
+                if (input.isReachable(songMeasure)){
                     possibles.Add(input);
                 }
             }

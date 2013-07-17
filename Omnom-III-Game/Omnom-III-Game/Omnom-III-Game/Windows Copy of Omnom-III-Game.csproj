@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DanceSequenceProtocol.cs" />
+    <Compile Include="dance\AnimatedCharacter.cs" />
     <Compile Include="dance\ButtonAnimation.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="DanceScene.cs" />
