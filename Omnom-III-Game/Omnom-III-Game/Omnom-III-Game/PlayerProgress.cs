@@ -43,6 +43,9 @@ namespace Omnom_III_Game {
 
         public RatedMoves nextRating(float measure, DanceSequence sequence, InputState input) {
             RatedMoves rating = new RatedMoves();
+            if (null == sequence)
+                return rating;
+
             List<DanceSequence.Input> possibleMatches = sequence.findReachableInputs(measure);
             List<DanceSequence.Input> rated = new List<DanceSequence.Input>();
 

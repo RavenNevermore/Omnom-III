@@ -82,6 +82,7 @@
     <Compile Include="fmod\fmod_dsp.cs" />
     <Compile Include="fmod\fmod_errors.cs" />
     <Compile Include="fmod\fmod_memoryinfo.cs" />
+    <Compile Include="graphics\AnimatedTexture.cs" />
     <Compile Include="InputState.cs" />
     <Compile Include="IScene.cs" />
     <Compile Include="MenuScene.cs" />

@@ -38,8 +38,11 @@ namespace Omnom_III_Game.util {
         }
 
         public void drawFromCenter(Texture2D texture, int width, int height) {
-            
             this.drawFromCenter(texture, width, height, 0, 0, Color.White);
+        }
+
+        public void drawFromCenter(Texture2D texture, Rectangle sourceRect, int width, int height) {
+            this.drawFromCenter(texture, sourceRect, width, height, 0, 0, Color.White);
         }
 
         public void drawFromCenter(Texture2D texture,
@@ -49,9 +52,27 @@ namespace Omnom_III_Game.util {
                 this.drawFromCenter(texture, width, height, offsetX, offsetY, Color.White);
         }
 
-        public void drawFromCenter(Texture2D texture, 
+        public void drawFromCenter(Texture2D texture, Rectangle sourceRect,
             int width, int height,
-            int offsetX, int offsetY, 
+            int offsetX, int offsetY) {
+
+            this.drawFromCenter(texture, sourceRect, width, height, offsetX, offsetY, Color.White);
+        }
+
+        public void drawFromCenter(Texture2D texture,
+                int width, int height,
+                int offsetX, int offsetY, 
+                Color color) {
+
+            Rectangle sourceRect = texture.Bounds;
+
+            this.drawFromCenter(texture, sourceRect, width, height, offsetX, offsetY, color);
+        }
+
+        public void drawFromCenter(Texture2D texture,
+            Rectangle sourceRect,
+            int width, int height,
+            int offsetX, int offsetY,
             Color color) {
 
             int centerX = (this.viewport.Width / 2) + offsetX;
@@ -63,7 +84,8 @@ namespace Omnom_III_Game.util {
                     centerX - width / 2,
                     centerY - height / 2,
                     width,
-                    height),
+                    height), 
+                sourceRect,
                 color);
         }
 

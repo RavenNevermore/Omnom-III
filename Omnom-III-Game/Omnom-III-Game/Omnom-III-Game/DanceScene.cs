@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Omnom_III_Game.util;
 using Omnom_III_Game.exceptions;
 using Omnom_III_Game.dance;
+using Omnom_III_Game.graphics;
 
 
 namespace Omnom_III_Game {
@@ -22,10 +23,12 @@ namespace Omnom_III_Game {
         DanceSequence currentSequence;
         PlayerProgress progress;
         
-        String enemyTexture;
+        AnimatedTexture enemyTexture;
+        
         String backgroundTexture;
         TextureContext textures;
 
+        long lastTime;
 
         bool exit;
 
@@ -54,10 +57,12 @@ namespace Omnom_III_Game {
             this.textures.loadTextures(content, 
                 "player_character", "btn_up", "btn_down", "btn_left", "btn_right", "btn_fail");
 
-            this.enemyTexture = this.script.get("enemy");
+            String enemyTextureName = this.script.get("enemy");
+            this.textures.loadTextures(content, enemyTextureName+"_idle");
+
             this.backgroundTexture = this.script.get("background");
             this.textures.loadTextures(content, 
-                this.enemyTexture,
+                //this.enemyTexture,
                 this.backgroundTexture);
 
             this.song = new Song(this.script);
@@ -71,6 +76,9 @@ namespace Omnom_III_Game {
                     handicap.startTime(song.bpms));
             }
 
+            this.enemyTexture = new AnimatedTexture(textures.getRaw(enemyTextureName + "_idle"), (long)(this.song.beatTimeInMs));
+            this.enemyTexture.reset();
+            this.lastTime = 0;
             this.song.play();
         }
 
@@ -80,6 +88,8 @@ namespace Omnom_III_Game {
 
             this.song.calculateMetaInfo();
             long time = this.song.timeRunningInMs;
+            long deltaT = time - this.lastTime;
+            this.lastTime = time;
             
             float measures = this.song.timeRunningInMeasures;
 
@@ -97,6 +107,7 @@ namespace Omnom_III_Game {
             
             
             this.animations.update(time);
+            this.enemyTexture.update(deltaT);
         }
 
         private bool hasExitState(InputState input) {
@@ -120,13 +131,12 @@ namespace Omnom_III_Game {
             this.textures.drawAsBackground(this.backgroundTexture, sprites);
 
             if (null != this.currentSequence) {
-                String character = null;
                 if (this.currentSequence.isEnemyActive(this.song.timeRunningInMeasures)) {
-                    character = this.enemyTexture;
+                    this.enemyTexture.drawCentered(sprites, 350, 350, 50);
                 } else {
-                    character = "player_character";
+                    sprites.drawFromCenter(this.textures.getRaw("player_character"), 350, 350, 0, 50);
                 }
-                sprites.drawFromCenter(this.textures.getRaw(character), 350, 350, 0, 50);
+                
             }
 
             sprites.drawDebugText(
