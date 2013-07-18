@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Omnom_III_Game.util;
 
 namespace Omnom_III_Game {
     public class PlayerProgress {
@@ -57,8 +58,18 @@ namespace Omnom_III_Game {
                     continue;
 
                 if (null != matching) {
-                    this.score += 5;
-                    rating.good.Add(matching);
+                    float accuracy = matching.getAccuracy(measure);
+                    if (accuracy <= Song.MusicTimeInFractions(Song.MusicTime.SIXTEENTH) / 2.0f) {
+                        this.score += 25;
+                        rating.perfect.Add(matching);
+                    } else if (accuracy <= Song.MusicTimeInFractions(Song.MusicTime.SIXTEENTH)) {
+                        this.score += 15;
+                        rating.good.Add(matching);
+                    } else {
+                        this.score += 5;
+                        rating.ok.Add(matching);
+                    }
+
                     rated.Add(matching);
                     this.notYetRated.Remove(matching);
                     if (measure > this.ratedUntil) {
@@ -75,6 +86,7 @@ namespace Omnom_III_Game {
                     rated.Add(possibleMiss);
                 }
             }
+            ListUtil.removeAllFromList(this.notYetRated, rating.missed);
 
             return rating;
         }

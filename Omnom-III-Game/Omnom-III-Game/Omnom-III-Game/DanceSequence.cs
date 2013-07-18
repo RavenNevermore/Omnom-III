@@ -57,6 +57,14 @@ namespace Omnom_III_Game {
             public override int GetHashCode() {
                 return 1;// (int)this.startTime(1f / 1000f);
             }
+
+            internal float getAccuracy(float songMeasure) {
+                float templateMeasure = songMeasure - this.parent.length;
+                float accuracy = templateMeasure - this.positionInSong;
+                if (0 > accuracy)
+                    accuracy *= -1;
+                return accuracy;
+            }
         }
 
         public static float FUZZYNESS = Song.MusicTimeInFractions(Song.MusicTime.SIXTEENTH);

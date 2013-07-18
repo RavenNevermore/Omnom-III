@@ -14,17 +14,23 @@ namespace Omnom_III_Game.dance {
         public static int Y_OFFSET = 50;
 
         public Dictionary<InputState.Move, ButtonAnimation> opponent;
-        public Dictionary<InputState.Move, ButtonAnimation> player;
+        public Dictionary<PlayerProgress.Rating, Dictionary<InputState.Move, ButtonAnimation>> player;
         public Dictionary<InputState.Move, ButtonAnimation> fail;
 
         public DanceSceneAnimationBundle(TextureContext textures, Song song) {
             this.opponent = new Dictionary<InputState.Move, ButtonAnimation>();
-            this.player = new Dictionary<InputState.Move, ButtonAnimation>();
+            this.player = new Dictionary<PlayerProgress.Rating, Dictionary<InputState.Move, ButtonAnimation>>();
+            this.player[PlayerProgress.Rating.OK] = new Dictionary<InputState.Move, ButtonAnimation>();
+            this.player[PlayerProgress.Rating.GOOD] = new Dictionary<InputState.Move, ButtonAnimation>();
+            this.player[PlayerProgress.Rating.PERFECT] = new Dictionary<InputState.Move, ButtonAnimation>();
             this.fail = new Dictionary<InputState.Move, ButtonAnimation>();
 
             long length = (long)song.beatTimeInMs;
             this.setup(this.opponent, textures, Color.LightBlue, length);
-            this.setup(this.player, textures, Color.Green, length);
+            this.setup(this.player[PlayerProgress.Rating.OK], textures, Color.Yellow, length);
+            this.setup(this.player[PlayerProgress.Rating.GOOD], textures, Color.Green, length);
+            this.setup(this.player[PlayerProgress.Rating.PERFECT], textures, Color.Lime, length);
+
             this.setup(this.fail, textures, Color.Black, length, new string[]{"btn_fail"});
         }
 
@@ -53,8 +59,8 @@ namespace Omnom_III_Game.dance {
             this.startAnimation(this.opponent, move, startPoint);
         }
 
-        public void startPlayerAnimation(InputState.Move move, long startPoint) {
-            this.startAnimation(this.player, move, startPoint);
+        public void startPlayerAnimation(InputState.Move move, long startPoint, PlayerProgress.Rating rating) {
+            this.startAnimation(this.player[rating], move, startPoint);
         }
 
         public void startFailAnimation(InputState.Move move, long startPoint) {
@@ -80,7 +86,10 @@ namespace Omnom_III_Game.dance {
         delegate void func(ButtonAnimation x);
         private void performOnAll(func myFunc) {
             this.performOnDict(this.opponent, myFunc);
-            this.performOnDict(this.player, myFunc);
+            foreach (Dictionary<InputState.Move, ButtonAnimation> bundle in this.player.Values) {
+                this.performOnDict(bundle, myFunc);
+            }
+            
             this.performOnDict(this.fail, myFunc);
         }
 
