@@ -34,7 +34,7 @@ namespace Omnom_III_Game {
 
             //this.scene = new DanceScene("eattherich");
             this.scene = new SceneManager();
-            this.scene.initialize(contentUtil);
+            this.scene.initialize(contentUtil, null);
 
             base.Initialize();
         }

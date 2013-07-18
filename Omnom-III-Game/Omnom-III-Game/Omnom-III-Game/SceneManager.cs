@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Omnom_III_Game.util;
+using Omnom_III_Game.highscore;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Omnom_III_Game {
@@ -17,11 +18,11 @@ namespace Omnom_III_Game {
         Dictionary<String, IScene> scenes;
         ContentUtil content;
         bool exit;
-        String nextSceneName;
+        SceneActivationParameters nextSceneParams;
         String defaultScene;
         IScene activeScene;
 
-        public void initialize(ContentUtil content) {
+        public void initialize(ContentUtil content, SceneActivationParameters parameters) {
             this.exit = false;
             this.content = content;
             this.scenes = new Dictionary<string,IScene>();
@@ -32,6 +33,9 @@ namespace Omnom_III_Game {
             this.addDanceScene("tigerstep", menu);
             this.addDanceScene("eattherich", menu);
             this.addDanceScene("level_steaky", menu);
+            menu.add(new MenuScene.MenuItem("highscore", "Highscore", new HighscoreParams("Foo Bar")));
+            this.scenes["highscore"] = new HighscoreScene();
+
             menu.add(new MenuScene.MenuItem("exit", "Quit Game"));
         }
 
@@ -46,25 +50,33 @@ namespace Omnom_III_Game {
                 return;
 
             if (null == this.activeScene) {
-                this.activeScene = this.scenes[null == this.nextSceneName ?
-                    this.defaultScene : this.nextSceneName];
-                this.activeScene.initialize(this.content);
+                SceneActivationParameters sceneParams = 
+                    this.initSceneParamsUsingDefaults(this.nextSceneParams);
+
+                this.activeScene = this.scenes[sceneParams.sceneName];
+                this.activeScene.initialize(this.content, sceneParams);
             }
 
             this.activeScene.update(input);
 
             if (this.activeScene.wantsToExit()) {
-                this.nextSceneName = this.activeScene.nextScene();
+                this.nextSceneParams = this.initSceneParamsUsingDefaults(this.activeScene.nextScene());
                 this.activeScene.cleanup();
-                if (null == this.nextSceneName)
-                    this.nextSceneName = defaultScene;
-
-                if ("exit".Equals(this.nextSceneName.ToLower())) {
+                
+                if ("exit".Equals(this.nextSceneParams.sceneName.ToLower())) {
                     this.exit = true;
                 } else {
                     this.activeScene = null;
                 }
             }
+        }
+
+        private SceneActivationParameters initSceneParamsUsingDefaults(SceneActivationParameters sceneParams) {
+            if (null == sceneParams)
+                sceneParams = new SceneActivationParameters();
+            if (null == sceneParams.sceneName)
+                sceneParams.sceneName = this.defaultScene;
+            return sceneParams;
         }
 
         public void draw(SpriteBatchWrapper sprites, GraphicsDevice device) {
@@ -73,7 +85,7 @@ namespace Omnom_III_Game {
             }
         }
 
-        public String nextScene() {
+        public SceneActivationParameters nextScene() {
             return null;
         }
 

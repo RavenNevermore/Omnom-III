@@ -11,6 +11,7 @@ using Omnom_III_Game.util;
 using Omnom_III_Game.exceptions;
 using Omnom_III_Game.dance;
 using Omnom_III_Game.graphics;
+using Omnom_III_Game.highscore;
 
 
 namespace Omnom_III_Game {
@@ -44,11 +45,15 @@ namespace Omnom_III_Game {
 
         public String title { get { return this.script.title; } }
 
-        public String nextScene() { return null; }
+        public SceneActivationParameters nextScene() { 
+            return new SceneActivationParameters(
+                "highscore",
+                new HighscoreParams(this.title, this.progress)); 
+        }
 
         public bool wantsToExit() { return exit; }
 
-        public void initialize(ContentUtil content) {
+        public void initialize(ContentUtil content, SceneActivationParameters parameters) {
             this.exit = false;
             this.textures.clear();
             this.currentSequence = null;

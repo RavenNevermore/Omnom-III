@@ -12,10 +12,14 @@ namespace Omnom_III_Game {
         public class MenuItem {
             public String sceneName;
             public String title;
+            public Object sceneParams;
 
-            public MenuItem(String sceneName, String title) {
+            public MenuItem(String sceneName, String title) : this(sceneName, title, null) {}
+
+            public MenuItem(String sceneName, String title, Object sceneParams) {
                 this.sceneName = sceneName;
                 this.title = title;
+                this.sceneParams = sceneParams;
             }
         }
 
@@ -37,7 +41,7 @@ namespace Omnom_III_Game {
             }
         }
 
-        public void initialize(ContentUtil content) {
+        public void initialize(ContentUtil content, SceneActivationParameters parameters) {
             this.selectedIndex = 0;
             this.input = new ExplicitInputState();
             this.next = false;
@@ -90,8 +94,11 @@ namespace Omnom_III_Game {
             }
         }
 
-        public String nextScene() {
-            return this.items[this.selectedIndex].sceneName;
+        public SceneActivationParameters nextScene() {
+            SceneActivationParameters parameters = new SceneActivationParameters();
+            parameters.sceneName = this.items[this.selectedIndex].sceneName;
+            parameters.parameters = this.items[this.selectedIndex].sceneParams;
+            return parameters;
         }
 
         public bool wantsToExit() {
