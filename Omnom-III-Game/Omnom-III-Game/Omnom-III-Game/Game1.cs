@@ -19,8 +19,9 @@ namespace Omnom_III_Game {
         SpriteFont defaultFont;
 
         public Game1() {
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            this.graphics = new GraphicsDeviceManager(this);
+            this.Content.RootDirectory = "Content";
+            this.Components.Add(new GamerServicesComponent(this));
         }
 
         /// <summary>
