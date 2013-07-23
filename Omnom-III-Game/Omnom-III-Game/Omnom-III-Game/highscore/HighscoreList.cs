@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Omnom_III_Game.highscore {
     public class HighscoreList {
@@ -10,7 +11,55 @@ namespace Omnom_III_Game.highscore {
 
         public HighscoreList() {
             this.scores = new List<Scoring>();
-            this.fillWithRandomData();
+            //this.fillWithRandomData();
+        }
+
+        public void loadForScene(String sceneName) {
+            String filepath = this.getFilenameFromScenename(sceneName);
+            this.scores.Clear();
+            if (!File.Exists(filepath)) {
+                return;
+            }
+            StreamReader reader = File.OpenText(filepath);
+            try {
+                String line = null;
+                while (null != (line = reader.ReadLine())) {
+                    line = line.Trim();
+                    if ("".Equals(line)) {
+                        continue;
+                    }
+                    this.add(Scoring.deserialize(line));
+                }
+            } finally {
+                reader.Close();
+            }
+        }
+
+        public void storeForScene(String sceneName) {
+            String filepath = this.getFilenameFromScenename(sceneName);
+            StreamWriter writer = null;
+            if (File.Exists(filepath)) {
+                File.Delete(filepath);
+            }
+            writer = File.CreateText(filepath);
+
+            try {
+                foreach (Scoring score in this.scores) {
+                    writer.Write(score.serialize());
+                    writer.Write("\n");
+                }
+            } finally {
+                writer.Flush();
+                writer.Close();
+            }
+        }
+
+        private String getFilenameFromScenename(String sceneName) {
+            String filepath = sceneName.ToLower();
+            filepath = filepath.Replace(" ", "_");
+            filepath = filepath.Replace("\t", "_");
+            filepath += ".score";
+            return filepath;
         }
 
         private void fillWithRandomData() {
@@ -49,7 +98,7 @@ namespace Omnom_III_Game.highscore {
             Scoring.sort(this.scores);
             List<Scoring> result = new List<Scoring>();
             int end = start + length;
-            for (int i = start; i < end; i++) {
+            for (int i = start; i < end && i < this.scores.Count; i++) {
                 result.Add(this.scores.ElementAt(i));
             }
             return result;

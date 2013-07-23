@@ -33,7 +33,7 @@ namespace Omnom_III_Game {
             this.addDanceScene("tigerstep", menu);
             this.addDanceScene("eattherich", menu);
             this.addDanceScene("level_steaky", menu);
-            menu.add(new MenuScene.MenuItem("highscore", "Highscore", new HighscoreParams("Foo Bar")));
+            menu.add(new MenuScene.MenuItem("highscore", "Highscore", new HighscoreParams("T-Bone the Steak")));
             this.scenes["highscore"] = new HighscoreScene();
 
             menu.add(new MenuScene.MenuItem("exit", "Quit Game"));

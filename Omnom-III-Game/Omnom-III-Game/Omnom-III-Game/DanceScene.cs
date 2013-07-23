@@ -48,7 +48,7 @@ namespace Omnom_III_Game {
         public SceneActivationParameters nextScene() { 
             return new SceneActivationParameters(
                 "highscore",
-                new HighscoreParams(this.title, this.progress)); 
+                new HighscoreParams(this.title, this.progress.clone())); 
         }
 
         public bool wantsToExit() { return exit; }

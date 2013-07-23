@@ -26,12 +26,13 @@ namespace Omnom_III_Game.highscore {
             this.listeningForInput = false;
             
             this.scores = new HighscoreList();
+            this.scores.loadForScene(stageName);
             this.exit = false;
 
-            if (null == this.nextScore) {
+            /*if (null == this.nextScore) {
                 this.nextScore = new PlayerProgress();
                 this.nextScore.score = 4321;
-            }
+            }*/
 
             //this.scores.add(new Scoring("Batman", this.nextScore.score, true));
             this.initTime = Environment.TickCount;
@@ -82,6 +83,7 @@ namespace Omnom_III_Game.highscore {
         }
 
         public void cleanup() {
+            this.scores.storeForScene(this.stageName);
         }
 
         public SceneActivationParameters nextScene() {

@@ -116,6 +116,14 @@ namespace Omnom_III_Game {
             this.notYetRated = new List<DanceSequence.Input>();
         }
 
-        
+
+
+        internal PlayerProgress clone() {
+            PlayerProgress progress = new PlayerProgress();
+            progress.score = this.score;
+            progress.ratedUntil = this.ratedUntil;
+            progress.notYetRated = this.notYetRated;
+            return progress;
+        }
     }
 }
