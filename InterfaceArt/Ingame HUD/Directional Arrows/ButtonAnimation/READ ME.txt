@@ -1,0 +1,1 @@
+Button image size is bigger than it should be. You will need to scale down resolution a bit while you apply buttons onto game interface.
