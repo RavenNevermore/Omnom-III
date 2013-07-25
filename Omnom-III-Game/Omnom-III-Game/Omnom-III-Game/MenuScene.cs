@@ -29,6 +29,7 @@ namespace Omnom_III_Game {
         bool next;
         ExplicitInputState input;
         bool firstUpdate;
+        Texture2D background;
 
         public MenuScene() {
             this.items = new List<MenuItem>();
@@ -46,6 +47,7 @@ namespace Omnom_III_Game {
             this.input = new ExplicitInputState();
             this.next = false;
             this.firstUpdate = true;
+            this.background = content.load<Texture2D>("menu/background01");
         }
 
         public void update(InputState currentInput) {
@@ -85,7 +87,8 @@ namespace Omnom_III_Game {
         }
 
         public void draw(SpriteBatchWrapper sprites, GraphicsDevice device) {
-            sprites.fillWithColor(Color.DarkGray, 1.0f);
+            //sprites.fillWithColor(Color.DarkGray, 1.0f);
+            sprites.drawBackground(background);
             for (int i = 0; i < this.items.Count; i++) {
                 String title = this.items.ElementAt(i).title;
                 bool active = selectedIndex == i;

@@ -148,6 +148,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="menu\background01.png">
+      <Name>background01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="tigerstep.content">
       <Name>tigerstep</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -159,9 +164,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="level_steaky.content">
+    <Compile Include="level_02.content">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>level_steaky</Name>
+      <Name>level_02</Name>
+    </Compile>
+    <Compile Include="level_03.content">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level_03</Name>
+    </Compile>
+    <Compile Include="level_04.content">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level_04</Name>
+    </Compile>
+    <None Include="level_01.content">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>level_01</Name>
     </None>
     <None Include="eattherich.content">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
