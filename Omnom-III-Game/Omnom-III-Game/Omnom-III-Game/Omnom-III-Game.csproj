@@ -122,6 +122,7 @@
     <Compile Include="SceneActivationParameters.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="Song.cs" />
+    <Compile Include="SceneChain.cs" />
     <Compile Include="util\ContentScript.cs" />
     <Compile Include="util\ContentUtil.cs" />
     <Compile Include="util\DrawingUtil.cs" />

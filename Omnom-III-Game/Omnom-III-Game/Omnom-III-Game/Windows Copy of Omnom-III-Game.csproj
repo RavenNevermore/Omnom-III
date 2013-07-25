@@ -96,6 +96,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="SceneActivationParameters.cs" />
+    <Compile Include="SceneChain.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="util\CommitingReader.cs" />

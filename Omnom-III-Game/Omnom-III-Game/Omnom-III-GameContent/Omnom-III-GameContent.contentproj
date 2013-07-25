@@ -164,18 +164,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="level_02.content">
+    <None Include="level_02.content">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>level_02</Name>
-    </Compile>
-    <Compile Include="level_03.content">
+    </None>
+    <None Include="level_03.content">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>level_03</Name>
-    </Compile>
-    <Compile Include="level_04.content">
+    </None>
+    <None Include="level_04.content">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>level_04</Name>
-    </Compile>
+    </None>
     <None Include="level_01.content">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>level_01</Name>

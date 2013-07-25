@@ -28,11 +28,22 @@ namespace Omnom_III_Game {
             this.scenes = new Dictionary<string,IScene>();
             this.defaultScene = "menu";
 
+            SceneChain storyMode = new SceneChain();
+            storyMode.addToChain(
+                "level_01",
+                "level_02",
+                "level_03",
+                "level_04");
+            this.scenes["story_mode"] = storyMode;
+
             MenuScene menu = new MenuScene();
             this.scenes["menu"] = menu;
-            this.addDanceScene("tigerstep", menu);
-            this.addDanceScene("eattherich", menu);
+            menu.add(new MenuScene.MenuItem("story_mode", "Story Mode", this));
+
             this.addDanceScene("level_01", menu);
+            this.addDanceScene("level_02", menu);
+            this.addDanceScene("level_03", menu);
+            this.addDanceScene("level_04", menu);
             menu.add(new MenuScene.MenuItem("highscore", "Highscore", new HighscoreParams("T-Bone the Steak")));
             this.scenes["highscore"] = new HighscoreScene();
 
@@ -53,8 +64,7 @@ namespace Omnom_III_Game {
                 SceneActivationParameters sceneParams = 
                     this.initSceneParamsUsingDefaults(this.nextSceneParams);
 
-                this.activeScene = this.scenes[sceneParams.sceneName];
-                this.activeScene.initialize(this.content, sceneParams);
+                this.activeScene = this.initScene(sceneParams);
             }
 
             this.activeScene.update(input);
@@ -69,6 +79,31 @@ namespace Omnom_III_Game {
                     this.activeScene = null;
                 }
             }
+        }
+
+        public IScene getNextSceneFor(IScene scene) {
+            SceneActivationParameters parameters = scene.nextScene();
+            if (null == parameters) {
+                return null;
+            }
+            return this.initScene(parameters);
+        }
+
+        public IScene initScene(String sceneName) {
+            return this.initScene(
+                this.getDefaultActivationParameters(sceneName));
+        }
+
+        private IScene initScene(SceneActivationParameters parameters) {
+            IScene nextScene = this.scenes[parameters.sceneName];
+            nextScene.initialize(this.content, parameters);
+            return nextScene;
+        }
+
+        private SceneActivationParameters getDefaultActivationParameters(String sceneName) {
+            SceneActivationParameters paramters = this.initSceneParamsUsingDefaults(null);
+            paramters.sceneName = sceneName;
+            return paramters;
         }
 
         private SceneActivationParameters initSceneParamsUsingDefaults(SceneActivationParameters sceneParams) {
@@ -97,6 +132,10 @@ namespace Omnom_III_Game {
             foreach (KeyValuePair<String, IScene> scene in this.scenes) {
                 scene.Value.cleanup();
             }
+        }
+
+        internal IScene getScene(string name) {
+            return this.scenes[name];
         }
     }
 }
