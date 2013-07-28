@@ -55,8 +55,17 @@ namespace Omnom_III_Game {
 
         private void initIntroScenes() {
             FadeInPictureScene sceneHairware = new FadeInPictureScene("intro/hairware", Color.White);
-            this.scenes["intro"] = sceneHairware;
-            this.nextSceneParams = new SceneActivationParameters("intro", null);
+            FadeInPictureScene sceneGA = new FadeInPictureScene("intro/games_academy", Color.White);
+            FadeInPictureScene sceneOmnom = new FadeInPictureScene("intro/omnom", Color.White);
+            this.scenes["intro_ga"] = sceneGA;
+            this.scenes["intro_hairware"] = sceneHairware;
+            this.scenes["intro_omnom"] = sceneOmnom;
+
+            SceneChain chain = new SceneChain();
+            chain.addToChain("intro_ga", "intro_hairware", "intro_omnom");
+            this.scenes["intro"] = chain;
+
+            this.nextSceneParams = new SceneActivationParameters("intro", this);
         }
 
         private void addDanceScene(String scriptname, MenuScene menu) {

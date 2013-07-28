@@ -158,6 +158,16 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="intro\games_academy.png">
+      <Name>games_academy</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="intro\omnom.png">
+      <Name>omnom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="tigerstep.content">
       <Name>tigerstep</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

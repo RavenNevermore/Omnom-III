@@ -10,7 +10,8 @@ using Microsoft.Xna.Framework;
 namespace Omnom_III_Game {
     public class FadeInPictureScene : IScene {
 
-        private long fadeTime = 1000;
+        private long fadeInTime = 1500;
+        private long fadeOutTime = 200;
 
         private String pictureName;
         private Texture2D picture;
@@ -45,10 +46,12 @@ namespace Omnom_III_Game {
                 this.runningTime = Stopwatch.StartNew();
 
             long deltaT = this.runningTime.ElapsedMilliseconds;
-            if (deltaT >= this.fadeTime) {
-                this.fadeTime = 1;
+            if (deltaT > this.fadeInTime + this.fadeOutTime) {
+                this.fadeAmount = 0.0f;
+            } else if (deltaT > this.fadeInTime) {
+                this.fadeAmount = 1.0f - (float) (deltaT - fadeInTime) / (float) fadeOutTime;
             } else {
-                this.fadeAmount = (float)deltaT / (float)fadeTime;
+                this.fadeAmount = (float)deltaT / (float)fadeInTime;
             }
         }
 
@@ -64,7 +67,7 @@ namespace Omnom_III_Game {
                 this.targetSize.Width, 
                 this.targetSize.Height, 
                 0, 0, 
-                Color.White * (1.0f - this.fadeAmount));
+                Color.White * this.fadeAmount);
 
         }
 
@@ -97,7 +100,7 @@ namespace Omnom_III_Game {
 
         public bool wantsToExit() {
             return this.exit ||
-                this.runningTime.ElapsedMilliseconds > this.fadeTime + 100;
+                this.runningTime.ElapsedMilliseconds > this.fadeInTime + this.fadeOutTime + 100;
         }
     }
 }
