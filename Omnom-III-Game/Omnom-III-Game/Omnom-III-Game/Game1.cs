@@ -68,6 +68,7 @@ namespace Omnom_III_Game {
             GamePadButtons buttons = GamePad.GetState(PlayerIndex.One).Buttons;
             
             InputState input = new InputState();
+            input.setPrevious(this.previousInput);
             input.set(InputState.Move.UP, dpad.Up == ButtonState.Pressed 
                 || buttons.Y == ButtonState.Pressed
                 || Keyboard.GetState().IsKeyDown(Keys.W));
@@ -89,11 +90,15 @@ namespace Omnom_III_Game {
 
             this.scene.update(input);
 
+            this.previousInput = input;
+
             if (this.scene.wantsToExit())
                 this.Exit();
 
             base.Update(gameTime);
         }
+
+        private InputState previousInput = null;
 
         private void checkForExitSignals() {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)

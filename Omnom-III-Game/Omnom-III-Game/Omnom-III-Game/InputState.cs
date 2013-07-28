@@ -30,10 +30,14 @@ namespace Omnom_III_Game {
 
         internal Dictionary<Move, Boolean> moveStates;
         internal Dictionary<Control, Boolean> controlStates;
+        public Move lastMove;
+        private Move previousMove;
 
         public InputState() {
             this.moveStates = new Dictionary<Move, Boolean>();
             this.controlStates = new Dictionary<Control, Boolean>();
+            this.lastMove = Move.BREAK;
+            this.previousMove = Move.BREAK;
         }
 
         public InputState(params Move[] activeInputs) {
@@ -41,6 +45,17 @@ namespace Omnom_III_Game {
             foreach (Move move in activeInputs){
                 this.activate(move);
             }
+        }
+
+        public void setPrevious(InputState previous) {
+            if (null == previous)
+                return;
+            this.previousMove = previous.lastMove;
+            this.lastMove = this.previousMove;
+        }
+
+        public bool lastMoveIsNew() {
+            return !this.previousMove.Equals(this.lastMove);
         }
 
         public void activate(Move move) { 
@@ -53,6 +68,13 @@ namespace Omnom_III_Game {
 
         public void set(Move move, Boolean value) {
             this.moveStates[move] = value;
+            if (value) {
+                this.previousMove = this.lastMove;
+                this.lastMove = move;
+            } else if (this.lastMove.Equals(move)) {
+                this.previousMove = Move.BREAK;
+                this.lastMove = Move.BREAK;
+            }
         }
 
         public void set(Control control, Boolean value) {

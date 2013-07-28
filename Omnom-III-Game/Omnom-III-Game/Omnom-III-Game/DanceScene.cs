@@ -25,6 +25,7 @@ namespace Omnom_III_Game {
         PlayerProgress progress;
         
         AnimatedCharacter enemy;
+        AnimatedCharacter player;
         
         String backgroundTexture;
         TextureContext textures;
@@ -61,14 +62,9 @@ namespace Omnom_III_Game {
             script.reload();
             this.textures.loadTextures(content, 
                 "player_character", "btn_up", "btn_down", "btn_left", "btn_right", "btn_fail");
-
-            String enemyTextureName = this.script.get("enemy");
-            //this.textures.loadTextures(content, enemyTextureName+"_idle");
-
+            
             this.backgroundTexture = this.script.get("background");
-            this.textures.loadTextures(content, 
-                //this.enemyTexture,
-                this.backgroundTexture);
+            this.textures.loadTextures(content, this.backgroundTexture);
 
             this.song = new Song(this.script);
             this.sequences.initialize(this.script);
@@ -81,9 +77,10 @@ namespace Omnom_III_Game {
                     handicap.startTime(song.bpms));
             }
 
-            this.enemy = new AnimatedCharacter(enemyTextureName, content, (long)this.song.beatTimeInMs);
-            //this.enemyTexture = new AnimatedTexture(textures.getRaw(enemyTextureName + "_idle"), (long)(this.song.beatTimeInMs));
-            //this.enemyTexture.reset();
+            long beatTimeMs = (long) this.song.beatTimeInMs;
+            this.enemy = new AnimatedCharacter(this.script.get("enemy"), content, beatTimeMs);
+            this.player = new AnimatedCharacter("toasty/toasty", content, beatTimeMs);
+            
             this.lastTime = 0;
             this.song.play();
         }
@@ -107,6 +104,18 @@ namespace Omnom_III_Game {
                 this.lastMove = move;
             }
 
+            //if (!input.lastMove.Equals(InputState.Move.BREAK)) {
+            if (input.lastMoveIsNew()) {
+                this.player.activate(input.lastMove);
+            }
+            updatePlayerRating(input, time, measures);
+            
+            this.animations.update(time);
+            this.player.update(deltaT);
+            this.enemy.update(deltaT);
+        }
+
+        private void updatePlayerRating(InputState input, long time, float measures) {
             PlayerProgress.RatedMoves rated = this.progress.nextRating(measures, this.currentSequence, input);
             foreach (DanceSequence.Input move in rated.ok) {
                 this.animations.startPlayerAnimation(move.handicap, time, PlayerProgress.Rating.OK);
@@ -123,10 +132,6 @@ namespace Omnom_III_Game {
             foreach (DanceSequence.Input move in rated.wrong) {
                 this.animations.startFailAnimation(move.handicap, time);
             }
-            
-            
-            this.animations.update(time);
-            this.enemy.update(deltaT);
         }
 
         private bool hasExitState(InputState input) {
@@ -153,7 +158,8 @@ namespace Omnom_III_Game {
                 if (this.currentSequence.isEnemyActive(this.song.timeRunningInMeasures)) {
                     this.enemy.draw(sprites);
                 } else {
-                    sprites.drawFromCenter(this.textures.getRaw("player_character"), 350, 350, 0, 50);
+                    this.player.draw(sprites);
+                    //sprites.drawFromCenter(this.textures.getRaw("player_character"), 350, 350, 0, 50);
                 }
                 
             }
