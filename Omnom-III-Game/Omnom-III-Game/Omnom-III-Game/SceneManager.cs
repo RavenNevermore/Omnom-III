@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Omnom_III_Game.util;
 using Omnom_III_Game.highscore;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Omnom_III_Game {
@@ -48,6 +49,14 @@ namespace Omnom_III_Game {
             this.scenes["highscore"] = new HighscoreScene();
 
             menu.add(new MenuScene.MenuItem("exit", "Quit Game"));
+
+            this.initIntroScenes();
+        }
+
+        private void initIntroScenes() {
+            FadeInPictureScene sceneHairware = new FadeInPictureScene("intro/hairware", Color.White);
+            this.scenes["intro"] = sceneHairware;
+            this.nextSceneParams = new SceneActivationParameters("intro", null);
         }
 
         private void addDanceScene(String scriptname, MenuScene menu) {

@@ -103,6 +103,7 @@
     <Compile Include="dance\DanceSceneAnimationBundle.cs" />
     <Compile Include="exceptions\SoundSystemException.cs" />
     <Compile Include="ExplicitInputState.cs" />
+    <Compile Include="FadeInPictureScene.cs" />
     <Compile Include="fmod\fmod.cs" />
     <Compile Include="fmod\fmod_dsp.cs" />
     <Compile Include="fmod\fmod_errors.cs" />
