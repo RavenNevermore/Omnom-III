@@ -39,16 +39,18 @@ namespace Omnom_III_Game {
 
             MenuScene menu = new MenuScene();
             this.scenes["menu"] = menu;
-            menu.add(new MenuScene.MenuItem("story_mode", "Story Mode", this));
+            //menu.add(new MenuItem("story_mode", "Story Mode", this));
 
             this.addDanceScene("level_01", menu);
             this.addDanceScene("level_02", menu);
             this.addDanceScene("level_03", menu);
             this.addDanceScene("level_04", menu);
-            menu.add(new MenuScene.MenuItem("highscore", "Highscore", new HighscoreParams("T-Bone the Steak")));
+            //menu.add(new MenuItem("highscore", "Highscore", new HighscoreParams("T-Bone the Steak")));
             this.scenes["highscore"] = new HighscoreScene();
 
-            menu.add(new MenuScene.MenuItem("exit", "Quit Game"));
+            //menu.add(new MenuItem("exit", "Quit Game"));
+
+            menu.buildMenuStructure(this);
 
             this.initIntroScenes();
         }
@@ -71,7 +73,7 @@ namespace Omnom_III_Game {
         private void addDanceScene(String scriptname, MenuScene menu) {
             DanceScene scene = new DanceScene(scriptname);
             this.scenes[scriptname] = scene;
-            menu.add(new MenuScene.MenuItem(scriptname, scene.title));
+            //menu.add(new MenuItem(scriptname, scene.title));
         }
 
         public void update(InputState input) {

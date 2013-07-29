@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace Omnom_III_Game {
-    class ExplicitInputState : InputState {
+    public class ExplicitInputState : InputState {
 
         Dictionary<object, Boolean> lastStates;
 
