@@ -84,5 +84,9 @@ namespace Omnom_III_Game {
             }
             return null;
         }
+
+        internal IEnumerable<DanceSequence> asList() {
+            return this.sequences;
+        }
     }
 }

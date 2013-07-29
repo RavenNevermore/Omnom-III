@@ -37,11 +37,13 @@ namespace Omnom_III_Game {
         InputState.Move lastMove;
 
         DanceSceneAnimationBundle animations;
+        VisualTransition transitions;
 
         public DanceScene(String scriptname) {
             this.script = ContentScript.FromFile(scriptname);
             this.textures = new TextureContext();
             this.sequences = new DanceSequenceProtocol();
+            this.transitions = new VisualTransition();
         }
 
         public String title { get { return this.script.title; } }
@@ -67,15 +69,14 @@ namespace Omnom_III_Game {
             this.textures.loadTextures(content, this.backgroundTexture);
 
             this.song = new Song(this.script);
-            this.sequences.initialize(this.script);
+            
             this.animations = new DanceSceneAnimationBundle(this.textures, this.song);
             this.progress = new PlayerProgress();
 
-            foreach (DanceSequence.Input handicap in this.sequences.handicaps) {
-                this.animations.startOpponentAnimation(
-                    handicap.handicap,
-                    handicap.startTime(song.bpms));
-            }
+            this.initOpponent();
+
+            this.initTransitions(content);
+
 
             long beatTimeMs = (long) this.song.beatTimeInMs;
             this.enemy = new AnimatedCharacter(this.script.get("enemy"), content, beatTimeMs);
@@ -83,6 +84,23 @@ namespace Omnom_III_Game {
             
             this.lastTime = 0;
             this.song.play();
+        }
+
+        private void initTransitions(ContentUtil content) {
+            this.transitions.initialize(content, this.song.beatTimeInMs);
+            foreach (DanceSequence sequence in this.sequences.asList()) {
+                this.transitions.addTransitPoint(
+                    sequence.startMeasure + sequence.length);
+            }
+        }
+
+        private void initOpponent() {
+            this.sequences.initialize(this.script);
+            foreach (DanceSequence.Input handicap in this.sequences.handicaps) {
+                this.animations.startOpponentAnimation(
+                    handicap.handicap,
+                    handicap.startTime(song.bpms));
+            }
         }
 
         public void update(InputState input) {
@@ -113,6 +131,7 @@ namespace Omnom_III_Game {
             this.animations.update(time);
             this.player.update(deltaT);
             this.enemy.update(deltaT);
+            this.transitions.update(time);
         }
 
         private void updatePlayerRating(InputState input, long time, float measures) {
@@ -170,7 +189,7 @@ namespace Omnom_III_Game {
                 "\n\rScore: ", this.progress.score);
             
             this.animations.draw(sprites);
-            
+            this.transitions.draw(sprites);
         }
 
 

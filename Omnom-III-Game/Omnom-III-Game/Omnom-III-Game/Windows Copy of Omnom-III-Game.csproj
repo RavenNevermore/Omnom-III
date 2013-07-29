@@ -77,6 +77,7 @@
     <Compile Include="DanceSequence.cs" />
     <Compile Include="dance\DanceProtocol.cs" />
     <Compile Include="dance\DanceSceneAnimationBundle.cs" />
+    <Compile Include="dance\VisualTransition.cs" />
     <Compile Include="exceptions\SoundSystemException.cs" />
     <Compile Include="ExplicitInputState.cs" />
     <Compile Include="FadeInPictureScene.cs" />

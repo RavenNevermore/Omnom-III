@@ -11,7 +11,6 @@ Content\MeasureTest.xnb
 Content\eyeofthetiger.xnb
 Content\steakysong.xnb
 Content\default.xnb
-Content\bgr_steaky.xnb
 Content\enemy_tbone_idle.xnb
 Content\enemy_tbone_down.xnb
 Content\enemy_tbone_left.xnb
@@ -26,6 +25,11 @@ Content\toasty\toasty_idle.xnb
 Content\toasty\toasty_left.xnb
 Content\toasty\toasty_right.xnb
 Content\toasty\toasty_up.xnb
+Content\circle.xnb
+Content\bgr_muffy.xnb
+Content\bgr_paprikano.xnb
+Content\bgr_tbone.xnb
+Content\bgr_tutorial.xnb
 Content\eattherich.wma
 Content\MeasureTest.wma
 Content\eyeofthetiger.wma
