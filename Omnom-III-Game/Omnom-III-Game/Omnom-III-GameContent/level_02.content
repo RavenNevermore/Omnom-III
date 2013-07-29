@@ -7,8 +7,8 @@ tempo: 107
 startshift: 0
 
 sequences:
-     1> 1/1  break
-     3> 1/1  break
+     1> 1/1  break, break
+     
      5> 1/4  up, break, down, break
      7> 1/4  left, break, right, break
 
