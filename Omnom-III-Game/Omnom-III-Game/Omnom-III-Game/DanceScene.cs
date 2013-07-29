@@ -89,8 +89,10 @@ namespace Omnom_III_Game {
         private void initTransitions(ContentUtil content) {
             this.transitions.initialize(content, this.song.beatTimeInMs);
             foreach (DanceSequence sequence in this.sequences.asList()) {
+                this.transitions.addTransitPoint(sequence.startMeasure, false);
+
                 this.transitions.addTransitPoint(
-                    sequence.startMeasure + sequence.length);
+                    sequence.startMeasure + sequence.length, true);
             }
         }
 
