@@ -29,12 +29,11 @@ sequences:
      30> 1/4  up, down, right, left,
          1/4  right, 1/2. left
 
-     36> 1/2. up, 1/4 left, 1/1 down,
-         1/2. left, 1/4 down, 1/2 right, up,
+     36> 1/4  up, up, up, left, 1/1 down,
+         1/4  left, left left, down, 1/1 up,
          1/1  break, 1/1 break
 
      48> 1/2  left, right, up, 1/8 break, left, down, right,
          1/2  left, right, 1/1 down
 
      56> 1/4  left, right, 1/4. up, 1/2 down, up, 1/8 break          
-
