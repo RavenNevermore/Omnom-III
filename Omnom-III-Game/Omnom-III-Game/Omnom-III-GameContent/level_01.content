@@ -1,8 +1,8 @@
 # Get to know her
 
 song: steakysong
-enemy: enemy_tbone
-background: bgr_steaky
+enemy: enemy_muffy
+background: bgr_tutorial
 tempo: 107
 startshift: 0
 

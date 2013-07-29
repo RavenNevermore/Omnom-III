@@ -2,39 +2,39 @@
 
 song: steakysong
 enemy: enemy_tbone
-background: bgr_steaky
+background: bgr_tbone
 tempo: 107
 startshift: 0
 
 sequences:
-     1> 1/4  left, right, left, right
-     3> 1/4  left, right, left, right
-     5> 1/4  up, down, up, down
-     7> 1/4  up, down, up, down
+     1> 1/1  break
+     3> 1/1  break
+     5> 1/4  up, break, down, break
+     7> 1/4  left, break, right, break
 
-     9>  1/4  left, right, left, right
-     11> 1/4  up, down, up, down
-     13> 1/4  up, down, up, down
-     15> 1/4  left, right, left, 1/8 right, up
+     9>  1/4  up, down, up, down
+     11> 1/4  left, right, left, right
+     13> 1/4  up, up, down, down
+     15> 1/4  left, left, right, right
 
      17> 1/8  left, right, up, down, 1/2 break
-     19> 1/8 right, left, down, up, 1/2 break
+     19> 1/8  right, left, down, up, 1/2 break
 
-     21> 1/4 up, down, right, left,
-         1/4 right, 1/2. left
+     21> 1/4  up, down, right, left,
+         1/4  right, 1/2. left
  
      26> 1/8  left, right, up, down, 1/2 break
-     28> 1/8 right, left, down, up, 1/2 break
+     28> 1/8  right, left, down, up, 1/2 break
 
-     30> 1/4 up, down, right, left,
-         1/4 right, 1/2. left
+     30> 1/4  up, down, right, left,
+         1/4  right, 1/2. left
 
      36> 1/2. up, 1/4 left, 1/1 down,
          1/2. left, 1/4 down, 1/2 right, up,
-         1/1 break, 1/1 break
+         1/1  break, 1/1 break
 
-     48> 1/2 left, right, up, 1/8 break, left, down, right,
-         1/2 left, right, 1/1 down
+     48> 1/2  left, right, up, 1/8 break, left, down, right,
+         1/2  left, right, 1/1 down
 
-     56> 1/4 left, right, 1/4. up, 1/2 down, up, 1/8 break          
+     56> 1/4  left, right, 1/4. up, 1/2 down, up, 1/8 break          
 

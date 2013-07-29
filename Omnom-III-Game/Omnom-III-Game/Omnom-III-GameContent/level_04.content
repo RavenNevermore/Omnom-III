@@ -1,8 +1,8 @@
 # The final conquest
 
 song: steakysong
-enemy: enemy_tbone
-background: bgr_steaky
+enemy: enemy_muffy
+background: bgr_muffy
 tempo: 107
 startshift: 0
 
