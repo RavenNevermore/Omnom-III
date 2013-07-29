@@ -22,9 +22,11 @@ namespace Omnom_III_Game {
         private Stopwatch runningTime;
         private bool exit;
 
-        public FadeInPictureScene(String pictureName, Color background) {
+        public FadeInPictureScene(String pictureName, Color background, long fadeTime) {
             this.pictureName = pictureName;
             this.backgroundColor = background;
+            this.fadeInTime = fadeTime * 7 / 8;
+            this.fadeOutTime = fadeTime * 1 / 8;
         }
 
         public void setTargetSize(int width, int height) {

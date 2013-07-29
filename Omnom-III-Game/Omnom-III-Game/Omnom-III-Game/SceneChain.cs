@@ -6,7 +6,7 @@ using Omnom_III_Game.util;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Omnom_III_Game {
-    class SceneChain : IScene {
+    public class SceneChain : IScene {
 
         public String[] chainedScenes;
         private IScene activeScene;
@@ -25,13 +25,13 @@ namespace Omnom_III_Game {
             this.chainedScenes = this.chainedScenes.Concat(sceneNames).ToArray();
         }
 
-        public void initialize(ContentUtil content, SceneActivationParameters parameters) {
+        public virtual void initialize(ContentUtil content, SceneActivationParameters parameters) {
             this.manager = (SceneManager) parameters.parameters;
             this.currentSceneIndex = -1;
             this.activateNext();
         }
 
-        public void update(InputState input) {
+        public virtual void update(InputState input) {
             if (this.wantsToExit()) {
                 return;
             }
@@ -66,7 +66,7 @@ namespace Omnom_III_Game {
             this.activeScene.draw(sprites, device);
         }
 
-        public void cleanup() {
+        public virtual void cleanup() {
             if (null != this.activeScene)
                 this.activeScene.cleanup();
             this.activeScene = null;

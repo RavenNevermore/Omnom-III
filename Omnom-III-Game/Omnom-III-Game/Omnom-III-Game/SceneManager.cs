@@ -54,14 +54,14 @@ namespace Omnom_III_Game {
         }
 
         private void initIntroScenes() {
-            FadeInPictureScene sceneHairware = new FadeInPictureScene("intro/hairware", Color.White);
-            FadeInPictureScene sceneGA = new FadeInPictureScene("intro/games_academy", Color.White);
-            FadeInPictureScene sceneOmnom = new FadeInPictureScene("intro/omnom", Color.White);
+            FadeInPictureScene sceneHairware = new FadeInPictureScene("intro/hairware", Color.White, 2000);
+            FadeInPictureScene sceneGA = new FadeInPictureScene("intro/games_academy", Color.White, 2000);
+            FadeInPictureScene sceneOmnom = new FadeInPictureScene("intro/omnom", Color.White, 4000);
             this.scenes["intro_ga"] = sceneGA;
             this.scenes["intro_hairware"] = sceneHairware;
             this.scenes["intro_omnom"] = sceneOmnom;
 
-            SceneChain chain = new SceneChain();
+            MusicalSceneChain chain = new MusicalSceneChain("intro/introsound", 120f);
             chain.addToChain("intro_ga", "intro_hairware", "intro_omnom");
             this.scenes["intro"] = chain;
 

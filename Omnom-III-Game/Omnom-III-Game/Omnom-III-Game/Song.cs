@@ -7,7 +7,7 @@ using Omnom_III_Game.exceptions;
 using Omnom_III_Game.util;
 
 namespace Omnom_III_Game {
-    public class Song {
+    public class Song : Sound {
         public enum MusicTime { 
             FULL, 
             HALF, HALF_DOTTED, 
@@ -185,9 +185,6 @@ namespace Omnom_III_Game {
 
         }
 
-        String filename;
-        FMOD.Sound content;
-        FMOD.Channel channel;
         public ExtendedSpectralData spectrum;
         private float beatsPerMillisecond;
         public float timeShift;
@@ -250,39 +247,21 @@ namespace Omnom_III_Game {
             }
         }
 
-        public Song() {
-        }
-
-        public Song(String contentName, float bpm) {
+        
+        public Song(String contentName, float bpm) : base(contentName) {
             this.bpm = bpm;
-            this.setFilenameFromContentName(contentName);
-            ERRCHECK(SystemRef.soundsystem.createSound(filename, FMOD.MODE.SOFTWARE, ref content));
         }
 
-        public Song(ContentScript script) {
+        public Song(ContentScript script) : base(script["song"][0]) {
             this.bpm = script.asFloat["tempo"][0];
-            this.setFilenameFromContentName(script["song"][0]);
-            ERRCHECK(SystemRef.soundsystem.createSound(filename, FMOD.MODE.SOFTWARE, ref content));
-
-
+            
             if (null != script["startshift"])
                 this.timeShift = this.beatTimeInMs * script.asFloat["startshift"][0];
         }
 
-        private void setFilenameFromContentName(String contentName) {
-            this.filename = "Content/" + contentName + ".wma";
-        }
-
-        private void ERRCHECK(FMOD.RESULT result) {
-            if (result != FMOD.RESULT.OK) {
-                throw new SoundSystemException(result.ToString("X"));
-            }
-        }
-
-        public void play() {
-            SystemRef.soundsystem.playSound(FMOD.CHANNELINDEX.FREE, content, false, ref channel);
+        public override void play() {
+            base.play();
             this.spectrum = new ExtendedSpectralData(this.channel);
-            
         }
 
         public void calculateMetaInfo() {
@@ -296,21 +275,5 @@ namespace Omnom_III_Game {
         }
 
 
-
-        public bool stoppedPlaying() {
-            bool isPlaying = false;
-            this.channel.isPlaying(ref isPlaying);
-            return !isPlaying;
-        }
-
-        internal void stop() {
-            if (!this.stoppedPlaying()) {
-                this.channel.stop();
-            }
-        }
-
-        internal void reset() {
-            this.channel.setPosition(0, TIMEUNIT.MS);
-        }
     }
 }

@@ -31,6 +31,10 @@ namespace Omnom_III_Game {
         bool firstUpdate;
         Texture2D background;
 
+        Sound clickSound;
+        Sound selectSound;
+        Sound backgroundSong;
+
         public MenuScene() {
             this.items = new List<MenuItem>();
         }
@@ -48,9 +52,15 @@ namespace Omnom_III_Game {
             this.next = false;
             this.firstUpdate = true;
             this.background = content.load<Texture2D>("menu/background01");
+            this.clickSound = new Sound("menu/click");
+            this.selectSound = new Sound("menu/select");
+            this.backgroundSong = new Sound("menu/backgroundsong");
         }
 
         public void update(InputState currentInput) {
+            if (!this.next && this.backgroundSong.stoppedPlaying())
+                this.backgroundSong.play();
+
             this.input.update(currentInput);
 
             // We ignore the first update after initializing the scene,
@@ -64,20 +74,26 @@ namespace Omnom_III_Game {
             if (this.input.isActive(InputState.Control.EXIT)){
                 this.selectedIndex = exitIndex;
                 this.next = true;
+                this.clickSound.play();
+                this.backgroundSong.stop();
                 return;
             }
 
             if (this.input.isActive(InputState.Control.SELECT)) {
                 this.next = true;
+                this.clickSound.play();
+                this.backgroundSong.stop();
                 return;
             }
 
             if (this.input.isActive(InputState.Move.UP)) {
+                this.selectSound.play();
                 this.selectedIndex--;
                 if (this.selectedIndex < 0) {
                     this.selectedIndex = this.items.Count - 1;
                 }
             } else if (this.input.isActive(InputState.Move.DOWN)) {
+                this.selectSound.play();
                 this.selectedIndex++;
                 if (this.selectedIndex >= this.items.Count) {
                     this.selectedIndex = 0;
