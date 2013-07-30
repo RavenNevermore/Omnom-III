@@ -8,6 +8,7 @@ namespace Omnom_III_Game.util {
     class SystemRef {
 
         private static FMOD.System _soundsystem;
+        private static Random random = new Random();
 
         public static FMOD.System soundsystem {
             get {
@@ -32,6 +33,10 @@ namespace Omnom_III_Game.util {
             if (result != FMOD.RESULT.OK) {
                 throw new SoundSystemException(result.ToString("X"));
             }
+        }
+
+        public static int nextRandomInt(int min, int max) {
+            return random.Next(min, max);
         }
     }
 }

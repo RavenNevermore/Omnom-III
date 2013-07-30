@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Omnom_III_Game.util;
 using Omnom_III_Game.highscore;
+using Omnom_III_Game.graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -72,10 +73,29 @@ namespace Omnom_III_Game {
             this.selectSound = new Sound("menu/select");
             this.backgroundSong = new Sound("menu/backgroundsong");
 
+            ScaledTexture[][] buttonTextures = this.loadButtonTextures(content);
+
             foreach (MenuItem item in this.items) {
-                item.initialize(this.clickSound, this.selectSound);
+                int texIndex = SystemRef.nextRandomInt(0, 4);
+                item.initialize(this.clickSound, this.selectSound,
+                    buttonTextures[texIndex][0], 
+                    buttonTextures[texIndex][1]);
             }
             this.items[0].select();
+        }
+
+        private ScaledTexture[][] loadButtonTextures(ContentUtil content) {
+            ScaledTexture[][] textures = new ScaledTexture[4][];
+            for (int i = 0; i < textures.Length; i++) {
+                textures[i] = new ScaledTexture[2];
+                textures[i][0] = new ScaledTexture(
+                    content.load<Texture2D>("menu/button" + (i + 1) + "_deactivated"),
+                    .3f);
+                textures[i][1] = new ScaledTexture(
+                    content.load<Texture2D>("menu/button" + (i + 1) + "_activated"),
+                    .3f);
+            }
+            return textures;
         }
 
         public void update(InputState currentInput) {
@@ -111,17 +131,13 @@ namespace Omnom_III_Game {
 
         public void draw(SpriteBatchWrapper sprites, GraphicsDevice device) {
             sprites.drawBackground(background);
-            int line = this.items.Count / 2 * -1;
+
+            Vector2 center = sprites.getCenterOfScreen();
+            int y = 40;
             foreach (MenuItem item in this.items) {
-                item.drawInLine(sprites, line);
-                line += item.getLineSize();
+                item.drawFromCenter(sprites, (int)center.X, y);
+                y += item.getHeight();
             }
-            /*
-            for (int i = 0; i < this.items.Count; i++) {
-                
-                int line = i - this.items.Count / 2;
-                this.items.ElementAt(i).drawInLine(sprites, line);
-            }*/
         }
 
         public SceneActivationParameters nextScene() {

@@ -48,10 +48,14 @@ namespace Omnom_III_Game {
 
         public String title { get { return this.script.title; } }
 
-        public SceneActivationParameters nextScene() { 
-            return new SceneActivationParameters(
-                "highscore",
-                new HighscoreParams(this.title, this.progress.clone())); 
+        public SceneActivationParameters nextScene() {
+            if (0 == this.progress.score) {
+                return null;
+            } else {
+                return new SceneActivationParameters(
+                    "highscore",
+                    new HighscoreParams(this.title, this.progress.clone()));
+            }
         }
 
         public bool wantsToExit() { return exit; }

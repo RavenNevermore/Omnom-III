@@ -51,6 +51,10 @@ namespace Omnom_III_Game.util {
             return (int) (this.font.MeasureString(text).X * scale);
         }
 
+        public int getHeightOfText(String text, float scale) {
+            return (int)(this.font.MeasureString(text).Y * scale);
+        }
+
         public void drawFromCenter(Texture2D texture, int width, int height) {
             this.drawFromCenter(texture, width, height, 0, 0, Color.White);
         }
@@ -103,6 +107,39 @@ namespace Omnom_III_Game.util {
                 color);
         }
 
+        public void drawTextureAt(Texture2D texture,
+                int width, int height,
+                int x, int y) {
+
+            this.drawTextureAt(texture, 1.0f, width, height, x, y);
+        }
+
+        public void drawTextureAt(Texture2D texture, float alpha,
+                int width, int height,
+                int x, int y) {
+
+            this.wrapped.Draw(
+                texture,
+                new Rectangle(
+                    x,
+                    y,
+                    width,
+                    height), 
+                texture.Bounds,
+                Color.White * alpha);
+        }
+
+        public void drawColorAt(Color color,
+                float alpha,
+                int width, int height,
+                int x, int y) {
+
+            //color = color * alpha;
+            Texture2D texture = DrawingUtil.createTexture(wrappedDevice, color);
+            Rectangle bounds = new Rectangle(x, y, width, height);
+            this.wrapped.Draw(texture, bounds, Color.White * alpha);
+        }
+
         internal void fillWithColor(Color color, float alpha) {
             Texture2D texture = DrawingUtil.createTexture(wrappedDevice, color);
             this.wrapped.Draw(texture, wrappedDevice.Viewport.Bounds, Color.White * alpha);
@@ -113,6 +150,13 @@ namespace Omnom_III_Game.util {
                 texture = DrawingUtil.createTexture(wrappedDevice, Color.CornflowerBlue);
             }
             this.wrapped.Draw(texture, wrappedDevice.Viewport.Bounds, Color.White);
+        }
+
+        internal Vector2 getCenterOfScreen() {
+            Vector2 center = new Vector2();
+            center.Y = this.wrappedDevice.Viewport.Height / 2;
+            center.X = this.wrappedDevice.Viewport.Width / 2;
+            return center;
         }
     }
 }

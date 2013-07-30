@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Omnom_III_Game.graphics;
 
 namespace Omnom_III_Game {
     public class SubMenu : MenuItem {
@@ -25,12 +26,14 @@ namespace Omnom_III_Game {
             }
         }
 
-        public override void initialize(Sound click, Sound select) {
-            base.initialize(click, select);
+        public override void initialize(Sound click, Sound select,
+                    ScaledTexture texDeactivated, ScaledTexture texActivated) {
+
+            base.initialize(click, select, texDeactivated, texActivated);
             this.active = false;
             this.selectedIndex = 0;
             foreach (MenuItem item in this.items) {
-                item.initialize(click, select);
+                item.initialize(click, select, texDeactivated, texActivated);
             }
         }
 
@@ -90,7 +93,7 @@ namespace Omnom_III_Game {
             }
         }
 
-        public override void drawInLine(util.SpriteBatchWrapper sprites, int line) {
+        /*public override void drawInLine(util.SpriteBatchWrapper sprites, int line) {
             base.drawInLine(sprites, line);
             if (this.active) {
                 int y = sprites.getYForTextLine(line + 1);
@@ -102,14 +105,48 @@ namespace Omnom_III_Game {
                     x += 15;
                 }
             }
-        }
+        }*/
 
-        public override int getLineSize() {
+        /*public override int getLineSize() {
             int size = base.getLineSize();
             if (this.active) {
                 size += 2;
             }
             return size;
+        }*/
+
+        public override void drawFromCenter(util.SpriteBatchWrapper sprites, int x, int y) {
+            base.drawFromCenter(sprites, x, y);
+            if (this.active) {
+                int width = 0;
+                foreach (MenuItem item in this.items) {
+                    width += sprites.getWidthOfText(item.title, .8f);
+                    width += 15;
+                }
+                width -= 15;
+
+                int submenuX = x - width / 2;
+                int submenuY = y + this.texture.bounds.Height;
+
+                int textHeight = sprites.getHeightOfText("FOO", .8f);
+                int backdropY = submenuY - 3;
+                sprites.drawColorAt(Color.Black, .3f, width +10, textHeight + 6, submenuX - 5, backdropY);
+
+                foreach (MenuItem item in this.items) {
+                    sprites.drawTextAt(item.title, submenuX, submenuY, .8f,
+                        item.isSelected() ? Color.Orange : Color.GhostWhite);
+                    submenuX += sprites.getWidthOfText(item.title, .8f);
+                    submenuX += 15;
+                }
+            }
+        }
+
+        public override int getHeight() {
+            int height = base.getHeight();
+            if (this.active) {
+                height += 30;
+            }
+            return height;
         }
 
         internal override string getSceneName() {

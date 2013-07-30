@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Omnom_III_Game.util;
+using Omnom_III_Game.graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -18,6 +19,9 @@ namespace Omnom_III_Game {
 
         protected Sound clickSound;
         protected Sound selectSound;
+
+        private ScaledTexture texDeactivated;
+        private ScaledTexture texActivated;
 
         public MenuItem(String sceneName, String title) : this(sceneName, title, null) { }
 
@@ -35,11 +39,15 @@ namespace Omnom_III_Game {
         }
 
         
-        public virtual void initialize(Sound click, Sound select){
+        public virtual void initialize(Sound click, Sound select,
+                    ScaledTexture texDeactivated, ScaledTexture texActivated) {
+
             this.clickSound = click;
             this.selectSound = select;
             this._nextScene = false;
             this.selected = false;
+            this.texDeactivated = texDeactivated;
+            this.texActivated = texActivated;
         }
 
         public void update(ExplicitInputState input) {
@@ -82,13 +90,40 @@ namespace Omnom_III_Game {
         private bool _nextScene;
         public bool nextScene { get { return this._nextScene; } }
 
-        public virtual void drawInLine(SpriteBatchWrapper sprites, int line) {
+        /*public virtual void drawInLine(SpriteBatchWrapper sprites, int line) {
             sprites.drawTextCentered(this.title, line, this.selected ? Color.Orange : Color.GhostWhite);
+        }*/
+
+        public virtual void drawFromCenter(SpriteBatchWrapper sprites, int x, int y) {
+            int width = sprites.getWidthOfText(this.title, 1.0f);
+            int textureWidth = this.texture.bounds.Width;
+            if (textureWidth < width + 20) {
+                textureWidth = width + 20;
+            }
+
+            sprites.drawTextureAt(
+                this.texture.texture, textureWidth, this.texture.bounds.Height, 
+                x - textureWidth/2, y);
+
+            int textY = y + (int)(this.texture.bounds.Height * .25);
+
+            sprites.drawTextAt(
+                this.title, x - width / 2, textY, 1.0f, 
+                this.selected ? Color.Orange : Color.GhostWhite);
         }
 
-        public virtual int getLineSize() {
-            return 1;
+        protected ScaledTexture texture {
+            get {
+            return this.selected ? this.texActivated : this.texDeactivated;
+        } }
+
+        public virtual int getHeight() {
+            return this.texture.bounds.Height + 10;
         }
+
+        /*public virtual int getLineSize() {
+            return 1;
+        }*/
 
         internal virtual string getSceneName() {
             return this.sceneName;
