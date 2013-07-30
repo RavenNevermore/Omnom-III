@@ -17,7 +17,6 @@ Content\intro\omnom.xnb
 Content\bgr_muffy.xnb
 Content\bgr_paprikano.xnb
 Content\bgr_tbone.xnb
-Content\bgr_tutorial.xnb
 Content\circle.xnb
 Content\circle_shadow.xnb
 Content\enemy_muffy_down.xnb
@@ -53,6 +52,7 @@ Content\menu\button3_activated.xnb
 Content\menu\button3_deactivated.xnb
 Content\menu\button4_activated.xnb
 Content\menu\button4_deactivated.xnb
+Content\bgr_tutorial.xnb
 Content\eattherich.wma
 Content\MeasureTest.wma
 Content\eyeofthetiger.wma

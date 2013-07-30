@@ -178,11 +178,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="bgr_tutorial.jpg">
-      <Name>bgr_tutorial</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="circle.png">
       <Name>circle</Name>
       <Importer>TextureImporter</Importer>
@@ -300,6 +295,11 @@
     </Compile>
     <Compile Include="menu\button4_deactivated.png">
       <Name>button4_deactivated</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="bgr_tutorial.png">
+      <Name>bgr_tutorial</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
