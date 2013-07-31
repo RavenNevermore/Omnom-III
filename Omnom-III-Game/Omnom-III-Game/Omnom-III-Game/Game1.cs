@@ -69,24 +69,68 @@ namespace Omnom_III_Game {
             
             InputState input = new InputState();
             input.setPrevious(this.previousInput);
-            input.set(InputState.Move.UP, dpad.Up == ButtonState.Pressed 
-                || buttons.Y == ButtonState.Pressed
-                || Keyboard.GetState().IsKeyDown(Keys.W));
-            input.set(InputState.Move.DOWN, dpad.Down == ButtonState.Pressed
-                || buttons.A == ButtonState.Pressed
-                || Keyboard.GetState().IsKeyDown(Keys.S));
-            input.set(InputState.Move.LEFT, dpad.Left == ButtonState.Pressed
-                || buttons.X == ButtonState.Pressed
-                || Keyboard.GetState().IsKeyDown(Keys.A));
-            input.set(InputState.Move.RIGHT, dpad.Right == ButtonState.Pressed
-                || buttons.B == ButtonState.Pressed
-                || Keyboard.GetState().IsKeyDown(Keys.D));
+            input.set(InputState.Move.UP, 
+                dpad.Up == ButtonState.Pressed ||
+                buttons.Y == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.W) ||
+                Keyboard.GetState().IsKeyDown(Keys.Up));
 
-            input.set(InputState.Control.EXIT, buttons.Back == ButtonState.Pressed
-                || Keyboard.GetState().IsKeyDown(Keys.Escape));
-            input.set(InputState.Control.SELECT, buttons.Start == ButtonState.Pressed
-                || Keyboard.GetState().IsKeyDown(Keys.Enter));
+            input.set(InputState.Move.DOWN, 
+                dpad.Down == ButtonState.Pressed ||
+                buttons.A == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.S) ||
+                Keyboard.GetState().IsKeyDown(Keys.Down));
 
+            input.set(InputState.Move.LEFT, 
+                dpad.Left == ButtonState.Pressed ||
+                buttons.X == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.A) ||
+                Keyboard.GetState().IsKeyDown(Keys.Left));
+
+            input.set(InputState.Move.RIGHT, 
+                dpad.Right == ButtonState.Pressed || 
+                buttons.B == ButtonState.Pressed || 
+                Keyboard.GetState().IsKeyDown(Keys.D) ||
+                Keyboard.GetState().IsKeyDown(Keys.Right));
+
+
+            input.set(InputState.Control.EXIT, 
+                buttons.Back == ButtonState.Pressed || 
+                Keyboard.GetState().IsKeyDown(Keys.Escape));
+
+            input.set(InputState.Control.BACK,
+                buttons.B == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.Escape) ||
+                Keyboard.GetState().IsKeyDown(Keys.Back));
+
+            input.set(InputState.Control.PAUSE,
+                buttons.Start == ButtonState.Pressed || 
+                Keyboard.GetState().IsKeyDown(Keys.P) || 
+                Keyboard.GetState().IsKeyDown(Keys.Space));
+
+            input.set(InputState.Control.SELECT, 
+                buttons.A == ButtonState.Pressed || 
+                Keyboard.GetState().IsKeyDown(Keys.Enter));
+
+            input.set(InputState.Control.UP,
+                dpad.Up == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.W) ||
+                Keyboard.GetState().IsKeyDown(Keys.Up));
+
+            input.set(InputState.Control.DOWN,
+                dpad.Down == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.S) ||
+                Keyboard.GetState().IsKeyDown(Keys.Down));
+
+            input.set(InputState.Control.LEFT,
+                dpad.Left == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.A) ||
+                Keyboard.GetState().IsKeyDown(Keys.Left));
+
+            input.set(InputState.Control.RIGHT,
+                dpad.Right == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.D) ||
+                Keyboard.GetState().IsKeyDown(Keys.Right));
 
             this.scene.update(input);
 

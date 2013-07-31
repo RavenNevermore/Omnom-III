@@ -10,7 +10,7 @@ namespace Omnom_III_Game {
     public class InputState {
 
         public enum Move { UP, DOWN, LEFT, RIGHT, BREAK };
-        public enum Control { EXIT, SELECT };
+        public enum Control { EXIT, PAUSE, UP, DOWN, LEFT, RIGHT, SELECT, BACK };
 
         public static Move moveFromString(String input) {
             input = input.Trim().ToUpper();

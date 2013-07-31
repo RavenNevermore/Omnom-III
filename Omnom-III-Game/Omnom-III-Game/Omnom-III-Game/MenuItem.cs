@@ -61,11 +61,11 @@ namespace Omnom_III_Game {
             if (input.isActive(InputState.Control.SELECT)) {
                 this.perform();
             }
-            if (input.isActive(InputState.Move.UP)) {
+            if (input.isActive(InputState.Control.UP)) {
                 this.selectSound.play();
                 this.previous.select();
             }
-            if (input.isActive(InputState.Move.DOWN)) {
+            if (input.isActive(InputState.Control.DOWN)) {
                 this.selectSound.play();
                 this.next.select();
             }

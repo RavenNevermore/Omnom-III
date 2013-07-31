@@ -59,20 +59,21 @@ namespace Omnom_III_Game {
 
         protected override void updateState(ExplicitInputState input) {
             if (this.active) {
-                if (input.isActive(InputState.Move.UP) ||
-                        input.isActive(InputState.Move.DOWN)){
+                if (input.isActive(InputState.Control.UP) ||
+                        input.isActive(InputState.Control.DOWN)) {
 
                     this.active = false;
                     this.clickSound.play();
                     base.updateState(input);
-                } else if (input.isActive(InputState.Control.EXIT)) {
+                } else if (input.isActive(InputState.Control.EXIT) ||
+                    input.isActive(InputState.Control.BACK)) {
                     this.active = false;
                     this.clickSound.play();
-                } else if (input.isActive(InputState.Move.RIGHT)) {
+                } else if (input.isActive(InputState.Control.RIGHT)) {
                     this.selectSound.play();
                     this.next();
                     this.selectedItem.select();
-                } else if (input.isActive(InputState.Move.LEFT)) {
+                } else if (input.isActive(InputState.Control.LEFT)) {
                     this.selectSound.play();
                     this.prev();
                     this.selectedItem.select();
