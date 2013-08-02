@@ -60,7 +60,7 @@ namespace Omnom_III_Game.dance {
             if (null == this.activeTexture)
                 return;
 
-            this.activeTexture.drawCentered(sprites, 350, 350, 50);
+            this.activeTexture.drawCentered(sprites, 450, 450, 75);
         }
 
         public void activate(InputState.Move move) {

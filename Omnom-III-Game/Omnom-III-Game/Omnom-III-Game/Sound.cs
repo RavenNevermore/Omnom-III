@@ -11,6 +11,7 @@ namespace Omnom_III_Game {
         protected String filename;
         protected FMOD.Sound content;
         protected FMOD.Channel channel;
+        private bool paused;
 
         public Sound(String contentName) {
             this.setFilenameFromContentName(contentName);
@@ -28,7 +29,19 @@ namespace Omnom_III_Game {
         }
 
         public virtual void play() {
-            SystemRef.soundsystem.playSound(FMOD.CHANNELINDEX.FREE, content, false, ref channel);
+            if (this.paused) {
+                this.paused = false;
+                this.channel.setPaused(false);
+            } else {
+                SystemRef.soundsystem.playSound(FMOD.CHANNELINDEX.FREE, content, false, ref channel);
+            }
+        }
+
+        public virtual void pause() {
+            if (this.paused)
+                return;
+            this.channel.setPaused(true);
+            this.paused = true;
         }
 
         public bool stoppedPlaying() {

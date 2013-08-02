@@ -33,11 +33,13 @@ namespace Omnom_III_Game {
         long lastTime;
 
         bool exit;
+        bool paused;
 
         InputState.Move lastMove;
 
         DanceSceneAnimationBundle animations;
         VisualTransition transitions;
+        private ExplicitInputState input;
 
         public DanceScene(String scriptname) {
             this.script = ContentScript.FromFile(scriptname);
@@ -62,8 +64,10 @@ namespace Omnom_III_Game {
 
         public void initialize(ContentUtil content, SceneActivationParameters parameters) {
             this.exit = false;
+            this.paused = false;
             this.textures.clear();
             this.currentSequence = null;
+            this.input = new ExplicitInputState();
 
             script.reload();
             this.textures.loadTextures(content, 
@@ -109,9 +113,24 @@ namespace Omnom_III_Game {
             }
         }
 
+        
         public void update(InputState input) {
+            this.input.update(input);
+            this.updateInternal(this.input);
+        }
+            
+        private void updateInternal(ExplicitInputState input) {
             if (this.hasExitState(input))
                 return;
+
+            if (input.isActive(InputState.Control.PAUSE)) {
+                if (this.paused){
+                    this.song.play();
+                } else {
+                    this.song.pause();
+                }
+                this.paused = !this.paused;
+            }
 
             this.song.calculateMetaInfo();
             long time = this.song.timeRunningInMs;

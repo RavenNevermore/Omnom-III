@@ -90,10 +90,10 @@ namespace Omnom_III_Game {
                 textures[i] = new ScaledTexture[2];
                 textures[i][0] = new ScaledTexture(
                     content.load<Texture2D>("menu/button" + (i + 1) + "_deactivated"),
-                    .3f);
+                    .4f);
                 textures[i][1] = new ScaledTexture(
                     content.load<Texture2D>("menu/button" + (i + 1) + "_activated"),
-                    .3f);
+                    .4f);
             }
             return textures;
         }
@@ -133,7 +133,12 @@ namespace Omnom_III_Game {
             sprites.drawBackground(background);
 
             Vector2 center = sprites.getCenterOfScreen();
-            int y = 40;
+            int totalHeight = 0;
+            foreach (MenuItem item in this.items) {
+                totalHeight += item.getHeight();
+            }
+
+            int y = (int)sprites.getCenterOfScreen().Y - (totalHeight/2);
             foreach (MenuItem item in this.items) {
                 item.drawFromCenter(sprites, (int)center.X, y);
                 y += item.getHeight();

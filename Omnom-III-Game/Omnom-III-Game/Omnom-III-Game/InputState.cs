@@ -47,7 +47,14 @@ namespace Omnom_III_Game {
             }
         }
 
-        public void setPrevious(InputState previous) {
+        protected void copyState(InputState state) {
+            this.moveStates = state.moveStates;
+            this.controlStates = state.controlStates;
+            this.lastMove = state.lastMove;
+            this.previousMove = state.previousMove;
+        }
+
+        public void initPreviousMove(InputState previous) {
             if (null == previous)
                 return;
             this.previousMove = previous.lastMove;

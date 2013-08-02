@@ -20,8 +20,7 @@ namespace Omnom_III_Game {
                 this.lastStates[state.Key] = state.Value;
             }
 
-            this.moveStates = input.moveStates;
-            this.controlStates = input.controlStates;
+            this.copyState(input);
         }
 
         public override Boolean isActive(Move move) {

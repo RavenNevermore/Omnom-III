@@ -20,6 +20,9 @@ namespace Omnom_III_Game {
 
         public Game1() {
             this.graphics = new GraphicsDeviceManager(this);
+            this.graphics.PreferredBackBufferHeight = 720;
+            this.graphics.PreferredBackBufferWidth = 1280;
+
             this.Content.RootDirectory = "Content";
             this.Components.Add(new GamerServicesComponent(this));
         }
@@ -63,12 +66,15 @@ namespace Omnom_III_Game {
         protected override void Update(GameTime gameTime) {
             //this.checkForExitSignals();
 
+            if (Keyboard.GetState().IsKeyDown(Keys.F11)){
+                this.graphics.ToggleFullScreen();
+            }
             
             GamePadDPad dpad = GamePad.GetState(PlayerIndex.One).DPad;
             GamePadButtons buttons = GamePad.GetState(PlayerIndex.One).Buttons;
             
             InputState input = new InputState();
-            input.setPrevious(this.previousInput);
+            input.initPreviousMove(this.previousInput);
             input.set(InputState.Move.UP, 
                 dpad.Up == ButtonState.Pressed ||
                 buttons.Y == ButtonState.Pressed ||
