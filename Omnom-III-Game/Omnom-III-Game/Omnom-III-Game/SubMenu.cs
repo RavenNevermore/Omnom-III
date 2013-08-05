@@ -8,6 +8,7 @@ using Omnom_III_Game.graphics;
 
 namespace Omnom_III_Game {
     public class SubMenu : MenuItem {
+        public static String FONTNAME = "menu/submenufont";
 
         private List<MenuItem> items;
         private int selectedIndex = 0;
@@ -121,7 +122,7 @@ namespace Omnom_III_Game {
             if (this.active) {
                 int width = 0;
                 foreach (MenuItem item in this.items) {
-                    width += sprites.getWidthOfText(item.title, .8f);
+                    width += sprites.getWidthOfText(item.title, 1.0f, SubMenu.FONTNAME);
                     width += 15;
                 }
                 width -= 15;
@@ -129,14 +130,15 @@ namespace Omnom_III_Game {
                 int submenuX = x - width / 2;
                 int submenuY = y + this.texture.bounds.Height;
 
-                int textHeight = sprites.getHeightOfText("FOO", .8f);
+                int textHeight = sprites.getHeightOfText("FOO", 1.0f, SubMenu.FONTNAME);
                 int backdropY = submenuY - 3;
                 sprites.drawColorAt(Color.Black, .3f, width +10, textHeight + 6, submenuX - 5, backdropY);
 
                 foreach (MenuItem item in this.items) {
-                    sprites.drawTextAt(item.title, submenuX, submenuY, .8f,
-                        item.isSelected() ? Color.Orange : Color.GhostWhite);
-                    submenuX += sprites.getWidthOfText(item.title, .8f);
+                    sprites.drawTextAt(item.title, submenuX, submenuY, 1.0f,
+                        item.isSelected() ? Color.Orange : Color.GhostWhite,
+                        SubMenu.FONTNAME);
+                    submenuX += sprites.getWidthOfText(item.title, 1.0f, SubMenu.FONTNAME);
                     submenuX += 15;
                 }
             }

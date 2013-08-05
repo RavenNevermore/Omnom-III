@@ -17,6 +17,7 @@ namespace Omnom_III_Game {
         SpriteBatch spriteBatch;
         IScene scene;
         SpriteFont defaultFont;
+        ContentUtil contentUti;
 
         public Game1() {
             this.graphics = new GraphicsDeviceManager(this);
@@ -34,11 +35,11 @@ namespace Omnom_III_Game {
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize() {
-            ContentUtil contentUtil = new ContentUtil(this.Content);
+            this.contentUti = new ContentUtil(this.Content);
 
             //this.scene = new DanceScene("eattherich");
             this.scene = new SceneManager();
-            this.scene.initialize(contentUtil, null);
+            this.scene.initialize(this.contentUti, null);
 
             base.Initialize();
         }
@@ -164,7 +165,7 @@ namespace Omnom_III_Game {
 
             this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             SpriteBatchWrapper wrapper = new SpriteBatchWrapper(
-                this.spriteBatch, this.GraphicsDevice, this.defaultFont);
+                this.spriteBatch, this.GraphicsDevice, this.contentUti);
             this.scene.draw(wrapper, this.GraphicsDevice);
             this.spriteBatch.End();
 

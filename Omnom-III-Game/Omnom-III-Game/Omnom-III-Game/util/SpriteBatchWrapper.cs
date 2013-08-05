@@ -10,16 +10,31 @@ namespace Omnom_III_Game.util {
 
         private SpriteBatch wrapped;
         private GraphicsDevice wrappedDevice;
-        private SpriteFont font;
+        private Dictionary<string, SpriteFont> fonts;
+        private ContentUtil content;
         private Rectangle viewport;
 
         public SpriteBatchWrapper() { }
-        public SpriteBatchWrapper(SpriteBatch wrapped, GraphicsDevice device, SpriteFont defaultFont) {
+        public SpriteBatchWrapper(SpriteBatch wrapped, GraphicsDevice device, ContentUtil content) {
             this.wrapped = wrapped;
             this.wrappedDevice = device;
             this.viewport = device.Viewport.Bounds;
-            this.font = defaultFont;
+            this.fonts = new Dictionary<string, SpriteFont>();
+            this.fonts["default"] = content.load<SpriteFont>("default");
+            this.content = content;
         }
+
+        private SpriteFont getFont(String name) {
+            if (null == name) {
+                name = "default";
+            }
+            if (!this.fonts.ContainsKey(name)) {
+                this.fonts[name] = this.content.load<SpriteFont>(name); ;
+            }
+            return this.fonts[name];
+        }
+
+        private SpriteFont defaultFont { get { return this.getFont("default"); } }
 
         public void drawDebugText(params object[] text) {
             String msg = "";
@@ -27,32 +42,40 @@ namespace Omnom_III_Game.util {
                 msg += null == item ? "null":item.ToString();
                 msg += " ";
             }
-            this.wrapped.DrawString(font, msg, new Vector2(5, 5), Color.DarkGray);
+            this.wrapped.DrawString(this.defaultFont, msg, new Vector2(5, 5), Color.DarkGray);
         }
 
         public void drawTextCentered(String text, int lineOffset, Color color) {
             int x = 50;
-            int y = this.getYForTextLine(lineOffset);
+            int y = this.getYForTextLine(lineOffset, null);
 
-            this.wrapped.DrawString(this.font, text, new Vector2(x, y), color);
+            this.wrapped.DrawString(this.defaultFont, text, new Vector2(x, y), color);
+        }
+
+        public void drawTextAt(String text, int x, int y, float scale, Color color, String fontName) {
+            SpriteFont font = this.defaultFont;
+            if (null != fontName) {
+                font = this.getFont(fontName);
+            }
+            this.wrapped.DrawString(font, text, new Vector2(x, y), color, 0.0f,
+                Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
         public void drawTextAt(String text, int x, int y, float scale, Color color) {
-            this.wrapped.DrawString(this.font, text, new Vector2(x, y), color, 0.0f, 
-                Vector2.Zero, scale, SpriteEffects.None, 0);
-            //this.wrapped.DrawString(this.font, text, new Vector2(x, y), color);
+            this.drawTextAt(text, x, y, scale, color, null);
         }
 
-        public int getYForTextLine(int line) {
-            return (this.viewport.Height / 2) + this.font.LineSpacing * line;
+
+        public int getYForTextLine(int line, String fontName){
+            return (this.viewport.Height / 2) + this.getFont(fontName).LineSpacing * line;
         }
 
-        public int getWidthOfText(String text, float scale) {
-            return (int) (this.font.MeasureString(text).X * scale);
+        public int getWidthOfText(String text, float scale, String fontName) {
+            return (int) (this.getFont(fontName).MeasureString(text).X * scale);
         }
 
-        public int getHeightOfText(String text, float scale) {
-            return (int)(this.font.MeasureString(text).Y * scale);
+        public int getHeightOfText(String text, float scale, String fontName) {
+            return (int) (this.getFont(fontName).MeasureString(text).Y * scale);
         }
 
         public void drawFromCenter(Texture2D texture, int width, int height) {

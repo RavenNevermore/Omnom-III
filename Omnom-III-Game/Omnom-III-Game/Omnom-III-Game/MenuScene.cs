@@ -90,10 +90,10 @@ namespace Omnom_III_Game {
                 textures[i] = new ScaledTexture[2];
                 textures[i][0] = new ScaledTexture(
                     content.load<Texture2D>("menu/button" + (i + 1) + "_deactivated"),
-                    .4f);
+                    .5f);
                 textures[i][1] = new ScaledTexture(
                     content.load<Texture2D>("menu/button" + (i + 1) + "_activated"),
-                    .4f);
+                    .5f);
             }
             return textures;
         }

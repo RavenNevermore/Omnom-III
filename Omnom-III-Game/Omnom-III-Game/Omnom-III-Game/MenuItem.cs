@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Omnom_III_Game {
     public class MenuItem {
+        public static String FONTNAME = "menu/menufont";
+
         public String sceneName;
         public String title;
         public Object sceneParams;
@@ -95,7 +97,7 @@ namespace Omnom_III_Game {
         }*/
 
         public virtual void drawFromCenter(SpriteBatchWrapper sprites, int x, int y) {
-            int width = sprites.getWidthOfText(this.title, 1.0f);
+            int width = sprites.getWidthOfText(this.title, 1.0f, FONTNAME);
             int textureWidth = this.texture.bounds.Width;
             if (textureWidth < width + 20) {
                 textureWidth = width + 20;
@@ -105,11 +107,11 @@ namespace Omnom_III_Game {
                 this.texture.texture, textureWidth, this.texture.bounds.Height, 
                 x - textureWidth/2, y);
 
-            int textY = y + (int)(this.texture.bounds.Height * .25);
+            int textY = y + (int)(this.texture.bounds.Height * .3);
 
             sprites.drawTextAt(
-                this.title, x - width / 2, textY, 1.0f, 
-                this.selected ? Color.Orange : Color.GhostWhite);
+                this.title, x - width / 2, textY, 1.0f,
+                this.selected ? Color.Orange : Color.GhostWhite, FONTNAME);
         }
 
         protected ScaledTexture texture {
@@ -118,7 +120,7 @@ namespace Omnom_III_Game {
         } }
 
         public virtual int getHeight() {
-            return this.texture.bounds.Height + 10;
+            return this.texture.bounds.Height;
         }
 
         /*public virtual int getLineSize() {
