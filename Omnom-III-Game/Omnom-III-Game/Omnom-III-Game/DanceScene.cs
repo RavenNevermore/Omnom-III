@@ -37,15 +37,16 @@ namespace Omnom_III_Game {
 
         InputState.Move lastMove;
 
-        DanceSceneAnimationBundle animations;
-        VisualTransition transitions;
+        IngameUI ui;
+        //VisualTransition transitions;
         private ExplicitInputState input;
 
         public DanceScene(String scriptname) {
             this.script = ContentScript.FromFile(scriptname);
             this.textures = new TextureContext();
             this.sequences = new DanceSequenceProtocol();
-            this.transitions = new VisualTransition();
+            //this.transitions = new VisualTransition();
+            this.ui = new IngameUI();
         }
 
         public String title { get { return this.script.title; } }
@@ -78,12 +79,15 @@ namespace Omnom_III_Game {
 
             this.song = new Song(this.script);
             
-            this.animations = new DanceSceneAnimationBundle(this.textures, this.song);
+            //this.animations = new DanceSceneAnimationBundle(this.textures, this.song);
+            
             this.progress = new PlayerProgress();
 
-            this.initOpponent();
+            this.sequences.initialize(this.script);
+            this.ui.initialize(content, this.sequences, this.song.beatTimeInMs);
+            //this.initOpponent();
 
-            this.initTransitions(content);
+            //this.initTransitions(content);
 
 
             long beatTimeMs = (long) this.song.beatTimeInMs;
@@ -94,6 +98,7 @@ namespace Omnom_III_Game {
             this.song.play();
         }
 
+        /*
         private void initTransitions(ContentUtil content) {
             this.transitions.initialize(content, this.song.beatTimeInMs);
             foreach (DanceSequence sequence in this.sequences.asList()) {
@@ -102,8 +107,9 @@ namespace Omnom_III_Game {
                 this.transitions.addTransitPoint(
                     sequence.startMeasure + sequence.length, true);
             }
-        }
+        }*/
 
+        /*
         private void initOpponent() {
             this.sequences.initialize(this.script);
             foreach (DanceSequence.Input handicap in this.sequences.handicaps) {
@@ -111,7 +117,7 @@ namespace Omnom_III_Game {
                     handicap.handicap,
                     handicap.startTime(song.bpms));
             }
-        }
+        }*/
 
         
         public void update(InputState input) {
@@ -123,14 +129,7 @@ namespace Omnom_III_Game {
             if (this.hasExitState(input))
                 return;
 
-            if (input.isActive(InputState.Control.PAUSE)) {
-                if (this.paused){
-                    this.song.play();
-                } else {
-                    this.song.pause();
-                }
-                this.paused = !this.paused;
-            }
+            updatePauseState(input);
 
             this.song.calculateMetaInfo();
             long time = this.song.timeRunningInMs;
@@ -147,19 +146,35 @@ namespace Omnom_III_Game {
                 this.lastMove = move;
             }
 
-            //if (!input.lastMove.Equals(InputState.Move.BREAK)) {
-            if (input.lastMoveIsNew()) {
+            PlayerProgress.RatedMoves rated = null;
+
+            if ((null == this.currentSequence ||
+                    this.currentSequence.playerInputAllowed(measures)) &&
+                    input.lastMoveIsNew()) {
+                
                 this.player.activate(input.lastMove);
+                rated = this.progress.nextRating(measures, this.currentSequence, input);
             }
-            updatePlayerRating(input, time, measures);
-            
-            this.animations.update(time);
+            this.ui.update(rated, time, deltaT);
+
+
             this.player.update(deltaT);
             this.enemy.update(deltaT);
-            this.transitions.update(time);
+            //this.transitions.update(time);
         }
 
-        private void updatePlayerRating(InputState input, long time, float measures) {
+        private void updatePauseState(ExplicitInputState input) {
+            if (input.isActive(InputState.Control.PAUSE)) {
+                if (this.paused) {
+                    this.song.play();
+                } else {
+                    this.song.pause();
+                }
+                this.paused = !this.paused;
+            }
+        }
+
+        /*private void updatePlayerRating(InputState input, long time, float measures) {
             PlayerProgress.RatedMoves rated = this.progress.nextRating(measures, this.currentSequence, input);
             foreach (DanceSequence.Input move in rated.ok) {
                 this.animations.startPlayerAnimation(move.handicap, time, PlayerProgress.Rating.OK);
@@ -176,7 +191,7 @@ namespace Omnom_III_Game {
             foreach (DanceSequence.Input move in rated.wrong) {
                 this.animations.startFailAnimation(move.handicap, time);
             }
-        }
+        }*/
 
         private bool hasExitState(InputState input) {
             if (this.exit) {
@@ -213,8 +228,9 @@ namespace Omnom_III_Game {
                 "Current Seq: ", this.currentSequence, "Last Move:", this.lastMove,
                 "\n\rScore: ", this.progress.score);
             
-            this.animations.draw(sprites);
-            this.transitions.draw(sprites);
+            //this.animations.draw(sprites);
+            this.ui.draw(sprites);
+            //this.transitions.draw(sprites);
         }
 
 

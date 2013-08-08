@@ -17,6 +17,7 @@ namespace Omnom_III_Game {
                 this.ok = new List<DanceSequence.Input>();
                 this.missed = new List<DanceSequence.Input>();
                 this.wrong = new List<DanceSequence.Input>();
+                this.allFromUserInput = new List<DanceSequence.Input>();
             }
 
             public List<DanceSequence.Input> perfect;
@@ -25,11 +26,30 @@ namespace Omnom_III_Game {
             public List<DanceSequence.Input> missed;
             public List<DanceSequence.Input> wrong;
 
+            public List<DanceSequence.Input> allFromUserInput;
+
+            internal void validate() {
+                this.allFromUserInput.Clear();
+                this.validateList(this.perfect);
+                this.validateList(this.good);
+                this.validateList(this.ok);
+                //this.validateList(this.missed);
+                this.validateList(this.wrong);
+            }
+
+            private void validateList(List<DanceSequence.Input> inputs) {
+                foreach (DanceSequence.Input input in inputs) {
+                    if (!this.allFromUserInput.Contains(input)){
+                        this.allFromUserInput.Add(input);
+                    }
+                }
+            }
+
             internal void addWrongMove(DanceSequence sequence, float measure, InputState.Move move) {
                 DanceSequence.Input input = new DanceSequence.Input(sequence);
                 input.positionInSong = measure;
                 input.handicap = move;
-                this.missed.Add(input);
+                this.wrong.Add(input);
             }
         }
 
@@ -88,6 +108,7 @@ namespace Omnom_III_Game {
             }
             ListUtil.removeAllFromList(this.notYetRated, rating.missed);
 
+            rating.validate();
             return rating;
         }
 

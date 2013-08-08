@@ -38,6 +38,10 @@ Content\menu\button3_deactivated.xnb
 Content\menu\button4_activated.xnb
 Content\menu\button4_deactivated.xnb
 Content\bgr_tutorial.xnb
+Content\hud\arrow_down.xnb
+Content\hud\arrow_left.xnb
+Content\hud\arrow_right.xnb
+Content\hud\arrow_up.xnb
 Content\enemy_tbone.xnb
 Content\toasty\toasty_down.xnb
 Content\toasty\toasty_left.xnb

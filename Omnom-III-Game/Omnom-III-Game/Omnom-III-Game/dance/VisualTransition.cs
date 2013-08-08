@@ -40,7 +40,9 @@ namespace Omnom_III_Game.dance {
         Texture2D preCountTexture;
         Texture2D preCountShadowTexture;
 
-        public void initialize(ContentUtil content, float beatTimeInMs) {
+        public void initialize(ContentUtil content,
+                DanceSequenceProtocol protocol, float beatTimeInMs) {
+
             this.preCountTexture = content.load<Texture2D>("circle");
             this.preCountShadowTexture = content.load<Texture2D>("circle_shadow");
 
@@ -50,6 +52,17 @@ namespace Omnom_III_Game.dance {
 
             this.activeTransit = null;
             this.lastSongTime = 0;
+
+            this.initWithProtocol(protocol);
+        }
+
+        private void initWithProtocol(DanceSequenceProtocol protocol) {
+            foreach (DanceSequence sequence in protocol.asList()) {
+                this.addTransitPoint(sequence.startMeasure, false);
+
+                this.addTransitPoint(
+                    sequence.startMeasure + sequence.length, true);
+            }
         }
 
         public void addTransitPoint(float timeInSong, bool transitFromEnemy) {

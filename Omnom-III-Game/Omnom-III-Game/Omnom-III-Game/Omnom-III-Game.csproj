@@ -110,11 +110,13 @@
     <Compile Include="fmod\fmod_errors.cs" />
     <Compile Include="fmod\fmod_memoryinfo.cs" />
     <Compile Include="graphics\AnimatedTexture.cs" />
+    <Compile Include="graphics\DirectionalIndicator.cs" />
     <Compile Include="graphics\ScaledTexture.cs" />
     <Compile Include="highscore\HighscoreList.cs" />
     <Compile Include="highscore\HighscoreParams.cs" />
     <Compile Include="highscore\HighscoreScene.cs" />
     <Compile Include="highscore\Scoring.cs" />
+    <Compile Include="IngameUI.cs" />
     <Compile Include="InputState.cs" />
     <Compile Include="IScene.cs" />
     <Compile Include="MenuItem.cs" />

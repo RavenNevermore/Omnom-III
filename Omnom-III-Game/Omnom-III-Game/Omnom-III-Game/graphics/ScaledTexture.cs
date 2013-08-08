@@ -27,5 +27,9 @@ namespace Omnom_III_Game.graphics {
             }
         }
 
+
+        public int Width { get { return this.bounds.Width; } }
+
+        public int Height { get { return this.bounds.Height; } }
     }
 }
