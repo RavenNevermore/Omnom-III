@@ -52,13 +52,35 @@ namespace Omnom_III_Game.util {
             this.wrapped.DrawString(this.defaultFont, text, new Vector2(x, y), color);
         }
 
-        public void drawTextAt(String text, int x, int y, float scale, Color color, String fontName) {
+        public void drawTextAt(String text, int x, int y, float scale, Color color, String fontName, 
+            bool measureFromCenter) {
             SpriteFont font = this.defaultFont;
             if (null != fontName) {
                 font = this.getFont(fontName);
             }
+
+            Vector2 size = font.MeasureString(text);
+
+            if (x < 0) {
+                x = this.wrappedDevice.Viewport.Width + x;
+                x -= (int) size.X;
+            }
+            if (y < 0) {
+                y = this.wrappedDevice.Viewport.Height + y;
+                y -= (int) size.Y;
+            }
+
+            if (measureFromCenter) {
+                x += (int) size.X / 2;
+                y += (int) size.Y / 2;
+            }
+
             this.wrapped.DrawString(font, text, new Vector2(x, y), color, 0.0f,
                 Vector2.Zero, scale, SpriteEffects.None, 0);
+        }
+        
+        public void drawTextAt(String text, int x, int y, float scale, Color color, String fontName) {
+            this.drawTextAt(text, x, y, scale, color, fontName, false);
         }
 
         public void drawTextAt(String text, int x, int y, float scale, Color color) {

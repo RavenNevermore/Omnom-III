@@ -10,9 +10,9 @@ using Omnom_III_Game.dance;
 
 namespace Omnom_III_Game.graphics {
     public class DirectionalIndicator {
-        static Vector2 FREEDOM = new Vector2(200f, 100f);
+        static Vector2 FREEDOM = new Vector2(250f, 100f);
         static int CENTER_OFFSET = 180;
-        static float TEXTURE_SCALE = .5f;
+        static float TEXTURE_SCALE = .55f;
 
         class RecordedStart {
             public RecordedStart(Color color, long time) {
@@ -125,6 +125,15 @@ namespace Omnom_III_Game.graphics {
             Vector2 position = this.direction * this.travel;
             position *= DirectionalIndicator.FREEDOM;
             position += startingPosition;
+
+            int undergroth = 10 + (int)(this.travel * 50);
+            sprites.drawFromCenter(
+                this.texture.texture,
+                this.texture.Width + undergroth,
+                this.texture.Height + undergroth,
+                (int) position.X * -1,
+                (int) position.Y * -1,
+                Color.Black * (1f - this.travel));
 
             sprites.drawFromCenter(
                 this.texture.texture,

@@ -38,14 +38,14 @@ namespace Omnom_III_Game {
         InputState.Move lastMove;
 
         IngameUI ui;
-        //VisualTransition transitions;
+        
         private ExplicitInputState input;
 
         public DanceScene(String scriptname) {
             this.script = ContentScript.FromFile(scriptname);
             this.textures = new TextureContext();
             this.sequences = new DanceSequenceProtocol();
-            //this.transitions = new VisualTransition();
+            
             this.ui = new IngameUI();
         }
 
@@ -79,16 +79,12 @@ namespace Omnom_III_Game {
 
             this.song = new Song(this.script);
             
-            //this.animations = new DanceSceneAnimationBundle(this.textures, this.song);
             
             this.progress = new PlayerProgress();
 
             this.sequences.initialize(this.script);
             this.ui.initialize(content, this.sequences, this.song.beatTimeInMs);
-            //this.initOpponent();
-
-            //this.initTransitions(content);
-
+            
 
             long beatTimeMs = (long) this.song.beatTimeInMs;
             this.enemy = new AnimatedCharacter(this.script.get("enemy"), content, beatTimeMs);
@@ -97,27 +93,6 @@ namespace Omnom_III_Game {
             this.lastTime = 0;
             this.song.play();
         }
-
-        /*
-        private void initTransitions(ContentUtil content) {
-            this.transitions.initialize(content, this.song.beatTimeInMs);
-            foreach (DanceSequence sequence in this.sequences.asList()) {
-                this.transitions.addTransitPoint(sequence.startMeasure, false);
-
-                this.transitions.addTransitPoint(
-                    sequence.startMeasure + sequence.length, true);
-            }
-        }*/
-
-        /*
-        private void initOpponent() {
-            this.sequences.initialize(this.script);
-            foreach (DanceSequence.Input handicap in this.sequences.handicaps) {
-                this.animations.startOpponentAnimation(
-                    handicap.handicap,
-                    handicap.startTime(song.bpms));
-            }
-        }*/
 
         
         public void update(InputState input) {
@@ -160,7 +135,6 @@ namespace Omnom_III_Game {
 
             this.player.update(deltaT);
             this.enemy.update(deltaT);
-            //this.transitions.update(time);
         }
 
         private void updatePauseState(ExplicitInputState input) {
@@ -174,24 +148,6 @@ namespace Omnom_III_Game {
             }
         }
 
-        /*private void updatePlayerRating(InputState input, long time, float measures) {
-            PlayerProgress.RatedMoves rated = this.progress.nextRating(measures, this.currentSequence, input);
-            foreach (DanceSequence.Input move in rated.ok) {
-                this.animations.startPlayerAnimation(move.handicap, time, PlayerProgress.Rating.OK);
-            }
-            foreach (DanceSequence.Input move in rated.good) {
-                this.animations.startPlayerAnimation(move.handicap, time, PlayerProgress.Rating.GOOD);
-            }
-            foreach (DanceSequence.Input move in rated.perfect) {
-                this.animations.startPlayerAnimation(move.handicap, time, PlayerProgress.Rating.PERFECT);
-            }
-            foreach (DanceSequence.Input move in rated.missed) {
-                this.animations.startFailAnimation(move.handicap, time);
-            }
-            foreach (DanceSequence.Input move in rated.wrong) {
-                this.animations.startFailAnimation(move.handicap, time);
-            }
-        }*/
 
         private bool hasExitState(InputState input) {
             if (this.exit) {
@@ -218,19 +174,23 @@ namespace Omnom_III_Game {
                     this.enemy.draw(sprites);
                 } else {
                     this.player.draw(sprites);
-                    //sprites.drawFromCenter(this.textures.getRaw("player_character"), 350, 350, 0, 50);
                 }
                 
             }
 
-            sprites.drawDebugText(
+            /*sprites.drawDebugText(
                 "Measures: ", this.song.timeRunningInMeasures,
                 "Current Seq: ", this.currentSequence, "Last Move:", this.lastMove,
-                "\n\rScore: ", this.progress.score);
+                "\n\rScore: ", this.progress.score);*/
+
+            sprites.drawTextAt(
+                "Score: " + this.progress.score,
+                -225, 15, 1.05f, Color.Black, "hud/ingametext", true);
+            sprites.drawTextAt(
+                "Score: " + this.progress.score,
+                -225, 15, 1.0f, Color.Orange, "hud/ingametext", true);
             
-            //this.animations.draw(sprites);
             this.ui.draw(sprites);
-            //this.transitions.draw(sprites);
         }
 
 

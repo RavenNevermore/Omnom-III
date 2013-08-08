@@ -359,6 +359,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="hud\ingametext.spritefont">
+      <Name>ingametext</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="level_02.content">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>level_02</Name>
