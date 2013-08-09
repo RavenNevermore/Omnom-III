@@ -58,6 +58,7 @@ namespace Omnom_III_Game.highscore {
             String filepath = sceneName.ToLower();
             filepath = filepath.Replace(" ", "_");
             filepath = filepath.Replace("\t", "_");
+            filepath = filepath.Replace("'", "");
             filepath += ".score";
             return filepath;
         }

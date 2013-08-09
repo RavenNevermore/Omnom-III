@@ -37,7 +37,12 @@ namespace Omnom_III_Game {
                 level1, level2, level3, level4);
             this.add(arcade);
 
-            this.add(new MenuItem("highscore", "Highscore", new HighscoreParams("T-Bone the Steak")));
+            SubMenu highscore = new SubMenu("highscore", "Highscores",
+                new MenuItem("highscore_01", "Get to know her", new HighscoreParams("Get to know her")),
+                new MenuItem("highscore_02", "T-Bone the Steak", new HighscoreParams("T-Bone the Steak")),
+                new MenuItem("highscore_03", "Daddy'll fix it", new HighscoreParams("Daddy'll fix it")),
+                new MenuItem("highscore_04", "The final conquest", new HighscoreParams("The final conquest")));
+            this.add(highscore);
             this.add(new MenuItem("exit", "Quit Game"));
         }
 
@@ -71,7 +76,8 @@ namespace Omnom_III_Game {
             this.background = content.load<Texture2D>("menu/background01");
             this.clickSound = new Sound("menu/click");
             this.selectSound = new Sound("menu/select");
-            this.backgroundSong = new Sound("menu/backgroundsong");
+            if (null == this.backgroundSong || this.backgroundSong.stoppedPlaying())
+                this.backgroundSong = new Sound("menu/backgroundsong");
 
             ScaledTexture[][] buttonTextures = this.loadButtonTextures(content);
 
@@ -175,7 +181,12 @@ namespace Omnom_III_Game {
         }
 
         public void cleanup() {
-            this.backgroundSong.stop();
+            SceneActivationParameters next = this.nextScene();
+            if (null == next || 
+                null == next.parameters || 
+                !(next.parameters is HighscoreParams)) {
+                this.backgroundSong.stop();
+            }
         }
     }
 }

@@ -46,7 +46,10 @@ namespace Omnom_III_Game {
             this.addDanceScene("level_03", menu);
             this.addDanceScene("level_04", menu);
             //menu.add(new MenuItem("highscore", "Highscore", new HighscoreParams("T-Bone the Steak")));
-            this.scenes["highscore"] = new HighscoreScene();
+            this.scenes["highscore_01"] = new HighscoreScene();
+            this.scenes["highscore_02"] = new HighscoreScene();
+            this.scenes["highscore_03"] = new HighscoreScene();
+            this.scenes["highscore_04"] = new HighscoreScene();
 
             //menu.add(new MenuItem("exit", "Quit Game"));
 
