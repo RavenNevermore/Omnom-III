@@ -374,6 +374,11 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
+    <Compile Include="hud\bignumbers.spritefont">
+      <Name>bignumbers</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="level_02.content">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>level_02</Name>

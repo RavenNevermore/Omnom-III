@@ -38,10 +38,10 @@ namespace Omnom_III_Game {
             this.add(arcade);
 
             SubMenu highscore = new SubMenu("highscore", "Highscores",
-                new MenuItem("highscore_01", "Get to know her", new HighscoreParams("Get to know her")),
-                new MenuItem("highscore_02", "T-Bone the Steak", new HighscoreParams("T-Bone the Steak")),
-                new MenuItem("highscore_03", "Daddy'll fix it", new HighscoreParams("Daddy'll fix it")),
-                new MenuItem("highscore_04", "The final conquest", new HighscoreParams("The final conquest")));
+                new MenuItem("highscore", "Get to know her", new HighscoreParams("Get to know her")),
+                new MenuItem("highscore", "T-Bone the Steak", new HighscoreParams("T-Bone the Steak")),
+                new MenuItem("highscore", "Daddy'll fix it", new HighscoreParams("Daddy'll fix it")),
+                new MenuItem("highscore", "The final conquest", new HighscoreParams("The final conquest")));
             this.add(highscore);
             this.add(new MenuItem("exit", "Quit Game"));
         }

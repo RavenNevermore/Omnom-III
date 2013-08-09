@@ -17,7 +17,9 @@ namespace Omnom_III_Game.dance {
             public long[] preCounts;
             public long transition;
             public VisualTransition parent;
-            public Color flashColor;
+            public bool transitFromEnemy;
+
+            public Color flashColor { get { return this.transitFromEnemy ? Color.LightGreen : Color.LightSkyBlue; } }
 
             public int CompareTo(TransitPoint other) {
                 return this.transition.CompareTo(other.transition);
@@ -70,7 +72,8 @@ namespace Omnom_III_Game.dance {
 
             TransitPoint transit = new TransitPoint();
             transit.parent = this;
-            transit.flashColor = transitFromEnemy ? Color.LightGreen : Color.LightSkyBlue;
+            transit.transitFromEnemy = transitFromEnemy;
+            
             transit.transition = (long) (timeInSong * measureTimeInMs);
             transit.preCounts = new long[4];
             transit.preCounts[0] = transit.transition - (long) (this.beatTimeInMs * 4);
@@ -125,6 +128,7 @@ namespace Omnom_III_Game.dance {
         private void drawPreCount(SpriteBatchWrapper sprites) {
             int firstX = this.getFirstPreCountX();
             int i = -1;
+            int lastCount = 0;
             foreach (long preCount in this.activeTransit.preCounts) {
                 i++;
                 if (preCount < 0)
@@ -132,14 +136,28 @@ namespace Omnom_III_Game.dance {
 
                 drawPreCountIndicator(sprites, this.preCountShadowTexture, firstX, i);
 
-                if (preCount > this.lastSongTime)
+                if (preCount > this.lastSongTime) {
                     continue;
+                }
                 
                 sprites.fillWithColor(
                     this.activeTransit.flashColor,
                     this.calcFlashyness(preCount) / 8);
 
                 drawPreCountIndicator(sprites, this.preCountTexture, firstX, i);
+                lastCount = i + 1;
+            }
+
+            if (this.activeTransit.transitFromEnemy && 0 < lastCount && lastCount <= 4) {
+                float deltaT = (float)(this.lastSongTime - this.activeTransit.preCounts[lastCount - 1]);
+
+                float alpha = 1.0f - (deltaT / this.beatTimeInMs);
+                float blackAlpha = 2 * alpha - alpha;
+                if (0.0f > blackAlpha)
+                    blackAlpha = 0.0f;
+
+                sprites.drawTextCentered("" + lastCount, "hud/bignumbers", 1.1f, Color.Black * blackAlpha);
+                sprites.drawTextCentered("" + lastCount, "hud/bignumbers", 1.0f, Color.Orange * (alpha * 2.0f));
             }
         }
 

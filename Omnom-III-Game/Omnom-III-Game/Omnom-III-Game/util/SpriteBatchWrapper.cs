@@ -45,6 +45,20 @@ namespace Omnom_III_Game.util {
             this.wrapped.DrawString(this.defaultFont, msg, new Vector2(5, 5), Color.DarkGray);
         }
 
+        public void drawTextCentered(String text, String fontName, float scale, Color color) {
+            int x = this.wrappedDevice.Viewport.Width / 2;
+            int y = this.wrappedDevice.Viewport.Height / 2;
+            SpriteFont font = this.getFont(fontName);
+
+            Vector2 textSize = font.MeasureString(text) * scale;
+
+            x -= (int) textSize.X / 2;
+            y -= (int) textSize.Y / 2;
+
+            this.wrapped.DrawString(font, text, new Vector2(x, y), color, 0.0f,
+                Vector2.Zero, scale, SpriteEffects.None, 0);
+        }
+
         public void drawTextCentered(String text, int lineOffset, Color color) {
             int x = 50;
             int y = this.getYForTextLine(lineOffset, null);
