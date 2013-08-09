@@ -1,9 +1,9 @@
 # The final conquest
 
-song: steakysong
+song: muffyfinalsong
 enemy: enemy_muffy
 background: bgr_muffy
-tempo: 107
+tempo: 140
 startshift: 0
 
 sequences:

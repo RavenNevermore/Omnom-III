@@ -60,6 +60,8 @@ Content\default.xnb
 Content\menu\menufont.xnb
 Content\menu\submenufont.xnb
 Content\hud\ingametext.xnb
+Content\muffytutorialsong.xnb
+Content\muffyfinalsong.xnb
 Content\eattherich.wma
 Content\MeasureTest.wma
 Content\eyeofthetiger.wma
@@ -68,6 +70,8 @@ Content\intro\introsound.wma
 Content\menu\click.wma
 Content\menu\select.wma
 Content\menu\backgroundsong.wma
+Content\muffytutorialsong.wma
+Content\muffyfinalsong.wma
 Content\tigerstep.content
 Content\level_02.content
 Content\level_03.content

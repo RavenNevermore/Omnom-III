@@ -1,40 +1,22 @@
 # Get to know her
 
-song: steakysong
+song: muffytutorialsong
 enemy: enemy_muffy
 background: bgr_tutorial
-tempo: 107
+tempo: 140
 startshift: 0
 
 sequences:
-     1> 1/4  left, right, left, right
-     3> 1/4  left, right, left, right
-     5> 1/4  up, down, up, down
-     7> 1/4  up, down, up, down
+      1> 1/1 break, break
+      5> 1/1 break, break
 
-     9>  1/4  left, right, left, right
-     11> 1/4  up, down, up, down
-     13> 1/4  up, down, up, down
-     15> 1/4  left, right, left, 1/8 right, up
+      9> 1/1 up, down
+     13> 1/1 up, down
+     17> 1/2 left, right, left, break
+     21> 1/2 right, left, right, break
 
-     17> 1/8  left, right, up, down, 1/2 break
-     19> 1/8 right, left, down, up, 1/2 break
+     25> 1/2 left, right, left, right,
+         1/2 up, down, up, down
 
-     21> 1/4 up, down, right, left,
-         1/4 right, 1/2. left
- 
-     26> 1/8  left, right, up, down, 1/2 break
-     28> 1/8 right, left, down, up, 1/2 break
-
-     30> 1/4 up, down, right, left,
-         1/4 right, 1/2. left
-
-     36> 1/2. up, 1/4 left, 1/1 down,
-         1/2. left, 1/4 down, 1/2 right, up,
-         1/1 break, 1/1 break
-
-     48> 1/2 left, right, up, 1/8 break, left, down, right,
-         1/2 left, right, 1/1 down
-
-     56> 1/4 left, right, 1/4. up, 1/2 down, up, 1/8 break          
-
+     33> 1/2 left, up, right, down,
+         1/2 right, up, left, down
