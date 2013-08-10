@@ -185,10 +185,10 @@ namespace Omnom_III_Game {
 
             sprites.drawTextAt(
                 "Score: " + this.progress.score,
-                -225, 15, 1.05f, Color.Black, "hud/ingametext", true);
+                -225, 15, 1.05f, Color.Black, "hud/ingametext", SpriteBatchWrapper.Direction.CENTER);
             sprites.drawTextAt(
                 "Score: " + this.progress.score,
-                -225, 15, 1.0f, Color.Orange, "hud/ingametext", true);
+                -225, 15, 1.0f, Color.Orange, "hud/ingametext", SpriteBatchWrapper.Direction.CENTER);
             
             this.ui.draw(sprites);
         }

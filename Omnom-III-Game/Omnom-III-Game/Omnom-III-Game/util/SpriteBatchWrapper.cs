@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework;
 namespace Omnom_III_Game.util {
     public class SpriteBatchWrapper {
 
+        public enum Direction { LEFT, RIGHT, CENTER }
+
         private SpriteBatch wrapped;
         private GraphicsDevice wrappedDevice;
         private Dictionary<string, SpriteFont> fonts;
@@ -67,7 +69,8 @@ namespace Omnom_III_Game.util {
         }
 
         public void drawTextAt(String text, int x, int y, float scale, Color color, String fontName, 
-            bool measureFromCenter) {
+                Direction measurementDirection) {
+
             SpriteFont font = this.defaultFont;
             if (null != fontName) {
                 font = this.getFont(fontName);
@@ -84,9 +87,12 @@ namespace Omnom_III_Game.util {
                 y -= (int) size.Y;
             }
 
-            if (measureFromCenter) {
+            if (Direction.CENTER == measurementDirection) {
                 x += (int) size.X / 2;
                 y += (int) size.Y / 2;
+            } else if (Direction.RIGHT == measurementDirection){
+                x -= (int) size.X;
+                //y += (int) size.Y;
             }
 
             this.wrapped.DrawString(font, text, new Vector2(x, y), color, 0.0f,
@@ -94,7 +100,7 @@ namespace Omnom_III_Game.util {
         }
         
         public void drawTextAt(String text, int x, int y, float scale, Color color, String fontName) {
-            this.drawTextAt(text, x, y, scale, color, fontName, false);
+            this.drawTextAt(text, x, y, scale, color, fontName, Direction.LEFT);
         }
 
         public void drawTextAt(String text, int x, int y, float scale, Color color) {
