@@ -328,11 +328,6 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
-    <Compile Include="muffytutorialsong.mp3">
-      <Name>muffytutorialsong</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
     <Compile Include="bgr_highscore.png">
       <Name>bgr_highscore</Name>
       <Importer>TextureImporter</Importer>
@@ -342,6 +337,11 @@
       <Name>highscore_line</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="muffytutorialsong.mp3">
+      <Name>muffytutorialsong</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
     </Compile>
     <Content Include="tigerstep.content">
       <Name>tigerstep</Name>
