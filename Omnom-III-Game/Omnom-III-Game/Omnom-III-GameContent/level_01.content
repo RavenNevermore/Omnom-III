@@ -5,6 +5,7 @@ enemy: enemy_muffy
 background: bgr_tutorial
 tempo: 140
 startshift: 0
+ui_speed: 0.5
 
 sequences:
       1> 1/1 break, break

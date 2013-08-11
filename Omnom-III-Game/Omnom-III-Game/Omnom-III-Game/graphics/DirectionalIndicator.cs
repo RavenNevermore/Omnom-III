@@ -28,6 +28,7 @@ namespace Omnom_III_Game.graphics {
         ScaledTexture texture;
         Vector2 direction;
         float beatTimeInMs;
+        float travelSpeed;
         Color color;
 
         float travel;
@@ -39,12 +40,14 @@ namespace Omnom_III_Game.graphics {
         public DirectionalIndicator(
                 ContentUtil content, 
                 InputState.Move move,
-                float beatTimeInMs) {
+                float beatTimeInMs,
+                float travelSpeed) {
 
             this.recordings = new List<RecordedStart>();
             this.color = Color.White;
             this.move = move;
             this.beatTimeInMs = beatTimeInMs;
+            this.travelSpeed = travelSpeed;
             String texName = "hud/arrow_" + move.ToString().ToLower();
             this.texture = new ScaledTexture(
                 content.load<Texture2D>(texName), TEXTURE_SCALE);
@@ -107,7 +110,7 @@ namespace Omnom_III_Game.graphics {
 
             //float normalizedTravel = this.beatTimeInMs * (deltaT / 1000f);
             float normalizedTravel = deltaT / this.beatTimeInMs;
-            this.travel += normalizedTravel * 2;
+            this.travel += normalizedTravel * 2f * travelSpeed;
 
             if (this.travel > 1) {
                 this.travel = 1;

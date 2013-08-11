@@ -136,6 +136,10 @@ namespace Omnom_III_Game.util {
             return null;
         }
 
+        public bool contains(String key) {
+            return this.content.ContainsKey(key);
+        }
+
         public List<String> this[String key] {
             get { return this.content.ContainsKey(key) ? this.content[key] : null; }
             set { this.set(key, value); }

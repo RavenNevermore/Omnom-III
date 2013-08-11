@@ -23,9 +23,10 @@ namespace Omnom_III_Game {
         public void initialize(
                 ContentUtil content, 
                 DanceSequenceProtocol protocol, 
-                float beatTimeInMS) {
+                float beatTimeInMS,
+                float uiSpeed) {
 
-            this.initTextures(content, beatTimeInMS);
+            this.initHud(content, beatTimeInMS, uiSpeed);
 
             float bpms = 1 / beatTimeInMS;
             foreach (DanceSequence.Input input in protocol.handicaps) {
@@ -38,12 +39,12 @@ namespace Omnom_III_Game {
             this.transitions.initialize(content, protocol, beatTimeInMS);
         }
 
-        private void initTextures(ContentUtil content, float beatTimeInMS) {
+        private void initHud(ContentUtil content, float beatTimeInMS, float uiSpeed) {
             this.hud.Clear();
-            this.hud[InputState.Move.UP] = new DirectionalIndicator(content, InputState.Move.UP, beatTimeInMS);
-            this.hud[InputState.Move.DOWN] = new DirectionalIndicator(content, InputState.Move.DOWN, beatTimeInMS);
-            this.hud[InputState.Move.LEFT] = new DirectionalIndicator(content, InputState.Move.LEFT, beatTimeInMS);
-            this.hud[InputState.Move.RIGHT] = new DirectionalIndicator(content, InputState.Move.RIGHT, beatTimeInMS);
+            this.hud[InputState.Move.UP] = new DirectionalIndicator(content, InputState.Move.UP, beatTimeInMS, uiSpeed);
+            this.hud[InputState.Move.DOWN] = new DirectionalIndicator(content, InputState.Move.DOWN, beatTimeInMS, uiSpeed);
+            this.hud[InputState.Move.LEFT] = new DirectionalIndicator(content, InputState.Move.LEFT, beatTimeInMS, uiSpeed);
+            this.hud[InputState.Move.RIGHT] = new DirectionalIndicator(content, InputState.Move.RIGHT, beatTimeInMS, uiSpeed);
         }
 
 

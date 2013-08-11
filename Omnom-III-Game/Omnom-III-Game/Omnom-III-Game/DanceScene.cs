@@ -83,7 +83,11 @@ namespace Omnom_III_Game {
             this.progress = new PlayerProgress();
 
             this.sequences.initialize(this.script);
-            this.ui.initialize(content, this.sequences, this.song.beatTimeInMs);
+
+            float uiSpeed = 1.0f;
+            if (this.script.contains("ui_speed"))
+                uiSpeed = this.script.asFloat["ui_speed"][0];
+            this.ui.initialize(content, this.sequences, this.song.beatTimeInMs, uiSpeed);
             
 
             long beatTimeMs = (long) this.song.beatTimeInMs;
