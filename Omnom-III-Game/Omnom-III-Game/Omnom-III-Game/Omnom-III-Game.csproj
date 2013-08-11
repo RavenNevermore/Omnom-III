@@ -105,10 +105,6 @@
     <Compile Include="exceptions\SoundSystemException.cs" />
     <Compile Include="ExplicitInputState.cs" />
     <Compile Include="FadeInPictureScene.cs" />
-    <Compile Include="fmod\fmod.cs" />
-    <Compile Include="fmod\fmod_dsp.cs" />
-    <Compile Include="fmod\fmod_errors.cs" />
-    <Compile Include="fmod\fmod_memoryinfo.cs" />
     <Compile Include="graphics\AnimatedTexture.cs" />
     <Compile Include="graphics\DirectionalIndicator.cs" />
     <Compile Include="graphics\ScaledTexture.cs" />

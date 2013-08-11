@@ -18,7 +18,7 @@ namespace Omnom_III_Game {
 
         public override void initialize(ContentUtil content, SceneActivationParameters parameters) {
             base.initialize(content, parameters);
-            this.song = new Song(this.songName, this.bpm);
+            this.song = new Song(this.songName, content, this.bpm);
         }
 
         public override void update(InputState input) {

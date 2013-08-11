@@ -20,7 +20,7 @@ namespace Omnom_III_Game {
 
         Sound clickSound;
         Sound selectSound;
-        Sound backgroundSong;
+        Song backgroundSong;
 
         public MenuScene() {
             this.items = new List<MenuItem>();
@@ -74,10 +74,10 @@ namespace Omnom_III_Game {
             this.exit = false;
             this.firstUpdate = true;
             this.background = content.load<Texture2D>("menu/background01");
-            this.clickSound = new Sound("menu/click");
-            this.selectSound = new Sound("menu/select");
+            this.clickSound = new Sound("menu/click", content);
+            this.selectSound = new Sound("menu/select", content);
             if (null == this.backgroundSong || this.backgroundSong.stoppedPlaying())
-                this.backgroundSong = new Sound("menu/backgroundsong");
+                this.backgroundSong = new Song("menu/backgroundsong", content, 120f);
 
             ScaledTexture[][] buttonTextures = this.loadButtonTextures(content);
 

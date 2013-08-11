@@ -196,12 +196,12 @@
     <Compile Include="menu\click.mp3">
       <Name>click</Name>
       <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="menu\select.mp3">
       <Name>select</Name>
       <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="menu\backgroundsong.mp3">
       <Name>backgroundsong</Name>
@@ -346,17 +346,17 @@
     <Compile Include="hud\error_move.wav">
       <Name>error_move</Name>
       <Importer>WavImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="hud\success_move.wav">
       <Name>success_move</Name>
       <Importer>WavImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="hud\success_sequence.wav">
       <Name>success_sequence</Name>
       <Importer>WavImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Content Include="tigerstep.content">
       <Name>tigerstep</Name>

@@ -77,7 +77,7 @@ namespace Omnom_III_Game {
             this.backgroundTexture = this.script.get("background");
             this.textures.loadTextures(content, this.backgroundTexture);
 
-            this.song = new Song(this.script);
+            this.song = new Song(this.script, content);
             
             
             this.progress = new PlayerProgress();

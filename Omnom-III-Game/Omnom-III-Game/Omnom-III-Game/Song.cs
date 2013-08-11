@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FMOD;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using Omnom_III_Game.exceptions;
 using Omnom_III_Game.util;
 
 namespace Omnom_III_Game {
-    public class Song : Sound {
+    public class Song {
         public enum MusicTime { 
             FULL, 
             HALF, HALF_DOTTED, 
@@ -72,120 +73,8 @@ namespace Omnom_III_Game {
             throw new ArgumentOutOfRangeException("Fraction is not a valid musictime fraction.");
         }
 
-        public class Spectrum {
-            public static int  DEFAULT_SAMPLESIZE = 64;
 
-            public float[] data;
-
-            private Spectrum(float[] data) {
-                this.data = data;
-            }
-
-            public Spectrum(int sampleSize) {
-                this.data = new float[sampleSize];
-               
-            }
-
-            public Spectrum(FMOD.Channel channel,int channelOffset) {
-
-                int sampleSize = DEFAULT_SAMPLESIZE;
-
-                float[] specs = new float[sampleSize];
-
-                channel.getSpectrum(specs, sampleSize, channelOffset, FMOD.DSP_FFT_WINDOW.RECT);
-                this.data = specs;
-            }
-
-            public Spectrum highCut(int cuttedSamples) {
-                float[] cutdata = new float[this.data.Length - cuttedSamples];
-                for (int i = 0; i < cutdata.Length; i++) {
-                    cutdata[i] = this.data[i];
-                }
-                return new Spectrum(cutdata);
-            }
-
-            public Spectrum downSample(int toSize) {
-                float[] newdata = new float[toSize];
-                double factor = this.data.Length / toSize;
-                int floorFactor = (int) Math.Floor(factor);
-                int ceilFactor = (int) Math.Ceiling(factor);
-                for (int i = 0; i < newdata.Length; i++) {
-                    float v = 0;
-
-                    int min = i * floorFactor;
-                    int  max = min + ceilFactor;
-                    for (int j = min; j < max; j++) {
-                        v += this.data[j];
-                    }
-
-                    newdata[i] = v / ceilFactor;
-                }
-                return new Spectrum(newdata);
-            }
-
-            public float[] scaledData(float scale) {
-                float[] scaled = new float[this.data.Length];
-                for (int i = 0; i < this.data.Length; i++) {
-                    scaled[i] = normalize(this.data[i]) * scale;
-                }
-                return scaled;
-            }
-
-            private float normalize(float data) {
-                return (float) Math.Pow(data, 1 / Math.E);
-            }
-
-            public int sampleSize {
-                get {
-                    return data.Length;
-                }
-            }
-
-            
-        }
-
-        public class SpectralData {
-            public Spectrum current;
-            public Spectrum max;
-
-            FMOD.Channel channel;
-            int offset;
-
-            public SpectralData(FMOD.Channel channel, int offset) {
-                this.channel = channel;
-                this.offset = offset;
-                this.max = new Spectrum(Spectrum.DEFAULT_SAMPLESIZE);
-            }
-
-            public void update() {
-                this.current = new Spectrum(this.channel, offset);
-                for (int i = 0; i < this.current.sampleSize; i++) {
-                    float vol = this.current.data[i];
-                    if (vol > this.max.data[i]){
-                        this.max.data[i] = vol;
-                    }
-                }
-            }
-        }
-
-        public class ExtendedSpectralData {
-            public SpectralData left;
-            public SpectralData right;
-
-
-            public ExtendedSpectralData(FMOD.Channel channel) {
-                this.left = new SpectralData(channel, 0);
-                this.right = new SpectralData(channel, 1);
-            }
-
-            public void update() {
-                this.left.update();
-                this.right.update();
-            }
-
-        }
-
-        public ExtendedSpectralData spectrum;
+        private Microsoft.Xna.Framework.Media.Song content;
         private float beatsPerMillisecond;
         public float timeShift;
 
@@ -248,32 +137,61 @@ namespace Omnom_III_Game {
         }
 
         
-        public Song(String contentName, float bpm) : base(contentName) {
+        public Song(String contentName, ContentUtil content, float bpm) {
             this.bpm = bpm;
+            this.content = content.load<Microsoft.Xna.Framework.Media.Song>(contentName);
         }
 
-        public Song(ContentScript script) : base(script["song"][0]) {
-            this.bpm = script.asFloat["tempo"][0];
+        public Song(ContentScript script, ContentUtil content)
+            : this(script["song"][0], content, script.asFloat["tempo"][0]) {
             
             if (null != script["startshift"])
                 this.timeShift = this.beatTimeInMs * script.asFloat["startshift"][0];
         }
 
-        public override void play() {
-            base.play();
-            this.spectrum = new ExtendedSpectralData(this.channel);
+        public void play() {
+            if (this.isActive() && MediaState.Paused == MediaPlayer.State) {
+                MediaPlayer.Resume();
+            } else {
+                MediaPlayer.Play(this.content);
+            }
         }
 
         public void calculateMetaInfo() {
-            SystemRef.soundsystem.update();
-            this.spectrum.update();
-
-            uint position = 0;
-            this.channel.getPosition(ref position, TIMEUNIT.MS);
+            uint position = this.isActive() ? 
+                (uint) MediaPlayer.PlayPosition.TotalMilliseconds : 0;
+            
             this._timeRunningInMs = (long) position;
             this._timeRunningInMs += (long)this.timeShift;
         }
 
 
+
+        internal bool stoppedPlaying() {
+            return !this.isActive() ||
+                MediaState.Stopped == MediaPlayer.State;
+        }
+
+        private bool isActive() {
+            Microsoft.Xna.Framework.Media.Song activeSong = MediaPlayer.Queue.ActiveSong;
+            return null != activeSong && activeSong.Equals(this.content);
+        }
+
+        internal void stop() {
+            if (this.isActive())
+                MediaPlayer.Stop();
+        }
+
+        internal void reset() {
+            this.stop();
+        }
+
+        internal void pause() {
+            if (!this.isActive())
+                return;
+            if (MediaState.Playing == MediaPlayer.State) {
+                MediaPlayer.Pause();
+            }
+        }
     }
 }
