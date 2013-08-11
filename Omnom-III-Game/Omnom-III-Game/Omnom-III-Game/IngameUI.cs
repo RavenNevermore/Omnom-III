@@ -14,10 +14,13 @@ namespace Omnom_III_Game {
 
         VisualTransition transitions;
         Dictionary<InputState.Move, DirectionalIndicator> hud;
+        float beatTimeInMs;
 
         Sound errorSound;
         Sound successSound;
         Sound seqSuccessSound;
+
+        float flash = 0.0f;
 
         public IngameUI() {
             this.transitions = new VisualTransition();
@@ -30,34 +33,38 @@ namespace Omnom_III_Game {
                 float beatTimeInMS,
                 float uiSpeed) {
 
-            this.initHud(content, beatTimeInMS, uiSpeed);
+            this.beatTimeInMs = beatTimeInMS;
+            this.initHud(content, uiSpeed);
 
-            this.errorSound = new Sound("hud/error_move");
+            this.errorSound = new Sound("hud/error_move", content);
             this.successSound = null;// new Sound("hud/success_move");
-            this.seqSuccessSound = new Sound("hud/success_sequence");
+            this.seqSuccessSound = new Sound("hud/success_sequence", content);
 
             float bpms = 1 / beatTimeInMS;
             foreach (DanceSequence.Input input in protocol.handicaps) {
                 if (!this.hud.ContainsKey(input.handicap))
                     continue;
 
-                this.hud[input.handicap].prerecord(input.startTime(bpms), Color.White);
+                this.hud[input.handicap].prerecord(input.startTime(bpms), Color.Orange);
             }
 
             this.transitions.initialize(content, protocol, beatTimeInMS);
         }
 
-        private void initHud(ContentUtil content, float beatTimeInMS, float uiSpeed) {
+        private void initHud(ContentUtil content, float uiSpeed) {
             this.hud.Clear();
-            this.hud[InputState.Move.UP] = new DirectionalIndicator(content, InputState.Move.UP, beatTimeInMS, uiSpeed);
-            this.hud[InputState.Move.DOWN] = new DirectionalIndicator(content, InputState.Move.DOWN, beatTimeInMS, uiSpeed);
-            this.hud[InputState.Move.LEFT] = new DirectionalIndicator(content, InputState.Move.LEFT, beatTimeInMS, uiSpeed);
-            this.hud[InputState.Move.RIGHT] = new DirectionalIndicator(content, InputState.Move.RIGHT, beatTimeInMS, uiSpeed);
+            this.hud[InputState.Move.UP] = new DirectionalIndicator(content, InputState.Move.UP, this.beatTimeInMs, uiSpeed);
+            this.hud[InputState.Move.DOWN] = new DirectionalIndicator(content, InputState.Move.DOWN, this.beatTimeInMs, uiSpeed);
+            this.hud[InputState.Move.LEFT] = new DirectionalIndicator(content, InputState.Move.LEFT, this.beatTimeInMs, uiSpeed);
+            this.hud[InputState.Move.RIGHT] = new DirectionalIndicator(content, InputState.Move.RIGHT, this.beatTimeInMs, uiSpeed);
         }
 
 
         public void update(PlayerProgress.RatedMoves rated, bool ratingComplete, long time, long deltaT) {
             this.transitions.update(time);
+
+            this.flash = 1.0f - ((time % this.beatTimeInMs) / this.beatTimeInMs);
+            this.flash = this.flash / 8;
 
             if (ratingComplete)
                 this.seqSuccessSound.play();
@@ -112,6 +119,8 @@ namespace Omnom_III_Game {
         }
 
         public void draw(SpriteBatchWrapper sprites) {
+            sprites.fillWithColor(Color.White, this.flash);
+
             this.transitions.draw(sprites);
 
             foreach (KeyValuePair<InputState.Move, DirectionalIndicator> hudElement in this.hud) {

@@ -148,8 +148,12 @@ namespace Omnom_III_Game.dance {
                 lastCount = i + 1;
             }
 
+            //this.drawNumbers(sprites, lastCount);
+        }
+
+        private void drawNumbers(SpriteBatchWrapper sprites, int lastCount) {
             if (this.activeTransit.transitFromEnemy && 0 < lastCount && lastCount <= 4) {
-                float deltaT = (float)(this.lastSongTime - this.activeTransit.preCounts[lastCount - 1]);
+                float deltaT = (float) (this.lastSongTime - this.activeTransit.preCounts[lastCount - 1]);
 
                 float alpha = 1.0f - (deltaT / this.beatTimeInMs);
                 float blackAlpha = 2 * alpha - alpha;
