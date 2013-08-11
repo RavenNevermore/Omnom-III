@@ -45,11 +45,23 @@ namespace Omnom_III_Game {
                 }
             }
 
+            internal bool contains(DanceSequence.Input input) {
+                if (null == input)
+                    return false;
+                return this.allFromUserInput.Contains(input) ||
+                    this.missed.Contains(input);
+            }
+
             internal void addWrongMove(DanceSequence sequence, float measure, InputState.Move move) {
                 DanceSequence.Input input = new DanceSequence.Input(sequence);
                 input.positionInSong = measure;
                 input.handicap = move;
                 this.wrong.Add(input);
+            }
+
+            internal bool hasErrors() {
+                return this.missed.Count > 0 ||
+                    this.wrong.Count > 0;
             }
         }
 
@@ -57,6 +69,7 @@ namespace Omnom_III_Game {
         public int score;
         private float ratedUntil;
         private List<DanceSequence.Input> notYetRated;
+        public bool errorInLastSequence;
 
         public PlayerProgress() {
             this.reset();
@@ -101,7 +114,9 @@ namespace Omnom_III_Game {
             }
             
             foreach (DanceSequence.Input possibleMiss in this.notYetRated) {
-                if (!possibleMiss.isReachable(measure)) {
+                if (!possibleMiss.isReachable(measure) || 
+                        this.ratedUntil > possibleMiss.positionInSong) {
+
                     rating.missed.Add(possibleMiss);
                     rated.Add(possibleMiss);
                 }

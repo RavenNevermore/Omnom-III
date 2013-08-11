@@ -103,6 +103,10 @@ namespace Omnom_III_Game {
             this.input.update(input);
             this.updateInternal(this.input);
         }
+
+        private int missed = 0;
+        private int wrong = 0;
+
             
         private void updateInternal(ExplicitInputState input) {
             if (this.hasExitState(input))
@@ -119,6 +123,9 @@ namespace Omnom_III_Game {
 
             this.currentSequence = sequences.atMeasure(measures);
             if (null != this.currentSequence && this.currentSequence.isEnemyActive(measures)) {
+                this.progress.errorInLastSequence = false;
+                this.missed = 0;
+                this.wrong = 0;
                 InputState.Move move = this.currentSequence.getActiveMoveAt(measures);
                 if (this.lastMove != move)
                     this.enemy.activate(move);
@@ -127,18 +134,43 @@ namespace Omnom_III_Game {
 
             PlayerProgress.RatedMoves rated = null;
 
+            bool sequenceComplete = false;
             if ((null == this.currentSequence ||
-                    this.currentSequence.playerInputAllowed(measures)) &&
-                    input.lastMoveIsNew()) {
+                    this.currentSequence.playerInputAllowed(measures))) {
                 
-                this.player.activate(input.lastMove);
+                
                 rated = this.progress.nextRating(measures, this.currentSequence, input);
+                if (rated.hasErrors()) {
+                    this.progress.errorInLastSequence = true;
+                    this.missed += rated.missed.Count;
+                    this.wrong += rated.wrong.Count;
+                }
+
+                if (input.lastMoveIsNew()) {
+                    this.player.activate(input.lastMove);
+
+                    this.progress.score -= rated.wrong.Count * 20;
+
+                    sequenceComplete = this.checkSequenceCompletion(rated, sequenceComplete);
+                }
             }
-            this.ui.update(rated, time, deltaT);
+
+            if (sequenceComplete) {
+                this.progress.score += 100;
+            }
+            this.ui.update(rated, sequenceComplete, time, deltaT);
 
 
             this.player.update(deltaT);
             this.enemy.update(deltaT);
+        }
+
+        private bool checkSequenceCompletion(PlayerProgress.RatedMoves rated, bool sequenceComplete) {
+            DanceSequence.Input lastMove = this.currentSequence.lastMoveInput;
+            if (rated.contains(lastMove)) {
+                sequenceComplete = !this.progress.errorInLastSequence;
+            }
+            return sequenceComplete;
         }
 
         private void updatePauseState(ExplicitInputState input) {
@@ -181,7 +213,7 @@ namespace Omnom_III_Game {
                 }
                 
             }
-
+            sprites.drawDebugText(this.progress.errorInLastSequence, "Missed:", this.missed, "Wrong:", this.wrong);
             /*sprites.drawDebugText(
                 "Measures: ", this.song.timeRunningInMeasures,
                 "Current Seq: ", this.currentSequence, "Last Move:", this.lastMove,

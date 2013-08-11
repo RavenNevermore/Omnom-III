@@ -66,6 +66,9 @@ Content\hud\bignumbers.xnb
 Content\bgr_highscore.xnb
 Content\hud\highscore_line.xnb
 Content\hud\highscoreline.xnb
+Content\hud\error_move.xnb
+Content\hud\success_move.xnb
+Content\hud\success_sequence.xnb
 Content\eattherich.wma
 Content\MeasureTest.wma
 Content\eyeofthetiger.wma
@@ -76,6 +79,9 @@ Content\menu\select.wma
 Content\menu\backgroundsong.wma
 Content\muffytutorialsong.wma
 Content\muffyfinalsong.wma
+Content\hud\error_move.wma
+Content\hud\success_move.wma
+Content\hud\success_sequence.wma
 Content\tigerstep.content
 Content\level_02.content
 Content\level_03.content

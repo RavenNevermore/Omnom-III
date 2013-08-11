@@ -15,6 +15,10 @@ namespace Omnom_III_Game {
         VisualTransition transitions;
         Dictionary<InputState.Move, DirectionalIndicator> hud;
 
+        Sound errorSound;
+        Sound successSound;
+        Sound seqSuccessSound;
+
         public IngameUI() {
             this.transitions = new VisualTransition();
             this.hud = new Dictionary<InputState.Move, DirectionalIndicator>();
@@ -27,6 +31,10 @@ namespace Omnom_III_Game {
                 float uiSpeed) {
 
             this.initHud(content, beatTimeInMS, uiSpeed);
+
+            this.errorSound = new Sound("hud/error_move");
+            this.successSound = null;// new Sound("hud/success_move");
+            this.seqSuccessSound = new Sound("hud/success_sequence");
 
             float bpms = 1 / beatTimeInMS;
             foreach (DanceSequence.Input input in protocol.handicaps) {
@@ -48,13 +56,21 @@ namespace Omnom_III_Game {
         }
 
 
-        public void update(PlayerProgress.RatedMoves rated, long time, long deltaT) {
+        public void update(PlayerProgress.RatedMoves rated, bool ratingComplete, long time, long deltaT) {
             this.transitions.update(time);
+
+            if (ratingComplete)
+                this.seqSuccessSound.play();
 
             if (null != rated) {
                 foreach (DanceSequence.Input ratedInput in rated.allFromUserInput) {
                     if (!this.hud.ContainsKey(ratedInput.handicap))
                         continue;
+
+                    Sound sound = getSoundForRating(rated, ratedInput);
+                    if (null != sound) {
+                        sound.play();
+                    }
 
                     Color color = getColorForRating(rated, ratedInput);
                     this.hud[ratedInput.handicap].start(color);
@@ -64,6 +80,21 @@ namespace Omnom_III_Game {
             foreach (KeyValuePair<InputState.Move, DirectionalIndicator> hudElement in this.hud) {
                 hudElement.Value.update(time, deltaT);
             }
+        }
+
+        private Sound getSoundForRating(PlayerProgress.RatedMoves rated, DanceSequence.Input ratedInput) {
+            
+            Sound sound;            
+            if (rated.ok.Contains(ratedInput)) {
+                sound = this.successSound;
+            } else if (rated.good.Contains(ratedInput)) {
+                sound = this.successSound;
+            } else if (rated.perfect.Contains(ratedInput)) {
+                sound = this.successSound;
+            } else {
+                sound = this.errorSound;
+            }
+            return sound;
         }
 
         private static Color getColorForRating(PlayerProgress.RatedMoves rated, DanceSequence.Input ratedInput) {

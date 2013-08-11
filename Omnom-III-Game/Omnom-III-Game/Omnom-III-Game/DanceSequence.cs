@@ -35,6 +35,8 @@ namespace Omnom_III_Game {
             }
 
             public bool isReachable(float songMeasure) {
+                if (InputState.Move.BREAK == this.handicap)
+                    return false;
                 float templateMeasure = songMeasure - this.parent.length;
 
                 float start = this.positionInSong - FUZZYNESS;
@@ -129,6 +131,18 @@ namespace Omnom_III_Game {
                 }
             }
             return possibles;
+        }
+
+        public Input lastMoveInput {
+            get {
+                Input lastInput = null;
+                foreach (Input input in sequence) {
+                    if (InputState.Move.BREAK != input.handicap) {
+                        lastInput = input;
+                    }
+                }
+                return lastInput;
+            }
         }
 
         
