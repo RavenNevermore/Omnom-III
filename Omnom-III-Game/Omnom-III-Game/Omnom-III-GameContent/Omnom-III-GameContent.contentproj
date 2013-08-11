@@ -357,6 +357,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="toasty\toasty_idle.png">
+      <Name>toasty_idle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="toasty\toasty_left.png">
       <Name>toasty_left</Name>
       <Importer>TextureImporter</Importer>
@@ -369,11 +374,6 @@
     </Compile>
     <Compile Include="toasty\toasty_up.png">
       <Name>toasty_up</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="toasty\toasty_idle.png">
-      <Name>toasty_idle</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
