@@ -137,6 +137,7 @@
     <Compile Include="util\SpriteBatchWrapper.cs" />
     <Compile Include="util\SystemRef.cs" />
     <Compile Include="util\TextureContext.cs" />
+    <Compile Include="VideoScene.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

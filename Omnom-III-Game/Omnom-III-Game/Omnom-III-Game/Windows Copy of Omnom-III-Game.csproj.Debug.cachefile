@@ -69,6 +69,7 @@ Content\menu\submenufont.xnb
 Content\hud\error_move.xnb
 Content\hud\success_move.xnb
 Content\hud\success_sequence.xnb
+Content\video\story_01.xnb
 Content\eattherich.wma
 Content\MeasureTest.wma
 Content\eyeofthetiger.wma
@@ -77,6 +78,7 @@ Content\intro\introsound.wma
 Content\menu\backgroundsong.wma
 Content\muffyfinalsong.wma
 Content\muffytutorialsong.wma
+Content\video\story_01.wmv
 Content\tigerstep.content
 Content\level_02.content
 Content\level_03.content

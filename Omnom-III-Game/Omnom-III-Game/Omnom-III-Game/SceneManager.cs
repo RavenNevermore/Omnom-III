@@ -29,8 +29,11 @@ namespace Omnom_III_Game {
             this.scenes = new Dictionary<string,IScene>();
             this.defaultScene = "menu";
 
+            this.scenes["story_01"] = new VideoScene("video/story_01");
+
             SceneChain storyMode = new SceneChain();
             storyMode.addToChain(
+                "story_01",
                 "level_01",
                 "level_02",
                 "level_03",

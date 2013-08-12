@@ -29,10 +29,6 @@ namespace Omnom_III_Game {
             this.fadeOutTime = fadeTime * 1 / 8;
         }
 
-        public void setTargetSize(int width, int height) {
-            this.targetSize = new Rectangle(0, 0, width, height);
-        }
-
         public void initialize(ContentUtil content, SceneActivationParameters parameters) {
             this.picture = content.load<Texture2D>(this.pictureName);
             this.fadeAmount = 0.0f;
@@ -61,7 +57,7 @@ namespace Omnom_III_Game {
             if (null != backgroundColor)
                 sprites.fillWithColor(backgroundColor, 1.0f);
             if (!targetSizeIsValid()) {
-                this.calculateTargetSize(device);
+                this.targetSize = sprites.calcMaxProportionalSize(this.picture);
             }
 
             sprites.drawFromCenter(
@@ -77,21 +73,7 @@ namespace Omnom_III_Game {
             return this.targetSize.Width > 0 && this.targetSize.Height > 0;
         }
 
-        private void calculateTargetSize(GraphicsDevice device) {
-            float imageAspect = (float) this.picture.Bounds.Width / (float) this.picture.Bounds.Height;
-            int maxH = device.Viewport.Height;
-            int maxW = device.Viewport.Width;
-
-            int wAtMaxH = (int) (maxH * imageAspect);
-            int hAtMaxW = (int) (maxW / imageAspect);
-
-            if (wAtMaxH > maxW) {
-                this.setTargetSize(maxW, hAtMaxW);
-            } else {
-                this.setTargetSize(wAtMaxH, maxH);
-            }
-        }
-
+        
         public void cleanup() {
             this.picture = null;
         }

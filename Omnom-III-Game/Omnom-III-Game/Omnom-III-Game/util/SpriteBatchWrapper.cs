@@ -172,6 +172,21 @@ namespace Omnom_III_Game.util {
                 color);
         }
 
+        public Rectangle calcMaxProportionalSize(Texture2D texture) {
+            float imageAspect = (float) texture.Bounds.Width / (float) texture.Bounds.Height;
+            int maxH = this.wrappedDevice.Viewport.Height;
+            int maxW = this.wrappedDevice.Viewport.Width;
+
+            int wAtMaxH = (int) (maxH * imageAspect);
+            int hAtMaxW = (int) (maxW / imageAspect);
+
+            if (wAtMaxH > maxW) {
+                return new Rectangle(0, 0, maxW, hAtMaxW);
+            } else {
+                return new Rectangle(0, 0, wAtMaxH, maxH);
+            }
+        }
+
         public void drawTextureAt(Texture2D texture,
                 int width, int height,
                 int x, int y) {
