@@ -51,13 +51,19 @@ namespace Omnom_III_Game {
 
         public String title { get { return this.script.title; } }
 
+        public string highscoreBackground { get { 
+            return this.script.get("highscore_background"); } }
+
         public SceneActivationParameters nextScene() {
             if (0 == this.progress.score) {
                 return null;
             } else {
                 return new SceneActivationParameters(
                     "highscore",
-                    new HighscoreParams(this.title, this.progress.clone()));
+                    new HighscoreParams(
+                        this.title, 
+                        this.script.get("highscore_background"),
+                        this.progress.clone()));
             }
         }
 
@@ -248,5 +254,7 @@ namespace Omnom_III_Game {
             this.song.stop();
             this.song.reset();
         }
+
+        
     }
 }

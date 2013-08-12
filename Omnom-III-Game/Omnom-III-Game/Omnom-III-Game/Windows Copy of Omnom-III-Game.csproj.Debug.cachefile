@@ -75,6 +75,14 @@ Content\stages\tutorial\layer_02.xnb
 Content\stages\tutorial\layer_03.xnb
 Content\stages\tutorial\layer_04.xnb
 Content\stages\tutorial\layer_beat.xnb
+Content\stages\tutorial\highscore.xnb
+Content\stages\tutorial\highscore_line.xnb
+Content\stages\meatbar\highscore_line.xnb
+Content\stages\meatbar\highscore.xnb
+Content\stages\veggielaunge\highscore_line.xnb
+Content\stages\veggielaunge\highscore.xnb
+Content\stages\backeryclub\highscore_line.xnb
+Content\stages\backeryclub\highscore.xnb
 Content\eattherich.wma
 Content\MeasureTest.wma
 Content\eyeofthetiger.wma

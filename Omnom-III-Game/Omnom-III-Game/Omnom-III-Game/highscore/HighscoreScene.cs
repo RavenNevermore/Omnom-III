@@ -29,8 +29,13 @@ namespace Omnom_III_Game.highscore {
             this.nextScore = stageParams.newScore;
             this.listeningForInput = false;
 
-            this.background = content.load<Texture2D>("bgr_highscore");
-            this.lineBackground = new ScaledTexture(content.load<Texture2D>("hud/highscore_line"), .4f);
+
+            this.background = content.load<Texture2D>(null == stageParams.background ? 
+                "bgr_highscore" : stageParams.background);
+
+            this.lineBackground = new ScaledTexture(content.load<Texture2D>(
+                null == stageParams.background ? "hud/highscore_line" : stageParams.background+"_line"), 
+                .4f);
             
             this.scores = new HighscoreList();
             this.scores.loadForScene(stageName);

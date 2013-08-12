@@ -3,6 +3,7 @@
 song: steakysong
 enemy: enemy_tbone
 background: bgr_tbone
+highscore_background: stages/meatbar/highscore
 tempo: 107
 startshift: 0
 

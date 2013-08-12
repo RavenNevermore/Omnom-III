@@ -5,14 +5,19 @@ using System.Text;
 
 namespace Omnom_III_Game.highscore {
     public class HighscoreParams {
-        public HighscoreParams(String stageName, PlayerProgress newScore) {
+
+        public String stage;
+        public String background;
+        public PlayerProgress newScore;
+        
+        public HighscoreParams(String stageName, String background, PlayerProgress newScore) {
             this.stage = stageName;
+            this.background = background;
             this.newScore = newScore;
         }
 
-        public HighscoreParams(String stageName) : this(stageName, null) {}
+        public HighscoreParams(String stageName, String background) : this(stageName, background, null) { }
 
-        public String stage;
-        public PlayerProgress newScore;
+        
     }
 }

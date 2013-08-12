@@ -3,6 +3,7 @@
 song: steakysong
 enemy: enemy_paprikano
 background: bgr_paprikano
+highscore_background: stages/veggielaunge/highscore
 tempo: 107
 startshift: 0
 

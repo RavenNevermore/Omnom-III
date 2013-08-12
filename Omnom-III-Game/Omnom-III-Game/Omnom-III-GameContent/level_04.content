@@ -3,6 +3,7 @@
 song: muffyfinalsong
 enemy: enemy_muffy
 background: bgr_muffy
+highscore_background: stages/backeryclub/highscore
 tempo: 140
 startshift: 0
 

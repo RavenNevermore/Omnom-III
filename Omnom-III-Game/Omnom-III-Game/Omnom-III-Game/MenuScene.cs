@@ -38,12 +38,19 @@ namespace Omnom_III_Game {
             this.add(arcade);
 
             SubMenu highscore = new SubMenu("highscore", "Highscores",
-                new MenuItem("highscore", "Get to know her", new HighscoreParams("Get to know her")),
-                new MenuItem("highscore", "T-Bone the Steak", new HighscoreParams("T-Bone the Steak")),
-                new MenuItem("highscore", "Daddy'll fix it", new HighscoreParams("Daddy'll fix it")),
-                new MenuItem("highscore", "The final conquest", new HighscoreParams("The final conquest")));
+                this.itemForHighscore("level_01", manager),
+                this.itemForHighscore("level_02", manager),
+                this.itemForHighscore("level_03", manager),
+                this.itemForHighscore("level_04", manager));
             this.add(highscore);
             this.add(new MenuItem("exit", "Quit Game"));
+        }
+
+        private MenuItem itemForHighscore(String level, SceneManager manager) {
+            DanceScene scene = (DanceScene)manager.getScene(level);
+            return new MenuItem("highscore", 
+                scene.title, 
+                new HighscoreParams(scene.title, scene.highscoreBackground));
         }
 
         private MenuItem itemForDanceScene(String name, SceneManager manager) {

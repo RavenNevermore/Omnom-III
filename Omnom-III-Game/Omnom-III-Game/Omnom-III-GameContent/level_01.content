@@ -8,6 +8,7 @@ countlayers: stages/tutorial/layer_01
              stages/tutorial/layer_02
              stages/tutorial/layer_03
              stages/tutorial/layer_04
+highscore_background: stages/tutorial/highscore
 tempo: 140
 startshift: 0
 ui_speed: 0.5
