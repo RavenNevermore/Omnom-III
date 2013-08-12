@@ -112,6 +112,10 @@ namespace Omnom_III_Game {
             return this.startMeasure <= measures && measures <= this.startMeasure + this.length;
         }
 
+        internal bool isEnemyShown(float measures) {
+            return this.startMeasure <= measures && measures <= this.startMeasure + this.length - 0.25f;
+        }
+
         public InputState.Move getActiveMoveAt(float songMeasure) {
             float templateMeasure = songMeasure - this.startMeasure;
             foreach (Input input in this.sequence) {

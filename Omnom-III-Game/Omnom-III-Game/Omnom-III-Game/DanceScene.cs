@@ -175,6 +175,9 @@ namespace Omnom_III_Game {
         }
 
         private bool checkSequenceCompletion(PlayerProgress.RatedMoves rated, bool sequenceComplete) {
+            if (null == this.currentSequence)
+                return false;
+
             DanceSequence.Input lastMove = this.currentSequence.lastMoveInput;
             if (rated.contains(lastMove)) {
                 sequenceComplete = !this.progress.errorInLastSequence;
@@ -216,7 +219,7 @@ namespace Omnom_III_Game {
             this.background.draw(sprites);
 
             if (null != this.currentSequence) {
-                if (this.currentSequence.isEnemyActive(this.song.timeRunningInMeasures)) {
+                if (this.currentSequence.isEnemyShown(this.song.timeRunningInMeasures)) {
                     this.enemy.draw(sprites);
                 } else {
                     this.player.draw(sprites);

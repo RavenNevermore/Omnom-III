@@ -25,5 +25,5 @@ sequences:
 
      29> 1/2 right, left, down, break
 
-     33> 1/2 up, right, down, up,
-         1/2 up, left, down, 1/4 up, break
+     33> 1/2 up, right, down, left,
+         1/2 up, left, down, 1/4 right, break
