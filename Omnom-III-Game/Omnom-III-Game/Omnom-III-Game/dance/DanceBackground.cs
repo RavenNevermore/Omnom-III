@@ -7,21 +7,50 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Omnom_III_Game.dance {
-    class DanceBackground {
+    public class DanceBackground {
+        class BeatLayer {
+            public Texture2D texture;
+            public float alpha;
+            public float startInMeasure;
+            public float updateLengthInBeats;
+
+            public BeatLayer(ContentUtil content, String loadString) {
+                String[] cfg = loadString.Split(' ');
+                this.texture = content.load<Texture2D>(cfg[0]);
+                this.alpha = 0.0f;
+
+                this.updateLengthInBeats = cfg.Length > 1 ? ParserUtil.toFloat(cfg[1]) : 1.0f;
+                this.startInMeasure = cfg.Length > 2 ? ParserUtil.toFloat(cfg[2]) : 0.0f;
+                
+            }
+
+            public void updateAlpha(float songTimeInMeasures) {
+                songTimeInMeasures -= this.startInMeasure;
+                float alphaUpdates = songTimeInMeasures * (4 / this.updateLengthInBeats);
+                float positionInUpdate = alphaUpdates - ((int)alphaUpdates);
+                
+                this.alpha = 1.0f - positionInUpdate;
+                this.alpha *= this.updateLengthInBeats;
+                this.alpha -= (this.updateLengthInBeats - 1);
+                if (this.alpha < 0.0f)
+                    this.alpha = 0.0f;
+            }
+        }
 
         private Texture2D bakground;
-        private Texture2D beatSign;
+        private BeatLayer[] beatSigns;
         private Texture2D[] countSigns;
 
-        private float beatAlpha;
         private int countsShown;
 
         public void initialize(ContentUtil content, ContentScript script) { 
             this.bakground = content.load<Texture2D>(script.get("background"));
 
-            String beatSignTexture = script.get("beatlayer");
-            if (null != beatSignTexture) {
-                this.beatSign = content.load<Texture2D>(beatSignTexture);
+            if (script.contains("beatlayers")){
+                this.beatSigns = new BeatLayer[script["beatlayers"].Count];
+                for (int i = 0; i < this.beatSigns.Length; i++){
+                    this.beatSigns[i] = new BeatLayer(content, script["beatlayers"][i]);
+                }
             }
 
             if (script.contains("countlayers")) {
@@ -32,9 +61,14 @@ namespace Omnom_III_Game.dance {
             }
         }
 
+        
+
         public void update(float songTimeInMeasures, float sequenceTimeNormal) {
-            float beats = songTimeInMeasures * 4;
-            this.beatAlpha = 1.0f - (beats - ((int)beats));
+            if (null != this.beatSigns) {
+                foreach (BeatLayer beatsign in this.beatSigns) {
+                    beatsign.updateAlpha(songTimeInMeasures);
+                }
+            }
 
             if (null != this.countSigns){
                 if (sequenceTimeNormal > 1.0f)
@@ -49,10 +83,14 @@ namespace Omnom_III_Game.dance {
             }
         }
 
+        
+
         public void draw(SpriteBatchWrapper sprites) {
             sprites.drawBackground(this.bakground);
-            if (null != this.beatSign) {
-                sprites.drawBackground(this.beatSign, this.beatAlpha);
+            if (null != this.beatSigns) {
+                foreach (BeatLayer beatsign in this.beatSigns) {
+                    sprites.drawBackground(beatsign.texture, beatsign.alpha);
+                }
             }
             if (null != this.countSigns) {
                 for (int i = 0; i < this.countsShown; i++) {

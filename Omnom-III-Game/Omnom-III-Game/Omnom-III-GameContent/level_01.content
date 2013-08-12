@@ -3,7 +3,7 @@
 song: muffytutorialsong
 enemy: enemy_muffy
 background: stages/tutorial/background
-beatlayer: stages/tutorial/layer_beat
+beatlayers: stages/tutorial/layer_beat
 countlayers: stages/tutorial/layer_01
              stages/tutorial/layer_02
              stages/tutorial/layer_03

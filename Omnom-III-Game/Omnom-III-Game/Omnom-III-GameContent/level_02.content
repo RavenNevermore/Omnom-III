@@ -2,7 +2,14 @@
 
 song: steakysong
 enemy: enemy_tbone
-background: bgr_tbone
+background: stages/meatbar/background
+beatlayers: stages/meatbar/layer_beat_01
+            stages/meatbar/layer_beat_02 2
+            stages/meatbar/layer_beat_03 2 0.25
+countlayers: stages/meatbar/layer_01
+             stages/meatbar/layer_02
+             stages/meatbar/layer_03
+             stages/meatbar/layer_04
 highscore_background: stages/meatbar/highscore
 tempo: 107
 startshift: 0
