@@ -71,6 +71,9 @@ namespace Omnom_III_Game.util {
         public void drawTextAt(String text, int x, int y, float scale, Color color, String fontName, 
                 Direction measurementDirection) {
 
+            if (null == text)
+                return;
+
             SpriteFont font = this.defaultFont;
             if (null != fontName) {
                 font = this.getFont(fontName);

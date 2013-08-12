@@ -1,14 +1,14 @@
 # Daddy'll fix it
 
 song: steakysong
-enemy: enemy_paprikano
+enemy: papricano/papricano
 background: bgr_paprikano
 highscore_background: stages/veggielaunge/highscore
 tempo: 107
 startshift: 0
 
 sequences:
-     1> 1/4  left, right, left, right
+     1> 1/4  break, break, left, right
      3> 1/4  left, right, left, right
      5> 1/4  up, down, up, down
      7> 1/4  up, down, up, down

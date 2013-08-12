@@ -423,6 +423,31 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="papricano\papricano_down.png">
+      <Name>papricano_down</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="papricano\papricano_left.png">
+      <Name>papricano_left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="papricano\papricano_right.png">
+      <Name>papricano_right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="papricano\papricano_up.png">
+      <Name>papricano_up</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="papricano\papricano_idle.png">
+      <Name>papricano_idle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="tigerstep.content">
       <Name>tigerstep</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
