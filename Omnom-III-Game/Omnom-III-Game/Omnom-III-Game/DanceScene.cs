@@ -26,8 +26,8 @@ namespace Omnom_III_Game {
         
         AnimatedCharacter enemy;
         AnimatedCharacter player;
-        
-        String backgroundTexture;
+
+        DanceBackground background;
         TextureContext textures;
 
         long lastTime;
@@ -45,7 +45,7 @@ namespace Omnom_III_Game {
             this.script = ContentScript.FromFile(scriptname);
             this.textures = new TextureContext();
             this.sequences = new DanceSequenceProtocol();
-            
+            this.background = new DanceBackground();
             this.ui = new IngameUI();
         }
 
@@ -74,8 +74,9 @@ namespace Omnom_III_Game {
             this.textures.loadTextures(content, 
                 "player_character", "btn_up", "btn_down", "btn_left", "btn_right", "btn_fail");
             
-            this.backgroundTexture = this.script.get("background");
-            this.textures.loadTextures(content, this.backgroundTexture);
+            //this.backgroundTexture = this.script.get("background");
+            //this.textures.loadTextures(content, this.backgroundTexture);
+            this.background.initialize(content, this.script);
 
             this.song = new Song(this.script, content);
             
@@ -121,16 +122,24 @@ namespace Omnom_III_Game {
             
             float measures = this.song.timeRunningInMeasures;
 
+            float timeInSequence = -1.0f;
+
             this.currentSequence = sequences.atMeasure(measures);
-            if (null != this.currentSequence && this.currentSequence.isEnemyActive(measures)) {
-                this.progress.errorInLastSequence = false;
-                this.missed = 0;
-                this.wrong = 0;
-                InputState.Move move = this.currentSequence.getActiveMoveAt(measures);
-                if (this.lastMove != move)
-                    this.enemy.activate(move);
-                this.lastMove = move;
+            if (null != this.currentSequence) {
+                timeInSequence = (measures - this.currentSequence.startMeasure) / this.currentSequence.length;
+
+                if (this.currentSequence.isEnemyActive(measures)) {
+                    this.progress.errorInLastSequence = false;
+                    this.missed = 0;
+                    this.wrong = 0;
+                    InputState.Move move = this.currentSequence.getActiveMoveAt(measures);
+                    if (this.lastMove != move)
+                        this.enemy.activate(move);
+                    this.lastMove = move;
+                }
             }
+
+            this.background.update(measures, timeInSequence);
 
             PlayerProgress.RatedMoves rated = null;
 
@@ -203,7 +212,8 @@ namespace Omnom_III_Game {
             if (this.exit)
                 return;
 
-            this.textures.drawAsBackground(this.backgroundTexture, sprites);
+            //this.textures.drawAsBackground(this.backgroundTexture, sprites);
+            this.background.draw(sprites);
 
             if (null != this.currentSequence) {
                 if (this.currentSequence.isEnemyActive(this.song.timeRunningInMeasures)) {

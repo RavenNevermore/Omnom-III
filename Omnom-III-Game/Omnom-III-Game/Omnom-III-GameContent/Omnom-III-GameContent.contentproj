@@ -298,8 +298,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="bgr_tutorial.png">
-      <Name>bgr_tutorial</Name>
+    <Compile Include="stages\tutorial\background.png">
+      <Name>background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -357,6 +357,31 @@
       <Name>success_sequence</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="stages\tutorial\layer_01.png">
+      <Name>layer_01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="stages\tutorial\layer_02.png">
+      <Name>layer_02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="stages\tutorial\layer_03.png">
+      <Name>layer_03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="stages\tutorial\layer_04.png">
+      <Name>layer_04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="stages\tutorial\layer_beat.png">
+      <Name>layer_beat</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
     <Content Include="tigerstep.content">
       <Name>tigerstep</Name>

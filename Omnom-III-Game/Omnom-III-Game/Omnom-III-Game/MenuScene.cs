@@ -118,13 +118,14 @@ namespace Omnom_III_Game {
                 return;
             }
 
+            /*
             if (this.input.isActive(InputState.Control.EXIT)){
                 this.next = true;
                 this.exit = true;
                 this.clickSound.play();
                 this.backgroundSong.stop();
                 return;
-            }
+            }*/
 
             foreach (MenuItem item in this.items) {
                 item.update(this.input);

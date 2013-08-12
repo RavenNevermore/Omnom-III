@@ -105,8 +105,8 @@ namespace Omnom_III_Game.dance {
             if (null == this.activeTransit)
                 return;
 
-            if (this.lastSongTime < this.activeTransit.transition)
-                this.drawPreCount(sprites);
+            //if (this.lastSongTime < this.activeTransit.transition)
+            //    this.drawPreCount(sprites);
 
             this.drawFlash(sprites);
         }

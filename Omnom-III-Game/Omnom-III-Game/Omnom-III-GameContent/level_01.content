@@ -2,7 +2,12 @@
 
 song: muffytutorialsong
 enemy: enemy_muffy
-background: bgr_tutorial
+background: stages/tutorial/background
+beatlayer: stages/tutorial/layer_beat
+countlayers: stages/tutorial/layer_01
+             stages/tutorial/layer_02
+             stages/tutorial/layer_03
+             stages/tutorial/layer_04
 tempo: 140
 startshift: 0
 ui_speed: 0.5
@@ -11,14 +16,14 @@ sequences:
       1> 1/1 break, break
       5> 1/1 break, break
 
-      9> 1/2 break, up, down, break
-     13> 1/2 break, up, down, break
-     17> 1/2 break, left, right, left
-     21> 1/2 break, right, left, right
+      9> 1/2 down, up, down, break
+     13> 1/2 down, up, down, break
+     17> 1/2 left, right, left, break
+     21> 1/2 right, left, right, break
 
-     25> 1/2 break, left, right, up
+     25> 1/2 left, right, up, break
 
-     29> 1/2 break, right, left, down
+     29> 1/2 right, left, down, break
 
-     33> 1/2 break, up, right, down,
-         1/2 break, up, left, down
+     33> 1/2 up, right, down, up,
+         1/2 up, left, down, 1/4 up, break

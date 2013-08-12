@@ -75,6 +75,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="DanceScene.cs" />
     <Compile Include="DanceSequence.cs" />
+    <Compile Include="dance\DanceBackground.cs" />
     <Compile Include="dance\DanceProtocol.cs" />
     <Compile Include="dance\DanceSceneAnimationBundle.cs" />
     <Compile Include="dance\VisualTransition.cs" />

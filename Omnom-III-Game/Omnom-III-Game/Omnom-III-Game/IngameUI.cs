@@ -64,7 +64,7 @@ namespace Omnom_III_Game {
             this.transitions.update(time);
 
             this.flash = 1.0f - ((time % this.beatTimeInMs) / this.beatTimeInMs);
-            this.flash = this.flash / 8;
+            this.flash = this.flash / 16;
 
             if (ratingComplete)
                 this.seqSuccessSound.play();

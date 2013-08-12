@@ -226,10 +226,14 @@ namespace Omnom_III_Game.util {
         }
 
         internal void drawBackground(Texture2D texture) {
+            this.drawBackground(texture, 1.0f);
+        }
+
+        internal void drawBackground(Texture2D texture, float alpha) {
             if (null == texture) {
                 texture = DrawingUtil.createTexture(wrappedDevice, Color.CornflowerBlue);
             }
-            this.wrapped.Draw(texture, wrappedDevice.Viewport.Bounds, Color.White);
+            this.wrapped.Draw(texture, wrappedDevice.Viewport.Bounds, Color.White * alpha);
         }
 
         internal Vector2 getCenterOfScreen() {
