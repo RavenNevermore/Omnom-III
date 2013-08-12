@@ -10,9 +10,10 @@ using Omnom_III_Game.dance;
 
 namespace Omnom_III_Game.graphics {
     public class DirectionalIndicator {
-        static Vector2 FREEDOM = new Vector2(250f, 100f);
+        static Vector2 FREEDOM = new Vector2(150f, 100f);
         static int CENTER_OFFSET = 180;
         static float TEXTURE_SCALE = .55f;
+        static float MAX_GROWTH = 1.0f;
 
         class RecordedStart {
             public RecordedStart(Color color, long time) {
@@ -118,6 +119,12 @@ namespace Omnom_III_Game.graphics {
             }
         }
 
+        private float growth {
+            get {
+                return this.travel * MAX_GROWTH;
+            }
+        }
+
         public void draw(SpriteBatchWrapper sprites) {
             if (!this.isMoving)
                 return;
@@ -130,18 +137,21 @@ namespace Omnom_III_Game.graphics {
             position += startingPosition;
 
             int undergroth = 10 + (int)(this.travel * 50);
+            int width = (int)(this.texture.Width + (this.growth * this.texture.Width));
+            int height = (int)(this.texture.Height + (this.growth * this.texture.Height));
+
             sprites.drawFromCenter(
                 this.texture.texture,
-                this.texture.Width + undergroth,
-                this.texture.Height + undergroth,
+                width + undergroth,
+                height + undergroth,
                 (int) position.X * -1,
                 (int) position.Y * -1,
                 Color.Black * (1f - this.travel));
 
             sprites.drawFromCenter(
                 this.texture.texture,
-                this.texture.Width,
-                this.texture.Height,
+                width,
+                height,
                 (int) position.X * -1,
                 (int) position.Y * -1,
                 this.color);
