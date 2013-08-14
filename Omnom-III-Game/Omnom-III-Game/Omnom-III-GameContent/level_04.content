@@ -2,7 +2,15 @@
 
 song: muffyfinalsong
 enemy: enemy_muffy
-background: bgr_muffy
+background: stages/backeryclub/background
+beatlayers: stages/backeryclub/beat_layer_01 4
+            stages/backeryclub/beat_layer_02 4 0.25
+            stages/backeryclub/beat_layer_03 4 0.5
+            stages/backeryclub/beat_layer_04 4 0.75
+countlayers: stages/backeryclub/layer_01
+             stages/backeryclub/layer_02
+             stages/backeryclub/layer_03
+             stages/backeryclub/layer_04
 highscore_background: stages/backeryclub/highscore
 tempo: 140
 startshift: 0
