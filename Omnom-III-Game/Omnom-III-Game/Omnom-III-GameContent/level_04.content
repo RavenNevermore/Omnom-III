@@ -20,19 +20,19 @@ sequences:
      1> 1/4 break, break, break, break
      3> 1/4 break, break, break, break
 
-     5> 1/4  up, down, up, break
-     7> 1/4  left, right, left, break
+     5> 1/4 up, down, up, break
+     7> 1/4 left, right, left, break
      
 	 
-     9> 1/4  left, right, left, break
-     11> 1/4  right, left, right, break 
-     13> 1/4  down, up, down, break
-     15> 1/4  left, right, left, break
+     9> 1/4 left, right, left, break
+     11> 1/4 right, left, right, break 
+     13> 1/4 down, up, down, break
+     15> 1/4 left, right, left, break
      
 	 
-     17> 1/4  left, down, right, break
-     19> 1/4  right, up, left, break 
-     21> 1/4  left, right, up, break 
+     17> 1/4 left, down, right, break
+     19> 1/4 right, up, left, break 
+     21> 1/4 left, right, up, break 
      23> 1/4 right, left, down, break
 
      25> 1/2 up, down, left, right, up, down, left, right
@@ -55,8 +55,8 @@ sequences:
      63> 1/4 up, down, right, break
      65> 1/4 up, down, left, break
 
-     67> 1/1 up, down, left, right
-     75> 1/1 right, left, down, up
+     67> 1/2 up, down, left, right, up, down, left, right 
+     75> 1/2 right, left, down, up, right, left, down, up
 
      83> 1/2 left, right
      85> 1/2 left, right
