@@ -19,13 +19,13 @@ namespace Omnom_III_Game.dance {
         public AnimatedCharacter(String name, ContentUtil content, long beatTimeInMs) {
 
             this.idleTexture  = this.loadTexture(content, name + "_idle",  beatTimeInMs);
-            this.upTexture    = this.loadTexture(content, name + "_up",    beatTimeInMs / 2);
+            this.upTexture    = this.loadTexture(content, name + "_up",    beatTimeInMs);
             this.upTexture.repeat = false;
-            this.leftTexture  = this.loadTexture(content, name + "_left",  beatTimeInMs / 2);
+            this.leftTexture  = this.loadTexture(content, name + "_left",  beatTimeInMs);
             this.leftTexture.repeat = false;
-            this.rightTexture = this.loadTexture(content, name + "_right", beatTimeInMs / 2);
+            this.rightTexture = this.loadTexture(content, name + "_right", beatTimeInMs);
             this.rightTexture.repeat = false;
-            this.downTexture  = this.loadTexture(content, name + "_down",  beatTimeInMs / 2);
+            this.downTexture  = this.loadTexture(content, name + "_down",  beatTimeInMs);
             this.downTexture.repeat = false;
 
             this.reset();
