@@ -1,41 +1,75 @@
 # Daddy'll fix it
 
-song: steakysong
+song: papricano_roll
 enemy: papricano/papricano
-background: bgr_paprikano
+background: stages/veggielaunge/background
+beatlayers: stages/veggielaunge/beatlayer01 
+            stages/veggielaunge/beatlayer02 2
+            stages/veggielaunge/beatlayer03 2 0.25
+            
+countlayers: stages/veggielaunge/layer01
+             stages/veggielaunge/layer02
+             stages/veggielaunge/layer03
+             stages/veggielaunge/layer04
 highscore_background: stages/veggielaunge/highscore
-tempo: 107
+tempo: 110
 startshift: 0
 
 sequences:
-     1> 1/4  break, break, left, right
-     3> 1/4  left, right, left, right
-     5> 1/4  up, down, up, down
-     7> 1/4  up, down, up, down
+     1> 1/1  break 
+     3> 1/1  break
+     5> 1/4  left, break, right, break
+     7> 1/4  up, break, down, break
 
-     9>  1/4  left, right, left, right
-     11> 1/4  up, down, up, down
-     13> 1/4  up, down, up, down
-     15> 1/4  left, right, left, 1/8 right, up
+     9>  1/4  right, left, right, break
+     11> 1/4  left, right, left, break
+     13> 1/4  down, up, down, up, left, right, left, break
+     
+     17> 1/4  up, down, up, break
+     19> 1/4  right, up, left, break
+     21> 1/4  right, left, right, left, up, break, down, break
 
-     17> 1/8  left, right, up, down, 1/2 break
-     19> 1/8 right, left, down, up, 1/2 break
-
-     21> 1/4 up, down, right, left,
-         1/4 right, 1/2. left
+     25> 1/4  up, left, down, right,
+         1/4  up, left, down, break
  
-     26> 1/8  left, right, up, down, 1/2 break
-     28> 1/8 right, left, down, up, 1/2 break
+     29> 1/4 down, up, down, up, 1/2 left, right
+     33> 1/4 left, right, left, right, 1/2 up, down
 
-     30> 1/4 up, down, right, left,
-         1/4 right, 1/2. left
+     37> 1/4 up, left, right, down, up, left, right, break
+         
+     41> 1/4 up, break, up, break
+     43> 1/4 down, break, down, break
+     45> 1/4 up, break, up, break 
+         
 
-     36> 1/2. up, 1/4 left, 1/1 down,
-         1/2. left, 1/4 down, 1/2 right, up,
-         1/1 break, 1/1 break
+     47> 1/2 up, 1/4 left, break
 
-     48> 1/2 left, right, up, 1/8 break, left, down, right,
-         1/2 left, right, 1/1 down
+     49> 1/2 down, 1/4 right, break   
+     
+     51> 1/4 left, down, up, right, left, down, up, break
 
-     56> 1/4 left, right, 1/4. up, 1/2 down, up, 1/8 break          
+     55> 1/4 up, right, left, down, up, right, left, break
+
+     59> 1/4 down, left, right, up, down, left, right, break
+
+     63> 1/4 right, up, down, left, right, up, down, break
+
+     67> 1/4 up, down, up, down, left, right, up, break
+
+     71> 1/4 left, break, left, break 
+     73> 1/4 right, break, right, break
+     75> 1/4 up, break, up, break
+
+     77> 1/4 down, up, down, up, left, right, left, right, 
+         1/4 down, up, down, up, left, right, left, break
+         
+     85> 1/4 right, left, break, right, up, break, down, break
+
+     89> 1/4 left, right, break, left, down, up, break, break
+
+     93> 1/4 up, down, up, down, up, down, break, break
+
+     97> 1/2 left, right
+
+     99> 1/2 down, up
 
