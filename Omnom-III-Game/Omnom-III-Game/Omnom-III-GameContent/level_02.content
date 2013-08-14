@@ -18,30 +18,61 @@ sequences:
      1> 1/1  break, break
      
      5> 1/4  up, break, down, break
-     7> 1/4  left, break, right, break
+     7> 1/4  up, break, down, break
+     
+     9>  1/4  left, right, left, break
+     11> 1/4  left, right, left, break
+     13> 1/4  up, down, up, break
+     15> 1/4  left, right, left, break
+      
+     17> 1/4  left, right, up, break
+     19> 1/4  right, left, down, break
 
-     9>  1/4  up, down, up, down
-     11> 1/4  left, right, left, right
-     13> 1/4  up, left, down, right
-     15> 1/4  down, right, up, left
-
-     17> 1/8  left, right, up, down, 1/2 break
-     19> 1/8  right, left, down, up, 1/2 break
-
-     21> 1/4  up, down, right, left,
-         1/4  right, 1/2. left
+     21> 1/4  left, right, left, right,
+         1/4  up, down, up, break
  
-     26> 1/8  left, right, up, down, 1/2 break
-     28> 1/8  right, left, down, up, 1/2 break
+     26> 1/4  left, right, up, break
+     28> 1/4  right, left, down, break
 
-     30> 1/4  up, down, right, left,
-         1/4  right, 1/2. left
+     30> 1/4  up, down, up, down,
+         1/4  left, right, left, break
 
-     36> 1/4  left, right, left, right, 1/1 down,
-         1/4  up, down, up, down, 1/1 left,
-         1/1  break, 1/1 break
+     34> 1/4  up, break, up, break
 
-     48> 1/2  left, right, up, down, 1/8 left, right, up, down,
-         1/2  up, break, 1/1 break
+     36> 1/4  left, up, left, break
+     38> 1/4  down, right, down, break
+     40> 1/4  down, left, down, break 
+     42> 1/4  up, right, up, break
+     44> 1/4  down, up, down, break
+     46> 1/4  right, left, right, break
 
-     56> 1/4  left, right, 1/4. up, 1/2 down, up, 1/8 break          
+     48> 1/2  down, left, up, right, down, left, up, right
+     56> 1/2  down, right, up, left, down, right, up, left
+
+     64> 1/4  down, left, up, break
+     66> 1/4  up, right, left, break 
+     
+     68> 1/4  up, down, up, down,
+         1/4  left, right, left, break 
+         
+      
+     
+     73> 1/4  down, left, up, break
+     75> 1/4  up, right, left, break 
+     
+     77> 1/4  up, down, up, down,
+         1/4  left, right, left, break  
+     
+     81> 1/4  right, break, right, break  
+     
+     83> 1/2  down, left, up, right, down, left, up, right
+     91> 1/2  left, right, left, right, left, right, 1/1 break
+
+     99> 1/4  left, break, left, break
+     101> 1/4  right, break, right, break
+     103> 1/4  up, break, up, break
+
+     105> 1/2  down, right, up, left, down, right, up, left
+     113> 1/2  left, up, right, down, left, up, break, break
+       
+     
