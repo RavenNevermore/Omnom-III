@@ -17,14 +17,14 @@ sequences:
       1> 1/1 break, break
       5> 1/1 break, break
 
-      9> 1/2 down, up, down, break
-     13> 1/2 down, up, down, break
-     17> 1/2 left, right, left, break
-     21> 1/2 right, left, right, break
+      9> 1/2 up, break, up, break
+     13> 1/2 down, break, down, break
+     17> 1/2 left, break, left, break
+     21> 1/2 right, break, right, break
 
-     25> 1/2 left, right, up, break
+     25> 1/2 up, down, up, break
 
-     29> 1/2 right, left, down, break
+     29> 1/2 right, left, right, break
 
      33> 1/2 up, right, down, left,
-         1/2 up, left, down, 1/4 right, break
+         1/2 up, right, down, left
