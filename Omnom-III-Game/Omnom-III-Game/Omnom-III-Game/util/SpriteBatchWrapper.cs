@@ -39,12 +39,12 @@ namespace Omnom_III_Game.util {
         private SpriteFont defaultFont { get { return this.getFont("default"); } }
 
         public void drawDebugText(params object[] text) {
-            String msg = "";
+            /*String msg = "";
             foreach (object item in text){
                 msg += null == item ? "null":item.ToString();
                 msg += " ";
             }
-            this.wrapped.DrawString(this.defaultFont, msg, new Vector2(5, 5), Color.DarkGray);
+            this.wrapped.DrawString(this.defaultFont, msg, new Vector2(5, 5), Color.DarkGray);*/
         }
 
         public void drawTextCentered(String text, String fontName, float scale, Color color) {
