@@ -30,14 +30,22 @@ namespace Omnom_III_Game {
             this.defaultScene = "menu";
 
             this.scenes["story_01"] = new VideoScene("video/story_01");
+            this.scenes["story_02"] = new VideoScene("video/story_02");
+            this.scenes["story_03"] = new VideoScene("video/story_03");
+            this.scenes["story_04"] = new VideoScene("video/story_04");
+            this.scenes["credits"] = new VideoScene("video/credits");
 
             SceneChain storyMode = new SceneChain();
             storyMode.addToChain(
                 "story_01",
                 "level_01",
+                "story_02",
                 "level_02",
+                "story_03",
                 "level_03",
-                "level_04");
+                "story_04",
+                "level_04",
+                "credits");
             this.scenes["story_mode"] = storyMode;
 
             MenuScene menu = new MenuScene();

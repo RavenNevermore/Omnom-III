@@ -612,8 +612,28 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="video\credits.wmv">
+      <Name>credits</Name>
+      <Importer>WmvImporter</Importer>
+      <Processor>VideoProcessor</Processor>
+    </Compile>
     <Compile Include="video\story_01.wmv">
       <Name>story_01</Name>
+      <Importer>WmvImporter</Importer>
+      <Processor>VideoProcessor</Processor>
+    </Compile>
+    <Compile Include="video\story_02.wmv">
+      <Name>story_02</Name>
+      <Importer>WmvImporter</Importer>
+      <Processor>VideoProcessor</Processor>
+    </Compile>
+    <Compile Include="video\story_03.wmv">
+      <Name>story_03</Name>
+      <Importer>WmvImporter</Importer>
+      <Processor>VideoProcessor</Processor>
+    </Compile>
+    <Compile Include="video\story_04.wmv">
+      <Name>story_04</Name>
       <Importer>WmvImporter</Importer>
       <Processor>VideoProcessor</Processor>
     </Compile>

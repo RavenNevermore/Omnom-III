@@ -25,9 +25,12 @@ namespace Omnom_III_Game {
             this.player = null;
             this.size = new Rectangle(0, 0, 0, 0);
             this.forceExit = false;
+            this.firstUpdate = true;
         }
 
         private ExplicitInputState input;
+        private bool firstUpdate;
+        
         public void update(InputState inputState) {
             if (this.wantsToExit())
                 return;
@@ -43,6 +46,13 @@ namespace Omnom_III_Game {
                 this.player.Play(this.video);
             }
 
+            // We ignore the first update after initializing the scene,
+            // to prevent older button presses carrying on.
+
+            if (this.firstUpdate) {
+                this.firstUpdate = false;
+                return;
+            }
             if (this.input.isActive(InputState.Control.BACK) ||
                 this.input.isActive(InputState.Control.EXIT)) {
                     this.forceExit = true;
