@@ -108,11 +108,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="steakysong.mp3">
-      <Name>steakysong</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
     <Compile Include="btn_fail.png">
       <Name>btn_fail</Name>
       <Importer>TextureImporter</Importer>
@@ -155,11 +150,6 @@
     </Compile>
     <Compile Include="intro\games_academy.png">
       <Name>games_academy</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="intro\omnom.png">
-      <Name>omnom</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -322,11 +312,6 @@
       <Name>arrow_up</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="muffyfinalsong.mp3">
-      <Name>muffyfinalsong</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
     </Compile>
     <Compile Include="bgr_highscore.png">
       <Name>bgr_highscore</Name>
@@ -533,11 +518,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="papricano_roll.mp3">
-      <Name>papricano_roll</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
     <Compile Include="stages\veggielaunge\beatlayer02.png">
       <Name>beatlayer02</Name>
       <Importer>TextureImporter</Importer>
@@ -627,6 +607,26 @@
       <Name>perfect_10</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="steakysong.mp3">
+      <Name>steakysong</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="papricano_roll.mp3">
+      <Name>papricano_roll</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="muffyfinalsong.mp3">
+      <Name>muffyfinalsong</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="intro\omnom.png">
+      <Name>omnom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
     <Content Include="tigerstep.content">
       <Name>tigerstep</Name>

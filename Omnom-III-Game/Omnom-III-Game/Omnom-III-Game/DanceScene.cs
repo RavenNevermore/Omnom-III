@@ -224,14 +224,15 @@ namespace Omnom_III_Game {
             //this.textures.drawAsBackground(this.backgroundTexture, sprites);
             this.background.draw(sprites);
 
-            if (null != this.currentSequence) {
-                if (this.currentSequence.isEnemyShown(this.song.timeRunningInMeasures)) {
-                    this.enemy.draw(sprites);
-                } else {
-                    this.player.draw(sprites);
-                }
-                
+            if (null != this.currentSequence &&
+                    this.currentSequence.isEnemyShown(this.song.timeRunningInMeasures)) {
+
+                this.enemy.draw(sprites);
+            } else {
+                this.player.draw(sprites);
             }
+                
+           
             sprites.drawDebugText(this.progress.errorInLastSequence, "Missed:", this.missed, "Wrong:", this.wrong);
             /*sprites.drawDebugText(
                 "Measures: ", this.song.timeRunningInMeasures,
