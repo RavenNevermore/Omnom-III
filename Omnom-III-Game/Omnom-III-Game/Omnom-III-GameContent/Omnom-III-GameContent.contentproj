@@ -153,11 +153,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="intro\omnom.png">
-      <Name>omnom</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="bgr_muffy.png">
       <Name>bgr_muffy</Name>
       <Importer>TextureImporter</Importer>
@@ -627,6 +622,11 @@
       <Name>muffyfinalsong</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="intro\omnom.png">
+      <Name>omnom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
     <Content Include="tigerstep.content">
       <Name>tigerstep</Name>
