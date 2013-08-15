@@ -18,7 +18,7 @@ namespace Omnom_III_Game {
 
         Sound errorSound;
         Sound successSound;
-        Sound seqSuccessSound;
+        RandomSound seqSuccessSound;
 
         float flash = 0.0f;
 
@@ -38,7 +38,7 @@ namespace Omnom_III_Game {
 
             this.errorSound = new Sound("hud/error_move", content);
             this.successSound = null;// new Sound("hud/success_move");
-            this.seqSuccessSound = new Sound("hud/success_sequence", content);
+            this.seqSuccessSound = new RandomSound("hud/perfect", 10, content);
 
             float bpms = 1 / beatTimeInMS;
             foreach (DanceSequence.Input input in protocol.handicaps) {

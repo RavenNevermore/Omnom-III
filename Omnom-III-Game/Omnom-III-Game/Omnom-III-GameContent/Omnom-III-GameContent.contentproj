@@ -578,6 +578,56 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="hud\perfect_01.mp3">
+      <Name>perfect_01</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="hud\perfect_02.mp3">
+      <Name>perfect_02</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="hud\perfect_03.mp3">
+      <Name>perfect_03</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="hud\perfect_04.mp3">
+      <Name>perfect_04</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="hud\perfect_05.mp3">
+      <Name>perfect_05</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="hud\perfect_06.mp3">
+      <Name>perfect_06</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="hud\perfect_07.mp3">
+      <Name>perfect_07</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="hud\perfect_08.mp3">
+      <Name>perfect_08</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="hud\perfect_09.mp3">
+      <Name>perfect_09</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="hud\perfect_10.mp3">
+      <Name>perfect_10</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
     <Content Include="tigerstep.content">
       <Name>tigerstep</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -135,6 +135,7 @@
     <Compile Include="util\CommitingReader.cs" />
     <Compile Include="util\ListUtil.cs" />
     <Compile Include="util\ParserUtil.cs" />
+    <Compile Include="util\RandomSound.cs" />
     <Compile Include="util\SpriteBatchWrapper.cs" />
     <Compile Include="util\SystemRef.cs" />
     <Compile Include="util\TextureContext.cs" />
