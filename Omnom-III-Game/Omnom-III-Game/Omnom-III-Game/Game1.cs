@@ -22,6 +22,7 @@ namespace Omnom_III_Game {
             this.graphics = new GraphicsDeviceManager(this);
             this.graphics.PreferredBackBufferHeight = 720;
             this.graphics.PreferredBackBufferWidth = 1280;
+            this.graphics.IsFullScreen = true;
 
             this.Content.RootDirectory = "Content";
             //this.Components.Add(new GamerServicesComponent(this));
