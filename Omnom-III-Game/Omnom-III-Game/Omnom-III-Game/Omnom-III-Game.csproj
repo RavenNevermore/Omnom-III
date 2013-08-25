@@ -138,7 +138,9 @@
     <Compile Include="util\RandomSound.cs" />
     <Compile Include="util\SpriteBatchWrapper.cs" />
     <Compile Include="util\SystemRef.cs" />
+    <Compile Include="util\TextInput.cs" />
     <Compile Include="util\TextureContext.cs" />
+    <Compile Include="util\Timer.cs" />
     <Compile Include="VideoScene.cs" />
   </ItemGroup>
   <ItemGroup>

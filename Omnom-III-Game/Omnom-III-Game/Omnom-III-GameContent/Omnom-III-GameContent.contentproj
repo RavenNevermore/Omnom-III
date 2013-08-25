@@ -704,6 +704,16 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
+    <Compile Include="hud\userinput.spritefont">
+      <Name>userinput</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="hud\message.spritefont">
+      <Name>message</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="level_02.content">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>level_02</Name>

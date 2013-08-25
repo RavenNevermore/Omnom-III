@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
@@ -25,7 +24,7 @@ namespace Omnom_III_Game {
             this.graphics.PreferredBackBufferWidth = 1280;
 
             this.Content.RootDirectory = "Content";
-            this.Components.Add(new GamerServicesComponent(this));
+            //this.Components.Add(new GamerServicesComponent(this));
         }
 
         /// <summary>
@@ -73,36 +72,49 @@ namespace Omnom_III_Game {
             
             GamePadDPad dpad = GamePad.GetState(PlayerIndex.One).DPad;
             GamePadButtons buttons = GamePad.GetState(PlayerIndex.One).Buttons;
-            
+
+            InputState input = createInputState(ref dpad, ref buttons);
+
+            this.scene.update(input);
+
+            this.previousInput = input;
+
+            if (this.scene.wantsToExit())
+                this.Exit();
+
+            base.Update(gameTime);
+        }
+
+        private InputState createInputState(ref GamePadDPad dpad, ref GamePadButtons buttons) {
             InputState input = new InputState();
             input.initPreviousMove(this.previousInput);
-            input.set(InputState.Move.UP, 
+            input.set(InputState.Move.UP,
                 dpad.Up == ButtonState.Pressed ||
                 buttons.Y == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.W) ||
                 Keyboard.GetState().IsKeyDown(Keys.Up));
 
-            input.set(InputState.Move.DOWN, 
+            input.set(InputState.Move.DOWN,
                 dpad.Down == ButtonState.Pressed ||
                 buttons.A == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.S) ||
                 Keyboard.GetState().IsKeyDown(Keys.Down));
 
-            input.set(InputState.Move.LEFT, 
+            input.set(InputState.Move.LEFT,
                 dpad.Left == ButtonState.Pressed ||
                 buttons.X == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.A) ||
                 Keyboard.GetState().IsKeyDown(Keys.Left));
 
-            input.set(InputState.Move.RIGHT, 
-                dpad.Right == ButtonState.Pressed || 
-                buttons.B == ButtonState.Pressed || 
+            input.set(InputState.Move.RIGHT,
+                dpad.Right == ButtonState.Pressed ||
+                buttons.B == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.D) ||
                 Keyboard.GetState().IsKeyDown(Keys.Right));
 
 
-            input.set(InputState.Control.EXIT, 
-                buttons.Back == ButtonState.Pressed || 
+            input.set(InputState.Control.EXIT,
+                buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape));
 
             input.set(InputState.Control.BACK,
@@ -111,12 +123,12 @@ namespace Omnom_III_Game {
                 Keyboard.GetState().IsKeyDown(Keys.Back));
 
             input.set(InputState.Control.PAUSE,
-                buttons.Start == ButtonState.Pressed || 
-                Keyboard.GetState().IsKeyDown(Keys.P) || 
+                buttons.Start == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.P) ||
                 Keyboard.GetState().IsKeyDown(Keys.Space));
 
-            input.set(InputState.Control.SELECT, 
-                buttons.A == ButtonState.Pressed || 
+            input.set(InputState.Control.SELECT,
+                buttons.A == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Enter));
 
             input.set(InputState.Control.UP,
@@ -138,15 +150,7 @@ namespace Omnom_III_Game {
                 dpad.Right == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.D) ||
                 Keyboard.GetState().IsKeyDown(Keys.Right));
-
-            this.scene.update(input);
-
-            this.previousInput = input;
-
-            if (this.scene.wantsToExit())
-                this.Exit();
-
-            base.Update(gameTime);
+            return input;
         }
 
         private InputState previousInput = null;
